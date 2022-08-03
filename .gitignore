@@ -2,4 +2,4 @@
 *.a
 *.out
 .DS_Store
-.vs_code
+.vs_code/
