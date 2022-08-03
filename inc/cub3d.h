@@ -12,6 +12,8 @@
 # define KEY_A		0
 # define KEY_S  	1
 # define KEY_D  	2
+# define KEY_Q		12
+# define KEY_E		14
 
 # define ROW		11
 # define COL		15
@@ -28,10 +30,14 @@
 # define WHITE		0xFFFFFF
 # define GRAY		0x808080
 # define PINK		0xFF00FF
+# define PI			3.1415926
 
 typedef struct	s_vec {
 	double		x;
 	double		y;
+	// double		a;
+	// double		dx;
+	// double		dy;
 }				t_vec;
 
 typedef struct	s_img {
@@ -47,5 +53,7 @@ typedef struct	s_data {
 	void		*win;
 	int			map[ROW][COL];
 	t_vec		player_pos;
+	t_vec		fov;
+	double		player_direction;
 	t_img		img;
 }				t_data;
