@@ -21,17 +21,29 @@ int	handle_key(int keycode, t_data *data)
 		data->fov.y = sin(data->player_direction);
 	}
 	if (keycode == KEY_W)
-		data->player_pos.y -= MOVE_GAP;
+	{
+		if (data->img.data[(WIDTH * ((int)data->player_pos.y - MOVE_GAP - 5)) + (int)data->player_pos.x] != GREEN)
+			data->player_pos.y -= MOVE_GAP;
+	}
 	if (keycode == KEY_A)
-		data->player_pos.x -= MOVE_GAP;
+	{
+		if (data->img.data[(WIDTH * ((int)data->player_pos.y)) + ((int)data->player_pos.x - MOVE_GAP - 5)] != GREEN)
+			data->player_pos.x -= MOVE_GAP;
+	}
 	if (keycode == KEY_S)
-		data->player_pos.y += MOVE_GAP;
+	{
+		if (data->img.data[(WIDTH * ((int)data->player_pos.y + MOVE_GAP + 5)) + (int)data->player_pos.x] != GREEN)
+			data->player_pos.y += MOVE_GAP;
+	}
 	if (keycode == KEY_D)
-		data->player_pos.x += MOVE_GAP;
+	{
+		if (data->img.data[(WIDTH * ((int)data->player_pos.y)) + ((int)data->player_pos.x + MOVE_GAP + 5)] != GREEN)
+			data->player_pos.x += MOVE_GAP;
+	}
 	if (keycode == KEY_ESC)
 		exit(0);
 	printf("Player Pos = %f,%f\n",data->player_pos.x, data->player_pos.y);
-	printf("Player direction = %f\n", data->player_direction);
+	//printf("Player direction = %f\n", data->player_direction);
 	return (0);
 }
 
@@ -128,7 +140,6 @@ void	draw_player(t_data *data)
 
 void	draw_player_direction(t_data *data)
 {
-	int	i;
 	double	ray_x;
 	double	ray_y;
 	double	temp_x;
@@ -142,11 +153,11 @@ void	draw_player_direction(t_data *data)
 	ray_y = sin(data->player_direction) * data->fov.x + cos(data->player_direction) * data->fov.y;
 	// printf("ray_x = %f\n", ray_x);
 	// printf("ray_y = %f\n", ray_y);
-	i = 0;
+//	i = 0;
 	while (1)
 	{
 		// int math = WIDTH * ((int)data->player_pos.y + (int)temp_y) + ((int)data->player_pos.x + (int)temp_x);
-		printf("%d %d\n",((int)data->player_pos.y + (int)temp_y), ((int)data->player_pos.x + (int)temp_x));
+		//printf("%d %d\n",((int)data->player_pos.y + (int)temp_y), ((int)data->player_pos.x + (int)temp_x));
 		if (data->img.data[WIDTH * ((int)data->player_pos.y + (int)temp_y) + ((int)data->player_pos.x + (int)temp_x)] != GREEN)
 			data->img.data[WIDTH * ((int)data->player_pos.y + (int)temp_y) + ((int)data->player_pos.x + (int)temp_x)] = BLUE;
 		else
@@ -157,7 +168,6 @@ void	draw_player_direction(t_data *data)
 		temp_y += ray_y;
 		// data->player_pos.x += ray_x;
 		// data->player_pos.y += ray_y;
-		i++;
 	}
 }
 
