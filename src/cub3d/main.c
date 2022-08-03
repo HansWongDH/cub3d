@@ -1,22 +1,100 @@
-#include <stdio.h>
 #include "cub3d.h"
+#include "libft.h"
 
-typedef struct	s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data;
+int	handle_key(int keycode, t_data *data)
+{
+	(void)data;
+	//if (keycode == KEY_W)
+	//if (keycode == KEY_A)
+	//if (keycode == KEY_S)
+	//if (keycode == KEY_D)
+	if (keycode == KEY_ESC)
+		exit(0);
+	return (0);
+}
+
+int	handle_exit(int keycode, t_data *data)
+{
+	(void)data;
+	(void)keycode;
+	exit(0);
+}
+
+void	draw_square(t_data *data, int i, int j, int colour)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	while (x < TILE_SIZE)
+	{
+		y = 0;
+		while (y < TILE_SIZE)
+		{
+			data->img.data[WIDTH * (y + j) + (x + i)] = colour;
+			y++;
+		}
+		x++;
+	}
+}
+
+void	draw_tiles(t_data *data)
+{
+	int	i;
+	int	j;
+
+	i = 0;	
+	while (i < ROW)
+	{
+		j = 0;
+		while (j < COL)
+		{
+			if (data->map[i][j] == 1)
+				draw_square(data, TILE_SIZE * j, TILE_SIZE * i, 0xFF0000);
+			else
+				draw_square(data, TILE_SIZE * j, TILE_SIZE * i, 0xFFFFFF);
+			j++;
+		}
+		i++;
+	}
+
+}
+
+int	draw_loop(t_data *data)
+{
+	draw_tiles(data);
+	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
+	return (0);
+}
 
 int	main()
 {
-	void	*mlx;
-	void	*mlx_win;
-	t_data	img;
+	t_data	data;
+	int  map[ROW][COL] =  {
+	{ 1 ,  1 ,	1 ,  1 ,  1 ,  1 ,	1 ,  1 ,  1 ,  1 ,	1 ,  1 ,  1 ,  1 ,	1 },
+	{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  1 ,  0 ,	1 },
+	{ 1 ,  0 ,	0 ,  0 ,  0 ,  1 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  1 ,  0 ,	1 },
+	{ 1 ,  1 ,	1 ,  1 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	1 ,  0 ,  1 ,  0 ,	1 },
+	{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	1 ,  0 ,  1 ,  0 ,	1 },
+	{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  1 ,  1 ,	1 ,  1 ,  1 ,  0 ,	1 },
+	{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	1 },
+	{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	1 },
+	{ 1 ,  1 ,	1 ,  1 ,  1 ,  1 ,	0 ,  0 ,  0 ,  1 ,	1 ,  1 ,  1 ,  0 ,	1 },
+	{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	1 },
+	{ 1 ,  1 ,	1 ,  1 ,  1 ,  1 ,	1 ,  1 ,  1 ,  1 ,	1 ,  1 ,  1 ,  1 ,	1 }
+	};
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	img.img = mlx_new_image(mlx, 1920, 1080);
-	mlx_loop(mlx);
+	data.mlx = mlx_init();
+	data.win = mlx_new_window(data.mlx, 800, 600, "cub3d");
+	ft_memcpy(data.map, map, sizeof(int) * ROW * COL);
+
+	data.img.img = mlx_new_image(data.mlx, WIDTH, HEIGHT);
+	data.img.data = (int*)mlx_get_data_addr(data.img.img,
+			&data.img.bpp, &data.img.line_size, &data.img.endian);
+
+	mlx_hook(data.win, X_KEY_PRESS, 0, handle_key, &data);
+	mlx_hook(data.win, X_KEY_EXIT, 0, handle_exit, &data);
+
+	mlx_loop_hook(data.mlx, draw_loop, &data);
+	mlx_loop(data.mlx);
 }

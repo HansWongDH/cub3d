@@ -29,6 +29,9 @@ $(LIBFT):
 ${NAME}:	${LIBFT} ${OBJ_FILES} ${OBJ_BANNER}
 	${GCC} -o ${NAME} ${OBJ_FILES} $(LIBRARIES) $(MINIFLAGS)
 
+test: $(NAME)
+	./$(NAME)
+
 clean:
 	$(RM) $(OBJ_DIR)/*
 	make clean -C $(LIBFT_DIR)
