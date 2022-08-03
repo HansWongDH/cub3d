@@ -18,6 +18,16 @@
 # define TILE_SIZE	32
 # define WIDTH		COL * TILE_SIZE
 # define HEIGHT		ROW * TILE_SIZE
+# define MOVE_GAP	3
+
+
+# define RED		0xFF0000
+# define GREEN		0x00FF00
+# define BLUE		0x0000FF
+# define BLACK		0x000000
+# define WHITE		0xFFFFFF
+# define GRAY		0x808080
+# define PINK		0xFF00FF
 
 typedef struct	s_vec {
 	double		x;
@@ -36,5 +46,6 @@ typedef struct	s_data {
 	void		*mlx;
 	void		*win;
 	int			map[ROW][COL];
+	t_vec		player_pos;
 	t_img		img;
 }				t_data;
