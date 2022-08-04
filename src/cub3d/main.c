@@ -140,12 +140,12 @@ void	draw_tiles(t_data *data)
 			if (data->map[i][j] == 1)
 			{
 				draw_square(data, TILE_SIZE * i, TILE_SIZE * j, GREEN);
-				draw_grid(data, TILE_SIZE * i, TILE_SIZE * j, GRAY);
+				//draw_grid(data, TILE_SIZE * i, TILE_SIZE * j, GRAY);
 			}
 			else
 			{
 				draw_square(data, TILE_SIZE * i, TILE_SIZE * j, WHITE);
-				draw_grid(data, TILE_SIZE * i, TILE_SIZE * j, BLACK);
+				//draw_grid(data, TILE_SIZE * i, TILE_SIZE * j, BLACK);
 			}
 			j++;
 		}
@@ -181,11 +181,11 @@ void	draw_game(t_data *data, float x, float y, float angle)
 	// data->img.data[WIDTH * ((int)y) + ((int)x)] = BLUE;
 
 
-	printf("x,y | %f %f\n", x, y);
+	//printf("x,y | %f %f\n", x, y);
 	distance = sqrt(pow(data->player_pos.x - x, 2) + pow(data->player_pos.y - y, 2));
-	printf("distance1 | %f\n", distance);
+	//printf("distance1 | %f\n", distance);
 	distance = distance * cos(angle);
-	printf("distance2 | %f\n", distance);
+	//printf("distance2 | %f\n", distance);
 
 	// printf("==================\n");
 	// printf("px,py | %f %f\n", data->player_pos.x,data->player_pos.y);
@@ -193,18 +193,18 @@ void	draw_game(t_data *data, float x, float y, float angle)
 	// printf("angle | %f\n", angle);
 	// printf("angle_offset | %f\n", angle_offset);
 	// printf("==================\n");
-	float temp = 2000.0/(distance/6);
-	for (int i = 0; i < 16; i++)
+	float temp = 2000.0/(distance/8);
+	for (int i = 0; i < 23; i++)
 	{
 		for (int j = 0; j < temp; j++)
 		{
 			// printf("math = %d\n", GAME_WIDTH * j + i);
 			if (angle >= 0)
-				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - (int)temp/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 2) - 16/2)] = GREEN;
+				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - (int)temp/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 23) - 23/2)] = GREEN;
 			else
 			{
 				// printf("math = %d\n", GAME_WIDTH * (j + GAME_HEIGHT/4) + (i + GAME_WIDTH/4 - (int)fabs(angle * 180 / PI * 2)));
-				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - (int)temp/2) + (i + GAME_WIDTH/2 - (int)fabs(angle * 180 / PI * 2) - 16/2)] = GREEN;
+				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - (int)temp/2) + (i + GAME_WIDTH/2 - (int)fabs(angle * 180 / PI * 23) - 23/2)] = GREEN;
 			}
 		}
 	}
@@ -212,54 +212,84 @@ void	draw_game(t_data *data, float x, float y, float angle)
 	// sqrt (x2 - x1)^2 + (y2-y1)^2
 }
 
+//void	draw_player_direction(t_data *data, float angle)
+//{
+//	float	ray_x;
+//	float	ray_y;
+//	float	temp_x;
+//	float	temp_y;
+//	float	max;
+//
+//	// printf("=========================\n");
+//	printf("fov_x = %f\n", data->fov.x);
+//	printf("fov_y = %f\n", data->fov.y);
+//	printf("player_direction = %f\n", data->player_direction);
+//	temp_x = data->fov.x;
+//	temp_y = data->fov.y;
+//	//printf("cos = %f\n", cos(angle + data->player_direction));
+//	//printf("sin = %f\n", sin(angle + data->player_direction));
+//	ray_x = cos(angle + data->player_direction) * data->fov.x - sin(angle + data->player_direction) * data->fov.y;
+//	ray_y = sin(angle + data->player_direction) * data->fov.x + cos(angle + data->player_direction) * data->fov.y;
+//	//printf("ray_x = %f\n", ray_x);
+//	//printf("ray_y = %f\n", ray_y);
+//	// printf("=========================\n");
+//
+//	max = fmax(fabs(ray_x), fabs(ray_y));
+//	//printf("max = %f\n", max);
+//	ray_x /= max;
+//	ray_y /= max;
+//	//printf("ray_x = %f\n", ray_x);
+//	//printf("ray_y = %f\n", ray_y);
+//	while (1)
+//	{
+//		// int math = WIDTH * ((int)data->player_pos.y + (int)temp_y) + ((int)data->player_pos.x + (int)temp_x);
+//		//printf("%d %d\n",((int)data->player_pos.y + (int)temp_y), ((int)data->player_pos.x + (int)temp_x));
+//		if (data->img.data[WIDTH * ((int)data->player_pos.y + (int)temp_y) + ((int)data->player_pos.x + (int)temp_x)] != GREEN)
+//				// data->img.data[WIDTH * ((int)data->player_pos.y + (int)temp_y) + ((int)data->player_pos.x + (int)temp_x)] != GRAY)
+//			data->img.data[WIDTH * ((int)data->player_pos.y + (int)temp_y) + ((int)data->player_pos.x + (int)temp_x)] = RED;
+//		else
+//		{
+//			draw_game(data, (data->player_pos.x + temp_x), (data->player_pos.y + temp_y), angle);
+//			// data->img.data[WIDTH * ((int)data->player_pos.y + (int)temp_y) + ((int)data->player_pos.x + (int)temp_x)] = BLUE;
+//			break;
+//		}
+//		//printf("temp_x = %f\n", temp_x);
+//		//printf("temp_y = %f\n", temp_y);
+//		temp_x += ray_x;
+//		temp_y += ray_y;
+//		// data->player_pos.x += ray_x;
+//		// data->player_pos.y += ray_y;
+//	}
+//}
+
 void	draw_player_direction(t_data *data, float angle)
 {
 	float	ray_x;
 	float	ray_y;
-	float	temp_x;
-	float	temp_y;
-	// float	max;
+	float	dx;
+	float	dy;
+	float	max;
 
-	// printf("=========================\n");
-	// printf("fov_x = %f\n", data->fov.x);
-	// printf("fov_y = %f\n", data->fov.y);
-	// printf("player_direction = %f\n", data->player_direction);
-	temp_x = data->fov.x;
-	temp_y = data->fov.y;
-	printf("cos = %f\n", cos(angle + data->player_direction));
-	printf("sin = %f\n", sin(angle + data->player_direction));
-	ray_x = cos(angle + data->player_direction) * data->fov.x - sin(angle + data->player_direction) * data->fov.y;
-	ray_y = sin(angle + data->player_direction) * data->fov.x + cos(angle + data->player_direction) * data->fov.y;
-	printf("ray_x = %f\n", ray_x);
-	printf("ray_y = %f\n", ray_y);
-	// printf("=========================\n");
+	ray_x = data->player_pos.x;
+	ray_y = data->player_pos.y;
 
-	// max = fmax(fabs(ray_x), fabs(ray_y));
-	// printf("max = %f\n", max);
-	// ray_x /= max;
-	// ray_y /= max;
-	// printf("ray_x = %f\n", ray_x);
-	// printf("ray_y = %f\n", ray_y);
-	//	i = 0;
+	dx = cos(angle) * data->fov.x - sin(angle) * data->fov.y;
+	dy = sin(angle) * data->fov.x + cos(angle) * data->fov.y;
+
+	max = fmax(fabs(dx), fabs(dy));
+	dx /= max;
+	dy /= max;
 	while (1)
 	{
-		// int math = WIDTH * ((int)data->player_pos.y + (int)temp_y) + ((int)data->player_pos.x + (int)temp_x);
-		//printf("%d %d\n",((int)data->player_pos.y + (int)temp_y), ((int)data->player_pos.x + (int)temp_x));
-		if (data->img.data[WIDTH * ((int)data->player_pos.y + (int)temp_y) + ((int)data->player_pos.x + (int)temp_x)] != GREEN)
-				// data->img.data[WIDTH * ((int)data->player_pos.y + (int)temp_y) + ((int)data->player_pos.x + (int)temp_x)] != GRAY)
-			data->img.data[WIDTH * ((int)data->player_pos.y + (int)temp_y) + ((int)data->player_pos.x + (int)temp_x)] = RED;
+		if (data->img.data[WIDTH * (int)floor(ray_y) + (int)floor(ray_x)] != GREEN)
+			data->img.data[WIDTH * (int)floor(ray_y) + (int)floor(ray_x)] = RED;
 		else
 		{
-			draw_game(data, (data->player_pos.x + temp_x), (data->player_pos.y + temp_y), angle);
-			// data->img.data[WIDTH * ((int)data->player_pos.y + (int)temp_y) + ((int)data->player_pos.x + (int)temp_x)] = BLUE;
+			draw_game(data, ray_x, ray_y, angle);
 			break;
 		}
-		printf("temp_x = %f\n", temp_x);
-		printf("temp_y = %f\n", temp_y);
-		temp_x += ray_x;
-		temp_y += ray_y;
-		// data->player_pos.x += ray_x;
-		// data->player_pos.y += ray_y;
+		ray_x += dx;
+		ray_y += dy;
 	}
 }
 
@@ -268,13 +298,22 @@ void	draw_fov(t_data *data)
 	float	angle;
 	
 	angle = 0;
-	printf("==================\n");
-	draw_player_direction(data, 0);
-	printf("==================\n");
-	draw_player_direction(data, PI * 10 / 180);
-	printf("==================\n");
-	draw_player_direction(data, -PI * 10 / 180);
-	printf("==================\n");
+	//printf("==================\n");
+	//draw_player_direction(data, 0);
+	//draw_player_direction(data, 0.5);
+	//draw_player_direction(data, -0.5);
+	//printf("==================\n");
+	//draw_player_direction(data, PI * 5 / 180);
+	//draw_player_direction(data, PI * 6 / 180);
+	//draw_player_direction(data, PI * 7 / 180);
+	//draw_player_direction(data, PI * 8 / 180);
+	//printf("==================\n");
+	//draw_player_direction(data, -PI * 5 / 180);
+	//draw_player_direction(data, -PI * 6 / 180);
+	//draw_player_direction(data, -PI * 7 / 180);
+	//draw_player_direction(data, -PI * 8 / 180);
+	//exit(0);
+	//printf("==================\n");
 	// draw_player_direction(data, 0.5);
 	// draw_player_direction(data, -0.5 + (2* PI));
 	// if (angle < 0)
@@ -283,29 +322,40 @@ void	draw_fov(t_data *data)
 	// draw_player_direction(data, 2*PI - 0.5);
 	// draw_player_direction(data, -0.5);
 
-	exit(0);
+	//exit(0);
 	// draw_player_direction(data, PI * 20/180);
 	// draw_player_direction(data, PI * 30/180);
 
 
-	// while (angle < (PI * 30/180))
-	// {
-	// 	draw_player_direction(data, angle);
-	// 	draw_player_direction(data, -angle);
-	// 	angle += (PI * 1/180);
-	// }
+	while (angle < (PI * 30/180))
+	{
+		draw_player_direction(data, angle);
+		draw_player_direction(data, -angle);
+		angle += (PI * 0.2/180);
+	}
+}
+
+void	draw_sky(t_data *data)
+{
+	for (int i = 0; i < GAME_WIDTH; i++)
+	{
+		for (int j = 0; j < GAME_HEIGHT; j++)
+		{
+			if (j > GAME_HEIGHT / 2)
+				data->game.data[GAME_WIDTH * j + i] = BROWN;
+			else
+				data->game.data[GAME_WIDTH * j + i] = LBLUE;
+		}
+	}
 }
 
 int	draw_loop(t_data *data)
 {
 	draw_tiles(data);
-	// draw_player(data);
-	for (int i = 0; i < GAME_WIDTH; i++)
-		for (int j = 0; j < GAME_HEIGHT; j++)
-			data->game.data[GAME_WIDTH * j + i] = WHITE;
+	draw_player(data);
+	draw_sky(data);
 	draw_fov(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
-		
 	mlx_put_image_to_window(data->mlx, data->win, data->game.img, WIDTH + 10, 0);
 	return (0);
 }
@@ -328,7 +378,7 @@ int	main()
 	};
 
 	data.mlx = mlx_init();
-	data.win = mlx_new_window(data.mlx, 1920, 1080, "cub3d");
+	data.win = mlx_new_window(data.mlx, 2500, 1080, "cub3d");
 	ft_memcpy(data.map, map, sizeof(int) * ROW * COL);
 
 	data.img.img = mlx_new_image(data.mlx, WIDTH, HEIGHT);
@@ -345,9 +395,12 @@ int	main()
 
 	data.player_pos.x = 48;
 	data.player_pos.y = 176;
-	data.player_direction = -PI/2;
+	data.player_direction = 3.921593;
 	data.fov.x = cos(data.player_direction);
 	data.fov.y = sin(data.player_direction);
+
+	printf("%f\n", data.fov.x);
+	printf("%f\n", data.fov.y);
 
 	// shade_colour("0xFF0000", 19);
 
@@ -365,4 +418,10 @@ int	main()
 
 //      -PI/2 
 //  PI          0
+//       PI/2
+//
+//
+//
+//      -PI/2 
+//  PI/2        0  PI/2
 //       PI/2
