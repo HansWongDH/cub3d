@@ -18,10 +18,14 @@
 # define ROW		11
 # define COL		15
 # define TILE_SIZE	32
-# define WIDTH		COL * TILE_SIZE
-# define HEIGHT		ROW * TILE_SIZE
+# define WIDTH		COL * TILE_SIZE //480
+# define HEIGHT		ROW * TILE_SIZE //352
 # define MOVE_GAP	3
 
+# define GAME_SCALE		16
+# define GAME_TILE		GAME_SCALE * TILE_SIZE //256
+# define GAME_WIDTH 	WIDTH * 3
+# define GAME_HEIGHT	HEIGHT * 3
 
 # define RED		0xFF0000
 # define GREEN		0x00FF00
@@ -30,14 +34,15 @@
 # define WHITE		0xFFFFFF
 # define GRAY		0x808080
 # define PINK		0xFF00FF
-# define PI			3.1415926
+# define YELLOW		0xFFFF00
+# define PI			3.141592653589793238
 
 typedef struct	s_vec {
-	double		x;
-	double		y;
-	// double		a;
-	// double		dx;
-	// double		dy;
+	float		x;
+	float		y;
+	// float		a;
+	// float		dx;
+	// float		dy;
 }				t_vec;
 
 typedef struct	s_img {
@@ -54,6 +59,7 @@ typedef struct	s_data {
 	int			map[ROW][COL];
 	t_vec		player_pos;
 	t_vec		fov;
-	double		player_direction;
+	float		player_direction;
 	t_img		img;
+	t_img		game;
 }				t_data;
