@@ -15,12 +15,13 @@
 # define KEY_Q		12
 # define KEY_E		14
 
-# define ROW		11
-# define COL		15
-# define TILE_SIZE	32
-# define WIDTH		COL * TILE_SIZE //480
-# define HEIGHT		ROW * TILE_SIZE //352
-# define MOVE_GAP	3
+# define ROW			11
+# define COL			15
+# define TILE_SIZE		32
+# define WIDTH			COL * TILE_SIZE //480
+# define HEIGHT			ROW * TILE_SIZE //352
+# define MOVE_GAP		3
+# define PLAYER_SIZE	10
 
 # define GAME_SCALE		16
 # define GAME_TILE		GAME_SCALE * TILE_SIZE //256
