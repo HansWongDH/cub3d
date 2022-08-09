@@ -276,41 +276,70 @@ void	draw_player(t_data *data)
 	}
 }
 
+//void	scale_wall(t_data *data, int x, int y, float distance)
+//{
+//	int	scale;
+//	(void)x;
+//	(void)y;
+//
+//	scale = 10;
+//	for (int i = 0; i < 4; i++)
+//	{
+//		for (int j = 0; j < distance; j++)
+//		{
+//			if (j % scale == 0)
+//				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - (int)distance/2) + (i + GAME_WIDTH/2)] = data->wall.data[XPM_SIZE * j/scale + i/scale];
+//			else
+//				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - (int)distance/2) + (i + GAME_WIDTH/2)] = data->wall.data[XPM_SIZE * (j-j % scale + y)/scale + (i-i%scale + x)/scale];
+//		}
+//	}
+//}
+
 void	draw_game(t_data *data, float x, float y, float angle)
 {
 	float	distance;
-	// float	angle_offset;
-	// data->img.data[WIDTH * ((int)y) + ((int)x)] = BLUE;
+	int		y_scale;
+	int		x_scale;
+	float	test_x;
+	float	test_y;
 
-
-	//printf("x,y | %f %f\n", x, y);
 	distance = sqrt(pow(data->player_pos.x - x, 2) + pow(data->player_pos.y - y, 2));
-	//printf("distance1 | %f\n", distance);
 	distance = distance * cos(angle);
-	//printf("distance2 | %f\n", distance);
+	y_scale = 24000/distance;
+	x_scale = 4;
 
-	// printf("==================\n");
-	// printf("px,py | %f %f\n", data->player_pos.x,data->player_pos.y);
-	// printf("distance3 | %f\n", distance);
-	// printf("angle | %f\n", angle);
-	// printf("angle_offset | %f\n", angle_offset);
-	// printf("==================\n");
-	float temp = 2000.0/(distance/8);
-	for (int i = 0; i < 4; i++)
+	test_x = fmodf(x / TILE_SIZE, 1) * XPM_SIZE;
+	test_y = fmodf(y / TILE_SIZE, 1) * XPM_SIZE;
+
+	//printf("distance | %f\n", distance); //727
+	//printf("x y      | %f %f\n",x, y); //48, 31
+	//printf("test_x test_y     | %f %f\n", test_x, test_y);
+	//exit(0);
+	for (int i = 0; i < x_scale; i++)
 	{
-		for (int j = 0; j < temp; j++)
+		for (int j = 0; j < y_scale; j++)
 		{
-			// printf("math = %d\n", GAME_WIDTH * j + i);
-			if (angle >= 0)
-				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - (int)temp/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 23) - 4/2)] = shade_colour(GREEN, distance/16);
-			else
-			{
-				// printf("math = %d\n", GAME_WIDTH * (j + GAME_HEIGHT/4) + (i + GAME_WIDTH/4 - (int)fabs(angle * 180 / PI * 2)));
-				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - (int)temp/2) + (i + GAME_WIDTH/2 - (int)fabs(angle * 180 / PI * 23) - 4/2)] = shade_colour(GREEN, distance/16);
-			}
+			//printf("i j               | %d %d\n", i, j);
+			//printf("i-scalar j-scaler | %d %d\n", (i/x_scale) , (j/y_scale));
+			//printf("i-scalar j-scaler | %d %d\n", (i - i % x_scale)/x_scale , (j - j % y_scale)/y_scale);
+			//printf("math              | %d\n", XPM_SIZE * (j/y_scale * 100) + (int)test_x);
+			//printf("test_x test_y     | %f %f\n", test_x, test_y);
+			data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 23) - x_scale/2)] = 
+				data->wall.data[XPM_SIZE * (int)((float)j/(float)y_scale * 100) + (int)test_x];
+			//else
+			//	data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 23) - x_scale/2)] = 
+			//		data->wall.data[XPM_SIZE * (j - j % y_scale)/y_scale + (i - i % x_scale)/x_scale];
+			//if (angle >= 0)
+			//	//data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - (int)y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 23) - x_scale/2)] = shade_colour(GREEN, distance/16);
+			//	data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 23) - x_scale/2)] = 
+			//		data->wall.data[XPM_SIZE * j/y_scale * i/x_scale];
+			//else
+			//	//data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - (int)y_scale/2) + (i + GAME_WIDTH/2 - (int)fabs(angle * 180 / PI * 23) - x_scale/2)] = shade_colour(GREEN, distance/16);
+			//	data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 23) - x_scale/2)] = 
+			//		data->wall.data[XPM_SIZE * (j - j % y_scale)/y_scale * (i - i % x_scale)/x_scale];
 		}
 	}
-
+	//exit(0);
 	// sqrt (x2 - x1)^2 + (y2-y1)^2
 }
 
@@ -401,7 +430,7 @@ void	draw_fov(t_data *data)
 
 	angle = 0;
 	//printf("==================\n");
-	//draw_player_direction(data, 0);
+	draw_player_direction(data, 0);
 	//draw_player_direction(data, 0.5);
 	//draw_player_direction(data, -0.5);
 	//printf("==================\n");
@@ -429,7 +458,7 @@ void	draw_fov(t_data *data)
 	// draw_player_direction(data, PI * 30/180);
 
 
-	while (angle < (PI * 30/180))
+	while (angle < (PI * 25/180))
 	{
 		draw_player_direction(data, angle);
 		draw_player_direction(data, -angle);
@@ -453,32 +482,42 @@ void	draw_sky(t_data *data)
 
 void	scale_image(t_data *data)
 {
-	int	scale;
+	int	x_scale = 1;
+	int	y_scale = 10;
 
-	scale = 2;
-	for (int i = 0; i < XPM_SIZE * scale; i++)
+	for (int i = 0; i < XPM_SIZE * x_scale; i++)
 	{
-		for (int j = 0; j < XPM_SIZE * scale; j++)
+		for (int j = 0; j < XPM_SIZE * y_scale; j++)
 		{
-			if (j % scale == 0)
-				data->game.data[GAME_WIDTH * j + i] = data->wall.data[XPM_SIZE * j/scale + i/scale];
+			if (j % y_scale== 0)
+				data->game.data[GAME_WIDTH * j + i] = data->wall.data[XPM_SIZE * j/y_scale + i/x_scale];
 			else
-				data->game.data[GAME_WIDTH * j + i] = data->wall.data[XPM_SIZE * (j-j%scale)/scale + (i-i%scale)/scale];
+				data->game.data[GAME_WIDTH * j + i] = data->wall.data[XPM_SIZE * (j-j%y_scale)/y_scale + (i-i%x_scale)/x_scale];
 		}
 	}
 }
 
+//void	scale_image_line(t_data)
+//{
+//	int	x_scale = 4;
+//	int	x_scale = 5;
+//}
+
 int	draw_loop(t_data *data)
 {
-	//draw_tiles(data);
-	//draw_player(data);
-	//draw_sky(data);
-	//draw_fov(data);
-	scale_image(data);
-	//mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
-	mlx_put_image_to_window(data->mlx, data->win, data->wall.img, 0, 0);
-	mlx_put_image_to_window(data->mlx, data->win, data->game.img, WIDTH, 0);
+	draw_tiles(data);
+	draw_player(data);
+	draw_sky(data);
+	draw_fov(data);
+	//scale_wall(data, 48, 31, 24000.0/33);
+	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
+	mlx_put_image_to_window(data->mlx, data->win, data->wall.img, 0, HEIGHT + 10);
+	//mlx_put_image_to_window(data->mlx, data->win, data->game.img, WIDTH, 0);
+	mlx_put_image_to_window(data->mlx, data->win, data->game.img, WIDTH + 10, 0);
+
+	//scale_image(data);
 	//mlx_put_image_to_window(data->mlx, data->win, data->game.img, WIDTH + 10, 0);
+	//mlx_put_image_to_window(data->mlx, data->win, data->wall.img, 0, HEIGHT + 10);
 	return (0);
 }
 
@@ -511,7 +550,7 @@ int	main()
 	data.game.data = (int*)mlx_get_data_addr(data.game.img,
 			&data.game.bpp, &data.game.line_size, &data.game.endian);
 
-	data.wall.img = mlx_xpm_file_to_image(data.mlx, "./test.xpm", &data.wall.width, &data.wall.height);
+	data.wall.img = mlx_xpm_file_to_image(data.mlx, "./Wall1.xpm", &data.wall.width, &data.wall.height);
 	data.wall.data = (int*)mlx_get_data_addr(data.wall.img,
 			&data.wall.bpp, &data.wall.line_size, &data.wall.endian);
 
@@ -519,15 +558,15 @@ int	main()
 	// printf("line_size = %d\n", data.img.line_size);
 	// printf("endian = %d\n", data.img.endian);
 
-	//data.player_pos.x = 48;
-	//data.player_pos.y = 306;
-	////data.player_direction = 3.921593;
-	//data.player_direction = -PI/2;
-	//data.fov.x = cos(data.player_direction);
-	//data.fov.y = sin(data.player_direction);
+	data.player_pos.x = 48;
+	data.player_pos.y = 64;
+	//data.player_direction = 3.921593;
+	data.player_direction = -PI/2;
+	data.fov.x = cos(data.player_direction);
+	data.fov.y = sin(data.player_direction);
 
-	//printf("%f\n", data.fov.x);
-	//printf("%f\n", data.fov.y);
+	printf("%f\n", data.fov.x);
+	printf("%f\n", data.fov.y);
 
 	//// shade_colour("0xFF0000", 19);
 

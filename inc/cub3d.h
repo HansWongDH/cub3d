@@ -30,17 +30,17 @@
 
 # define XPM_SIZE		64
 
-# define RED		0xFF0000
-# define GREEN		0x00FF00
-# define BLUE		0x0000FF
-# define BLACK		0x000000
-# define WHITE		0xFFFFFF
-# define GRAY		0x808080
-# define PINK		0xFF00FF
-# define YELLOW		0xFFFF00
-# define LBLUE		0x00B4D8
-# define BROWN		0xAB3428
-# define PI			3.141592653589793238
+# define RED			0xFF0000
+# define GREEN			0x00FF00
+# define BLUE			0x0000FF
+# define BLACK			0x000000
+# define WHITE			0xFFFFFF
+# define GRAY			0x808080
+# define PINK			0xFF00FF
+# define YELLOW			0xFFFF00
+# define LBLUE			0x00B4D8
+# define BROWN			0xAB3428
+# define PI				3.141592653589793238
 
 typedef struct	s_vec {
 	float		x;
