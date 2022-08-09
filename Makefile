@@ -27,7 +27,7 @@ $(LIBFT):
 	make -C $(LIBFT_DIR)
 
 ${NAME}:	${LIBFT} ${OBJ_FILES} ${OBJ_BANNER}
-	${GCC} -o ${NAME} ${OBJ_FILES} $(LIBRARIES) $(MINIFLAGS)
+	${GCC} -o ${NAME} ${OBJ_FILES} $(LIBRARIES) $(SANITIZE) $(MINIFLAGS)
 
 test: $(NAME)
 	./$(NAME)

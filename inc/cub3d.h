@@ -28,6 +28,8 @@
 # define GAME_WIDTH 	WIDTH * 3
 # define GAME_HEIGHT	HEIGHT * 3
 
+# define XPM_SIZE		64
+
 # define RED		0xFF0000
 # define GREEN		0x00FF00
 # define BLUE		0x0000FF
@@ -53,6 +55,16 @@ typedef struct	s_img {
 	int			endian;
 }				t_img;
 
+typedef struct	s_xpm {
+	void		*img;
+	int			*data;
+	int			bpp;
+	int			line_size;
+	int			endian;
+	int			width;
+	int			height;
+}				t_xpm;
+
 typedef struct	s_data {
 	void		*mlx;
 	void		*win;
@@ -61,5 +73,6 @@ typedef struct	s_data {
 	t_vec		fov;
 	float		player_direction;
 	t_img		img;
+	t_xpm		wall;
 	t_img		game;
 }				t_data;

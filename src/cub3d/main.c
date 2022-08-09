@@ -451,14 +451,34 @@ void	draw_sky(t_data *data)
 	}
 }
 
+void	scale_image(t_data *data)
+{
+	int	scale;
+
+	scale = 2;
+	for (int i = 0; i < XPM_SIZE * scale; i++)
+	{
+		for (int j = 0; j < XPM_SIZE * scale; j++)
+		{
+			if (j % scale == 0)
+				data->game.data[GAME_WIDTH * j + i] = data->wall.data[XPM_SIZE * j/scale + i/scale];
+			else
+				data->game.data[GAME_WIDTH * j + i] = data->wall.data[XPM_SIZE * (j-j%scale)/scale + (i-i%scale)/scale];
+		}
+	}
+}
+
 int	draw_loop(t_data *data)
 {
-	draw_tiles(data);
-	draw_player(data);
-	draw_sky(data);
-	draw_fov(data);
-	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
-	mlx_put_image_to_window(data->mlx, data->win, data->game.img, WIDTH + 10, 0);
+	//draw_tiles(data);
+	//draw_player(data);
+	//draw_sky(data);
+	//draw_fov(data);
+	scale_image(data);
+	//mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
+	mlx_put_image_to_window(data->mlx, data->win, data->wall.img, 0, 0);
+	mlx_put_image_to_window(data->mlx, data->win, data->game.img, WIDTH, 0);
+	//mlx_put_image_to_window(data->mlx, data->win, data->game.img, WIDTH + 10, 0);
 	return (0);
 }
 
@@ -491,21 +511,25 @@ int	main()
 	data.game.data = (int*)mlx_get_data_addr(data.game.img,
 			&data.game.bpp, &data.game.line_size, &data.game.endian);
 
+	data.wall.img = mlx_xpm_file_to_image(data.mlx, "./test.xpm", &data.wall.width, &data.wall.height);
+	data.wall.data = (int*)mlx_get_data_addr(data.wall.img,
+			&data.wall.bpp, &data.wall.line_size, &data.wall.endian);
+
 	// printf("bpp = %d\n", data.img.bpp);
 	// printf("line_size = %d\n", data.img.line_size);
 	// printf("endian = %d\n", data.img.endian);
 
-	data.player_pos.x = 48;
-	data.player_pos.y = 306;
-	//data.player_direction = 3.921593;
-	data.player_direction = -PI/2;
-	data.fov.x = cos(data.player_direction);
-	data.fov.y = sin(data.player_direction);
+	//data.player_pos.x = 48;
+	//data.player_pos.y = 306;
+	////data.player_direction = 3.921593;
+	//data.player_direction = -PI/2;
+	//data.fov.x = cos(data.player_direction);
+	//data.fov.y = sin(data.player_direction);
 
-	printf("%f\n", data.fov.x);
-	printf("%f\n", data.fov.y);
+	//printf("%f\n", data.fov.x);
+	//printf("%f\n", data.fov.y);
 
-	// shade_colour("0xFF0000", 19);
+	//// shade_colour("0xFF0000", 19);
 
 	mlx_hook(data.win, X_KEY_PRESS, 0, handle_key, &data);
 	mlx_hook(data.win, X_KEY_EXIT, 0, handle_exit, &data);
