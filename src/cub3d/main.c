@@ -404,12 +404,30 @@ void	init_xpm(t_data *data)
 			&data->west_wall.bpp, &data->west_wall.line_size, &data->west_wall.endian);
 }
 
+void	init_player_info(t_data *data)
+{
+	data->player_pos.x = 80;
+	data->player_pos.y = 80;
+	data->player_direction = -PI/2;
+	data->fov.x = cos(data->player_direction);
+	data->fov.y = sin(data->player_direction);
+}
+
 void	init_data(t_data *data)
 {
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, 2500, 1080, "cub3d");
 	init_images(data);
 	init_xpm(data);
+	init_player_info(data);
+}
+
+void	start_game(t_data *data)
+{
+	mlx_hook(data->win, X_KEY_PRESS, 0, handle_key, data);
+	mlx_hook(data->win, X_KEY_EXIT, 0, handle_exit, data);
+	mlx_loop_hook(data->mlx, draw_loop, data);
+	mlx_loop(data->mlx);
 }
 
 int	main()
@@ -432,18 +450,7 @@ int	main()
 	ft_memcpy(data.map, map, sizeof(int) * ROW * COL);
 
 	init_data(&data);
-
-	data.player_pos.x = 80;
-	data.player_pos.y = 80;
-	data.player_direction = -PI/2;
-	data.fov.x = cos(data.player_direction);
-	data.fov.y = sin(data.player_direction);
-
-	mlx_hook(data.win, X_KEY_PRESS, 0, handle_key, &data);
-	mlx_hook(data.win, X_KEY_EXIT, 0, handle_exit, &data);
-
-	mlx_loop_hook(data.mlx, draw_loop, &data);
-	mlx_loop(data.mlx);
+	start_game(&data);
 }
 
 
