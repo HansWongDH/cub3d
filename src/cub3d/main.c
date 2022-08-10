@@ -276,122 +276,86 @@ void	draw_player(t_data *data)
 	}
 }
 
-//void	scale_wall(t_data *data, int x, int y, float distance)
-//{
-//	int	scale;
-//	(void)x;
-//	(void)y;
-//
-//	scale = 10;
-//	for (int i = 0; i < 4; i++)
-//	{
-//		for (int j = 0; j < distance; j++)
-//		{
-//			if (j % scale == 0)
-//				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - (int)distance/2) + (i + GAME_WIDTH/2)] = data->wall.data[XPM_SIZE * j/scale + i/scale];
-//			else
-//				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - (int)distance/2) + (i + GAME_WIDTH/2)] = data->wall.data[XPM_SIZE * (j-j % scale + y)/scale + (i-i%scale + x)/scale];
-//		}
-//	}
-//}
+int		equate_float(float num, float num2)
+{
+	return (fabs(num - num2) < FLT_EPSILON);
+}
+
+int		greater_than_float(float a, float b)
+{
+    return (a - b) > ( (fabs(a) < fabs(b) ? fabs(b) : fabs(a)) * FLT_EPSILON);
+}
+
+int		less_than_float(float a, float b)
+{
+    return (b - a) > ( (fabs(a) < fabs(b) ? fabs(b) : fabs(a)) * FLT_EPSILON);
+}
+
+float	get_positive_value_of_angle(float angle)
+{
+	if (equate_float(angle, 0.0))
+		return (0);
+	if (greater_than_float(angle, 2 * PI))
+		return (angle - (2 * PI));
+	if (less_than_float(angle, 0))
+		return (angle + (2 * PI));
+	return (angle);
+}
+
+t_direction	get_direction_of_ray(float player_direction, float angle_offset)
+{
+	float	angle;
+
+	angle = get_positive_value_of_angle(player_direction + angle_offset);
+	if (angle > 5 * PI / 4 && angle <= 7 * PI / 4)
+		return (NORTH);
+	if ((angle > 7 * PI / 4 && angle <= 2 * PI)
+			|| (angle >= 0 && angle <= PI / 4))
+		return (EAST);
+	if (angle > PI / 4 && angle <= 3 * PI / 4)
+		return (SOUTH);
+	return (WEST);
+}
+
+float		get_x_offset_for_tile_position(t_direction direction, float x, float y)
+{
+	if (direction == NORTH || direction == SOUTH)
+		return (fmodf(x / TILE_SIZE, 1) * XPM_SIZE);
+	return (fmodf(y / TILE_SIZE, 1) * XPM_SIZE);
+}
 
 void	draw_game(t_data *data, float x, float y, float angle)
 {
-	float	distance;
-	int		y_scale;
-	int		x_scale;
-	float	test_x;
-	float	test_y;
+	float		distance;
+	int			y_scale;
+	float		x_offset;
+	t_direction	direction;
 
 	distance = sqrt(pow(data->player_pos.x - x, 2) + pow(data->player_pos.y - y, 2));
 	distance = distance * cos(angle);
-	y_scale = 24000/distance;
-	x_scale = 4;
+	y_scale = Y_INV_SCALE/distance;
 
-	test_x = fmodf(x / TILE_SIZE, 1) * XPM_SIZE;
-	test_y = fmodf(y / TILE_SIZE, 1) * XPM_SIZE;
-
-	//printf("distance | %f\n", distance); //727
-	//printf("x y      | %f %f\n",x, y); //48, 31
-	//printf("test_x test_y     | %f %f\n", test_x, test_y);
-	//exit(0);
-	for (int i = 0; i < x_scale; i++)
+	direction = get_direction_of_ray(data->player_direction, angle);
+	x_offset = get_x_offset_for_tile_position(direction, x, y);
+	for (int i = 0; i < X_SCALE; i++)
 	{
 		for (int j = 0; j < y_scale; j++)
 		{
-			//printf("i j               | %d %d\n", i, j);
-			//printf("i-scalar j-scaler | %d %d\n", (i/x_scale) , (j/y_scale));
-			//printf("i-scalar j-scaler | %d %d\n", (i - i % x_scale)/x_scale , (j - j % y_scale)/y_scale);
-			//printf("math              | %d\n", XPM_SIZE * (j/y_scale * 100) + (int)test_x);
-			//printf("test_x test_y     | %f %f\n", test_x, test_y);
-			data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 23) - x_scale/2)] = 
-				data->wall.data[XPM_SIZE * (int)((float)j/(float)y_scale * 100) + (int)test_x];
-			//else
-			//	data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 23) - x_scale/2)] = 
-			//		data->wall.data[XPM_SIZE * (j - j % y_scale)/y_scale + (i - i % x_scale)/x_scale];
-			//if (angle >= 0)
-			//	//data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - (int)y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 23) - x_scale/2)] = shade_colour(GREEN, distance/16);
-			//	data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 23) - x_scale/2)] = 
-			//		data->wall.data[XPM_SIZE * j/y_scale * i/x_scale];
-			//else
-			//	//data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - (int)y_scale/2) + (i + GAME_WIDTH/2 - (int)fabs(angle * 180 / PI * 23) - x_scale/2)] = shade_colour(GREEN, distance/16);
-			//	data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 23) - x_scale/2)] = 
-			//		data->wall.data[XPM_SIZE * (j - j % y_scale)/y_scale * (i - i % x_scale)/x_scale];
+			if (direction == NORTH)
+				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 24) - X_SCALE/2)] = 
+					data->north_wall.data[XPM_SIZE * (int)((float)j/(float)y_scale * 64) + (int)x_offset];
+			else if (direction == EAST)
+				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 24) - X_SCALE/2)] = 
+					data->east_wall.data[XPM_SIZE * (int)((float)j/(float)y_scale * 64) + (int)x_offset];
+			else if (direction == WEST)
+				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 24) - X_SCALE/2)] = 
+					data->west_wall.data[XPM_SIZE * (int)((float)j/(float)y_scale * 64) + (int)x_offset];
+			else if (direction == SOUTH)
+				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 24) - X_SCALE/2)] = 
+					data->south_wall.data[XPM_SIZE * (int)((float)j/(float)y_scale * 64) + (int)x_offset];
 		}
 	}
-	//exit(0);
-	// sqrt (x2 - x1)^2 + (y2-y1)^2
 }
-
-//void	draw_player_direction(t_data *data, float angle)
-//{
-//	float	ray_x;
-//	float	ray_y;
-//	float	temp_x;
-//	float	temp_y;
-//	float	max;
-//
-//	// printf("=========================\n");
-//	printf("fov_x = %f\n", data->fov.x);
-//	printf("fov_y = %f\n", data->fov.y);
-//	printf("player_direction = %f\n", data->player_direction);
-//	temp_x = data->fov.x;
-//	temp_y = data->fov.y;
-//	//printf("cos = %f\n", cos(angle + data->player_direction));
-//	//printf("sin = %f\n", sin(angle + data->player_direction));
-//	ray_x = cos(angle + data->player_direction) * data->fov.x - sin(angle + data->player_direction) * data->fov.y;
-//	ray_y = sin(angle + data->player_direction) * data->fov.x + cos(angle + data->player_direction) * data->fov.y;
-//	//printf("ray_x = %f\n", ray_x);
-//	//printf("ray_y = %f\n", ray_y);
-//	// printf("=========================\n");
-//
-//	max = fmax(fabs(ray_x), fabs(ray_y));
-//	//printf("max = %f\n", max);
-//	ray_x /= max;
-//	ray_y /= max;
-//	//printf("ray_x = %f\n", ray_x);
-//	//printf("ray_y = %f\n", ray_y);
-//	while (1)
-//	{
-//		// int math = WIDTH * ((int)data->player_pos.y + (int)temp_y) + ((int)data->player_pos.x + (int)temp_x);
-//		//printf("%d %d\n",((int)data->player_pos.y + (int)temp_y), ((int)data->player_pos.x + (int)temp_x));
-//		if (data->img.data[WIDTH * ((int)data->player_pos.y + (int)temp_y) + ((int)data->player_pos.x + (int)temp_x)] != GREEN)
-//				// data->img.data[WIDTH * ((int)data->player_pos.y + (int)temp_y) + ((int)data->player_pos.x + (int)temp_x)] != GRAY)
-//			data->img.data[WIDTH * ((int)data->player_pos.y + (int)temp_y) + ((int)data->player_pos.x + (int)temp_x)] = RED;
-//		else
-//		{
-//			draw_game(data, (data->player_pos.x + temp_x), (data->player_pos.y + temp_y), angle);
-//			// data->img.data[WIDTH * ((int)data->player_pos.y + (int)temp_y) + ((int)data->player_pos.x + (int)temp_x)] = BLUE;
-//			break;
-//		}
-//		//printf("temp_x = %f\n", temp_x);
-//		//printf("temp_y = %f\n", temp_y);
-//		temp_x += ray_x;
-//		temp_y += ray_y;
-//		// data->player_pos.x += ray_x;
-//		// data->player_pos.y += ray_y;
-//	}
-//}
 
 void	draw_player_direction(t_data *data, float angle)
 {
@@ -430,7 +394,9 @@ void	draw_fov(t_data *data)
 
 	angle = 0;
 	//printf("==================\n");
+	draw_player_direction(data, PI * 0.1/180);
 	draw_player_direction(data, 0);
+	draw_player_direction(data, PI * -0.1/180);
 	//draw_player_direction(data, 0.5);
 	//draw_player_direction(data, -0.5);
 	//printf("==================\n");
@@ -473,9 +439,9 @@ void	draw_sky(t_data *data)
 		for (int j = 0; j < GAME_HEIGHT; j++)
 		{
 			if (j > GAME_HEIGHT / 2)
-				data->game.data[GAME_WIDTH * j + i] = BROWN;
+				data->game.data[GAME_WIDTH * j + i] = FLOORCOL;
 			else
-				data->game.data[GAME_WIDTH * j + i] = LBLUE;
+				data->game.data[GAME_WIDTH * j + i] = CIELCOL;
 		}
 	}
 }
@@ -490,18 +456,12 @@ void	scale_image(t_data *data)
 		for (int j = 0; j < XPM_SIZE * y_scale; j++)
 		{
 			if (j % y_scale== 0)
-				data->game.data[GAME_WIDTH * j + i] = data->wall.data[XPM_SIZE * j/y_scale + i/x_scale];
+				data->game.data[GAME_WIDTH * j + i] = data->north_wall.data[XPM_SIZE * j/y_scale + i/x_scale];
 			else
-				data->game.data[GAME_WIDTH * j + i] = data->wall.data[XPM_SIZE * (j-j%y_scale)/y_scale + (i-i%x_scale)/x_scale];
+				data->game.data[GAME_WIDTH * j + i] = data->north_wall.data[XPM_SIZE * (j-j%y_scale)/y_scale + (i-i%x_scale)/x_scale];
 		}
 	}
 }
-
-//void	scale_image_line(t_data)
-//{
-//	int	x_scale = 4;
-//	int	x_scale = 5;
-//}
 
 int	draw_loop(t_data *data)
 {
@@ -511,13 +471,16 @@ int	draw_loop(t_data *data)
 	draw_fov(data);
 	//scale_wall(data, 48, 31, 24000.0/33);
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
-	mlx_put_image_to_window(data->mlx, data->win, data->wall.img, 0, HEIGHT + 10);
+	mlx_put_image_to_window(data->mlx, data->win, data->north_wall.img, XPM_SIZE, HEIGHT);
+	mlx_put_image_to_window(data->mlx, data->win, data->east_wall.img, XPM_SIZE * 2, HEIGHT + XPM_SIZE);
+	mlx_put_image_to_window(data->mlx, data->win, data->south_wall.img, XPM_SIZE, HEIGHT + 2 * XPM_SIZE);
+	mlx_put_image_to_window(data->mlx, data->win, data->west_wall.img, 0, HEIGHT + XPM_SIZE);
 	//mlx_put_image_to_window(data->mlx, data->win, data->game.img, WIDTH, 0);
 	mlx_put_image_to_window(data->mlx, data->win, data->game.img, WIDTH + 10, 0);
 
 	//scale_image(data);
 	//mlx_put_image_to_window(data->mlx, data->win, data->game.img, WIDTH + 10, 0);
-	//mlx_put_image_to_window(data->mlx, data->win, data->wall.img, 0, HEIGHT + 10);
+	//mlx_put_image_to_window(data->mlx, data->win, data->north_wall.img, 0, HEIGHT + 10);
 	return (0);
 }
 
@@ -527,8 +490,8 @@ int	main()
 	int  map[ROW][COL] =  {
 		{ 1 ,  1 ,	1 ,  1 ,  1 ,  1 ,	1 ,  1 ,  1 ,  1 ,	1 ,  1 ,  1 ,  1 ,	1 },
 		{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  1 ,  0 ,	1 },
-		{ 1 ,  0 ,	0 ,  0 ,  0 ,  1 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  1 ,  0 ,	1 },
-		{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	1 ,  0 ,  1 ,  0 ,	1 },
+		{ 1 ,  0 ,	0 ,  0 ,  0 ,  1 ,	1 ,  0 ,  0 ,  0 ,	0 ,  0 ,  1 ,  0 ,	1 },
+		{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	1 ,  0 ,  0 ,  0 ,	1 ,  0 ,  1 ,  0 ,	1 },
 		{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	1 ,  0 ,  1 ,  0 ,	1 },
 		{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  1 ,  1 ,	1 ,  1 ,  1 ,  0 ,	1 },
 		{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	1 },
@@ -550,16 +513,28 @@ int	main()
 	data.game.data = (int*)mlx_get_data_addr(data.game.img,
 			&data.game.bpp, &data.game.line_size, &data.game.endian);
 
-	data.wall.img = mlx_xpm_file_to_image(data.mlx, "./Wall1.xpm", &data.wall.width, &data.wall.height);
-	data.wall.data = (int*)mlx_get_data_addr(data.wall.img,
-			&data.wall.bpp, &data.wall.line_size, &data.wall.endian);
+	data.north_wall.img = mlx_xpm_file_to_image(data.mlx, "./textures/Labwall_North.xpm", &data.north_wall.width, &data.north_wall.height);
+	data.north_wall.data = (int*)mlx_get_data_addr(data.north_wall.img,
+			&data.north_wall.bpp, &data.north_wall.line_size, &data.north_wall.endian);
+
+	data.east_wall.img = mlx_xpm_file_to_image(data.mlx, "./textures/Labwall_East.xpm", &data.east_wall.width, &data.east_wall.height);
+	data.east_wall.data = (int*)mlx_get_data_addr(data.east_wall.img,
+			&data.east_wall.bpp, &data.east_wall.line_size, &data.east_wall.endian);
+
+	data.south_wall.img = mlx_xpm_file_to_image(data.mlx, "./textures/Labwall_South.xpm", &data.south_wall.width, &data.south_wall.height);
+	data.south_wall.data = (int*)mlx_get_data_addr(data.south_wall.img,
+			&data.south_wall.bpp, &data.south_wall.line_size, &data.south_wall.endian);
+
+	data.west_wall.img = mlx_xpm_file_to_image(data.mlx, "./textures/Labwall_West.xpm", &data.west_wall.width, &data.west_wall.height);
+	data.west_wall.data = (int*)mlx_get_data_addr(data.west_wall.img,
+			&data.west_wall.bpp, &data.west_wall.line_size, &data.west_wall.endian);
 
 	// printf("bpp = %d\n", data.img.bpp);
 	// printf("line_size = %d\n", data.img.line_size);
 	// printf("endian = %d\n", data.img.endian);
 
-	data.player_pos.x = 48;
-	data.player_pos.y = 64;
+	data.player_pos.x = 80;
+	data.player_pos.y = 80;
 	//data.player_direction = 3.921593;
 	data.player_direction = -PI/2;
 	data.fov.x = cos(data.player_direction);

@@ -2,6 +2,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
+# include <float.h>
 
 # define X_KEY_PRESS	2
 # define X_KEY_RELEASE	3
@@ -27,6 +28,8 @@
 # define GAME_TILE		GAME_SCALE * TILE_SIZE //256
 # define GAME_WIDTH 	WIDTH * 3
 # define GAME_HEIGHT	HEIGHT * 3
+# define X_SCALE		4
+# define Y_INV_SCALE	32000
 
 # define XPM_SIZE		64
 
@@ -40,14 +43,26 @@
 # define YELLOW			0xFFFF00
 # define LBLUE			0x00B4D8
 # define BROWN			0xAB3428
-# define PI				3.141592653589793238
+# define PI				3.14159265359
+# define FLOORCOL		0x1E1E18
+# define CIELCOL		0x183C30
 
-typedef struct	s_vec {
+typedef enum	e_direction
+{
+	NORTH,
+	EAST,
+	SOUTH,
+	WEST
+}				t_direction;
+
+typedef struct	s_vec
+{
 	float		x;
 	float		y;
 }				t_vec;
 
-typedef struct	s_img {
+typedef struct	s_img
+{
 	void		*img;
 	int			*data;
 	int			bpp;
@@ -55,7 +70,8 @@ typedef struct	s_img {
 	int			endian;
 }				t_img;
 
-typedef struct	s_xpm {
+typedef struct	s_xpm
+{
 	void		*img;
 	int			*data;
 	int			bpp;
@@ -65,7 +81,8 @@ typedef struct	s_xpm {
 	int			height;
 }				t_xpm;
 
-typedef struct	s_data {
+typedef struct	s_data
+{
 	void		*mlx;
 	void		*win;
 	int			map[ROW][COL];
@@ -73,6 +90,9 @@ typedef struct	s_data {
 	t_vec		fov;
 	float		player_direction;
 	t_img		img;
-	t_xpm		wall;
+	t_xpm		north_wall;
+	t_xpm		east_wall;
+	t_xpm		south_wall;
+	t_xpm		west_wall;
 	t_img		game;
 }				t_data;
