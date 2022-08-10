@@ -1,104 +1,20 @@
 #include "cub3d.h"
 #include "libft.h"
 
-//int shade_colour(char *colour, float percent)
-//{
-//	(void)percent;
-//	printf("R = %s\n", ft_substr(colour, 2, 2));
-//	printf("G = %s\n", ft_substr(colour, 4, 2));
-//	printf("B = %s\n", ft_substr(colour, 6, 2));
-//	
-//	printf("R = %d\n", (int)strtol(ft_substr(colour, 2, 2), NULL, 16) * (int)(100 + percent)/100);
-//	printf("G = %d\n", (int)strtol(ft_substr(colour, 4, 2), NULL, 16) * (int)(100 + percent)/100);
-//	printf("B = %d\n", (int)strtol(ft_substr(colour, 6, 2), NULL, 16) * (int)(100 + percent)/100);
-//
-//	int	temp_R = (int)strtol(ft_substr(colour, 2, 2), NULL, 16) * (int)(100 + percent)/100;
-//	int	temp_G = (int)strtol(ft_substr(colour, 4, 2), NULL, 16) * (int)(100 + percent)/100;
-//	int	temp_B = (int)strtol(ft_substr(colour, 6, 2), NULL, 16) * (int)(100 + percent)/100;
-//
-//	int R = temp_R < 255 ? temp_R : 255;
-//	int G = temp_G < 255 ? temp_G : 255;
-//	int B = temp_B < 255 ? temp_B : 255;
-//
-//	printf("%d%d%d\n", R,G,B);
-//
-//	// printf("%s\n", );
-//	// int	RR = (int)strtol(ft_substr(colour, 2, 2), NULL, 16);
-//	// int	temp_G = (int)strtol(ft_substr(colour, 4, 2), NULL, 16);
-//	// int	temp_B = (int)strtol(ft_substr(colour, 6, 2), NULL, 16);
-//
-//	// printf("%s\n", );
-//
-//	return (0);
-//}
-
 int shade_colour(int colour, int percent)
 {
 	(void)percent;
-	//printf("R = %s\n", ft_substr(colour, 2, 2));
-	//printf("G = %s\n", ft_substr(colour, 4, 2));
-	//printf("B = %s\n", ft_substr(colour, 6, 2));
-
-	//int    temp_R = (int)strtol(ft_substr(colour, 2, 2), NULL, 16);
-	//int    temp_G = (int)strtol(ft_substr(colour, 4, 2), NULL, 16);
-	//int    temp_B = (int)strtol(ft_substr(colour, 6, 2), NULL, 16);
-
-	//int    temp_R = (int)strtol(ft_substr(colour, 2, 2), NULL, 16) * (int)(100 + percent)/100;
-	//int    temp_G = (int)strtol(ft_substr(colour, 4, 2), NULL, 16) * (int)(100 + percent)/100;
-	//int    temp_B = (int)strtol(ft_substr(colour, 6, 2), NULL, 16) * (int)(100 + percent)/100;
-
-	//printf("R = %d\n", temp_R);
-	//printf("G = %d\n", temp_G);
-	//printf("B = %d\n", temp_B);
-
-	//int R = temp_R < 255 ? temp_R : 255;
-	//int G = temp_G < 255 ? temp_G : 255;
-	//int B = temp_B < 255 ? temp_B : 255;
-
-	//printf("%d%d%d\n", R,G,B);
-
-	//int    test = B * 65536 + G * 256 + R;
-	//printf("%ld\n", test);
-
-	//int    RR = (int)strtol(ft_substr(colour, 2, 2), NULL, 16);
-	//int    temp_G = (int)strtol(ft_substr(colour, 4, 2), NULL, 16);
-	//int    temp_B = (int)strtol(ft_substr(colour, 6, 2), NULL, 16);
-
-	//colour = (colour & 0xfefefe) >> 1;
 	int i = 0;
 	while (i++ < percent)
 		colour = ((colour & 0x7E7E7E) >> 1) | (colour & 0x808080);
-
-	//int test = (((colour & 0x0000FF) + percent) | ((((colour >> 8) & 0x00FF) + percent) << 8) | (((colour >> 16) + percent) << 16));
-	//colour = ((colour & 0x7E7E7E) >> 1) | (colour & 0x808080);
-	//printf("col = %ld\n", test);
 	return (colour);
 }
 
 int	handle_key(int keycode, t_data *data)
 {
-	(void)data;
-	int	valid;
 	float	to_move_x;
 	float	to_move_y;
 
-	valid = 1;
-	//if (keycode == KEY_Q)
-	//{
-	//	data->player_direction -= 0.13;
-	//	if (data->player_direction < 0)
-	//		data->player_direction += 2 * PI;
-	//	data->fov.x = cos(data->player_direction);
-	//	data->fov.y = sin(data->player_direction);
-	//}
-	//if (keycode == KEY_E)
-	//{
-	//	data->player_direction += 0.13;
-	//	if (data->player_direction > 2 * PI)
-	//		data->player_direction += 2 * PI;
-	//	data->fov.x = cos(data->player_direction);
-	//	data->fov.y = sin(data->player_direction);
-	//}
 	if (keycode == KEY_W)
 	{
 		printf("================\n");
@@ -283,12 +199,12 @@ int		equate_float(float num, float num2)
 
 int		greater_than_float(float a, float b)
 {
-    return (a - b) > ( (fabs(a) < fabs(b) ? fabs(b) : fabs(a)) * FLT_EPSILON);
+	return (a - b) > ( (fabs(a) < fabs(b) ? fabs(b) : fabs(a)) * FLT_EPSILON);
 }
 
 int		less_than_float(float a, float b)
 {
-    return (b - a) > ( (fabs(a) < fabs(b) ? fabs(b) : fabs(a)) * FLT_EPSILON);
+	return (b - a) > ( (fabs(a) < fabs(b) ? fabs(b) : fabs(a)) * FLT_EPSILON);
 }
 
 float	get_positive_value_of_angle(float angle)
@@ -342,16 +258,16 @@ void	draw_game(t_data *data, float x, float y, float angle)
 		for (int j = 0; j < y_scale; j++)
 		{
 			if (direction == NORTH)
-				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 24) - X_SCALE/2)] = 
+				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 24) - X_SCALE/2)] =
 					data->north_wall.data[XPM_SIZE * (int)((float)j/(float)y_scale * 64) + (int)x_offset];
 			else if (direction == EAST)
-				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 24) - X_SCALE/2)] = 
+				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 24) - X_SCALE/2)] =
 					data->east_wall.data[XPM_SIZE * (int)((float)j/(float)y_scale * 64) + (int)x_offset];
 			else if (direction == WEST)
-				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 24) - X_SCALE/2)] = 
+				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 24) - X_SCALE/2)] =
 					data->west_wall.data[XPM_SIZE * (int)((float)j/(float)y_scale * 64) + (int)x_offset];
 			else if (direction == SOUTH)
-				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 24) - X_SCALE/2)] = 
+				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 24) - X_SCALE/2)] =
 					data->south_wall.data[XPM_SIZE * (int)((float)j/(float)y_scale * 64) + (int)x_offset];
 		}
 	}
@@ -397,34 +313,9 @@ void	draw_fov(t_data *data)
 	draw_player_direction(data, PI * 0.1/180);
 	draw_player_direction(data, 0);
 	draw_player_direction(data, PI * -0.1/180);
-	//draw_player_direction(data, 0.5);
-	//draw_player_direction(data, -0.5);
 	//printf("==================\n");
-	//draw_player_direction(data, PI * 5 / 180);
-	//draw_player_direction(data, PI * 6 / 180);
-	//draw_player_direction(data, PI * 7 / 180);
-	//draw_player_direction(data, PI * 8 / 180);
-	//printf("==================\n");
-	//draw_player_direction(data, -PI * 5 / 180);
-	//draw_player_direction(data, -PI * 6 / 180);
-	//draw_player_direction(data, -PI * 7 / 180);
-	//draw_player_direction(data, -PI * 8 / 180);
-	//exit(0);
-	//printf("==================\n");
-	// draw_player_direction(data, 0.5);
-	// draw_player_direction(data, -0.5 + (2* PI));
-	// if (angle < 0)
-	// 	angle += 2 * PI;
-	// draw_player_direction(data, -0.5);
-	// draw_player_direction(data, 2*PI - 0.5);
-	// draw_player_direction(data, -0.5);
 
-	//exit(0);
-	// draw_player_direction(data, PI * 20/180);
-	// draw_player_direction(data, PI * 30/180);
-
-
-	while (angle < (PI * 25/180))
+	while (angle < (PI * 30/180))
 	{
 		draw_player_direction(data, angle);
 		draw_player_direction(data, -angle);
@@ -463,25 +354,62 @@ void	scale_image(t_data *data)
 	}
 }
 
+void	put_images(t_data *data)
+{
+	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
+	mlx_put_image_to_window(data->mlx, data->win, data->north_wall.img, XPM_SIZE, HEIGHT);
+	mlx_put_image_to_window(data->mlx, data->win, data->east_wall.img, XPM_SIZE * 2, HEIGHT + XPM_SIZE);
+	mlx_put_image_to_window(data->mlx, data->win, data->south_wall.img, XPM_SIZE, HEIGHT + 2 * XPM_SIZE);
+	mlx_put_image_to_window(data->mlx, data->win, data->west_wall.img, 0, HEIGHT + XPM_SIZE);
+	mlx_put_image_to_window(data->mlx, data->win, data->game.img, WIDTH + 10, 0);
+}
+
 int	draw_loop(t_data *data)
 {
 	draw_tiles(data);
 	draw_player(data);
 	draw_sky(data);
 	draw_fov(data);
-	//scale_wall(data, 48, 31, 24000.0/33);
-	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);
-	mlx_put_image_to_window(data->mlx, data->win, data->north_wall.img, XPM_SIZE, HEIGHT);
-	mlx_put_image_to_window(data->mlx, data->win, data->east_wall.img, XPM_SIZE * 2, HEIGHT + XPM_SIZE);
-	mlx_put_image_to_window(data->mlx, data->win, data->south_wall.img, XPM_SIZE, HEIGHT + 2 * XPM_SIZE);
-	mlx_put_image_to_window(data->mlx, data->win, data->west_wall.img, 0, HEIGHT + XPM_SIZE);
-	//mlx_put_image_to_window(data->mlx, data->win, data->game.img, WIDTH, 0);
-	mlx_put_image_to_window(data->mlx, data->win, data->game.img, WIDTH + 10, 0);
-
-	//scale_image(data);
-	//mlx_put_image_to_window(data->mlx, data->win, data->game.img, WIDTH + 10, 0);
-	//mlx_put_image_to_window(data->mlx, data->win, data->north_wall.img, 0, HEIGHT + 10);
+	put_images(data);
 	return (0);
+}
+
+void	init_images(t_data *data)
+{
+	data->img.img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	data->img.data = (int*)mlx_get_data_addr(data->img.img,
+			&data->img.bpp, &data->img.line_size, &data->img.endian);
+
+	data->game.img = mlx_new_image(data->mlx, GAME_WIDTH, GAME_HEIGHT);
+	data->game.data = (int*)mlx_get_data_addr(data->game.img,
+			&data->game.bpp, &data->game.line_size, &data->game.endian);
+}
+
+void	init_xpm(t_data *data)
+{
+	data->north_wall.img = mlx_xpm_file_to_image(data->mlx, "./textures/Labwall_North.xpm", &data->north_wall.width, &data->north_wall.height);
+	data->north_wall.data = (int*)mlx_get_data_addr(data->north_wall.img,
+			&data->north_wall.bpp, &data->north_wall.line_size, &data->north_wall.endian);
+
+	data->east_wall.img = mlx_xpm_file_to_image(data->mlx, "./textures/Labwall_East.xpm", &data->east_wall.width, &data->east_wall.height);
+	data->east_wall.data = (int*)mlx_get_data_addr(data->east_wall.img,
+			&data->east_wall.bpp, &data->east_wall.line_size, &data->east_wall.endian);
+
+	data->south_wall.img = mlx_xpm_file_to_image(data->mlx, "./textures/SUPPORT_5B.xpm", &data->south_wall.width, &data->south_wall.height);
+	data->south_wall.data = (int*)mlx_get_data_addr(data->south_wall.img,
+			&data->south_wall.bpp, &data->south_wall.line_size, &data->south_wall.endian);
+
+	data->west_wall.img = mlx_xpm_file_to_image(data->mlx, "./textures/Labwall_West.xpm", &data->west_wall.width, &data->west_wall.height);
+	data->west_wall.data = (int*)mlx_get_data_addr(data->west_wall.img,
+			&data->west_wall.bpp, &data->west_wall.line_size, &data->west_wall.endian);
+}
+
+void	init_data(t_data *data)
+{
+	data->mlx = mlx_init();
+	data->win = mlx_new_window(data->mlx, 2500, 1080, "cub3d");
+	init_images(data);
+	init_xpm(data);
 }
 
 int	main()
@@ -501,49 +429,15 @@ int	main()
 		{ 1 ,  1 ,	1 ,  1 ,  1 ,  1 ,	1 ,  1 ,  1 ,  1 ,	1 ,  1 ,  1 ,  1 ,	1 }
 	};
 
-	data.mlx = mlx_init();
-	data.win = mlx_new_window(data.mlx, 2500, 1080, "cub3d");
 	ft_memcpy(data.map, map, sizeof(int) * ROW * COL);
 
-	data.img.img = mlx_new_image(data.mlx, WIDTH, HEIGHT);
-	data.img.data = (int*)mlx_get_data_addr(data.img.img,
-			&data.img.bpp, &data.img.line_size, &data.img.endian);
-
-	data.game.img = mlx_new_image(data.mlx, GAME_WIDTH, GAME_HEIGHT);
-	data.game.data = (int*)mlx_get_data_addr(data.game.img,
-			&data.game.bpp, &data.game.line_size, &data.game.endian);
-
-	data.north_wall.img = mlx_xpm_file_to_image(data.mlx, "./textures/Labwall_North.xpm", &data.north_wall.width, &data.north_wall.height);
-	data.north_wall.data = (int*)mlx_get_data_addr(data.north_wall.img,
-			&data.north_wall.bpp, &data.north_wall.line_size, &data.north_wall.endian);
-
-	data.east_wall.img = mlx_xpm_file_to_image(data.mlx, "./textures/Labwall_East.xpm", &data.east_wall.width, &data.east_wall.height);
-	data.east_wall.data = (int*)mlx_get_data_addr(data.east_wall.img,
-			&data.east_wall.bpp, &data.east_wall.line_size, &data.east_wall.endian);
-
-	data.south_wall.img = mlx_xpm_file_to_image(data.mlx, "./textures/Labwall_South.xpm", &data.south_wall.width, &data.south_wall.height);
-	data.south_wall.data = (int*)mlx_get_data_addr(data.south_wall.img,
-			&data.south_wall.bpp, &data.south_wall.line_size, &data.south_wall.endian);
-
-	data.west_wall.img = mlx_xpm_file_to_image(data.mlx, "./textures/Labwall_West.xpm", &data.west_wall.width, &data.west_wall.height);
-	data.west_wall.data = (int*)mlx_get_data_addr(data.west_wall.img,
-			&data.west_wall.bpp, &data.west_wall.line_size, &data.west_wall.endian);
-
-	// printf("bpp = %d\n", data.img.bpp);
-	// printf("line_size = %d\n", data.img.line_size);
-	// printf("endian = %d\n", data.img.endian);
+	init_data(&data);
 
 	data.player_pos.x = 80;
 	data.player_pos.y = 80;
-	//data.player_direction = 3.921593;
 	data.player_direction = -PI/2;
 	data.fov.x = cos(data.player_direction);
 	data.fov.y = sin(data.player_direction);
-
-	printf("%f\n", data.fov.x);
-	printf("%f\n", data.fov.y);
-
-	//// shade_colour("0xFF0000", 19);
 
 	mlx_hook(data.win, X_KEY_PRESS, 0, handle_key, &data);
 	mlx_hook(data.win, X_KEY_EXIT, 0, handle_exit, &data);
@@ -557,12 +451,12 @@ int	main()
 
 // we render from x -> y so our coordinate axis is rotated
 
-//      -PI/2 
+//      -PI/2
 //  PI          0
 //       PI/2
 //
 //
 //
-//      -PI/2 
+//      -PI/2
 //  PI/2        0  PI/2
 //       PI/2
