@@ -4,6 +4,8 @@
 # include <math.h>
 # include <float.h>
 
+# define PI				3.14159265359
+
 # define X_KEY_PRESS	2
 # define X_KEY_RELEASE	3
 # define X_KEY_EXIT		17
@@ -16,13 +18,15 @@
 # define KEY_Q		12
 # define KEY_E		14
 
-# define ROW			11
-# define COL			15
-# define TILE_SIZE		32
-# define WIDTH			COL * TILE_SIZE //480
-# define HEIGHT			ROW * TILE_SIZE //352
 # define MOVE_GAP		3
 # define PLAYER_SIZE	10
+# define ROTATE_FACTOR	PI / 72
+
+# define ROW			11 //remove to be dynamic
+# define COL			15 //remove to be dynamic
+# define TILE_SIZE		32
+# define WIDTH			COL * TILE_SIZE //480 //remove to be dynamic
+# define HEIGHT			ROW * TILE_SIZE //352 //remove to be dynamic
 
 # define GAME_SCALE		16
 # define GAME_TILE		GAME_SCALE * TILE_SIZE //256
@@ -43,9 +47,11 @@
 # define YELLOW			0xFFFF00
 # define LBLUE			0x00B4D8
 # define BROWN			0xAB3428
-# define PI				3.14159265359
 # define FLOORCOL		0x1E1E18
 # define CIELCOL		0x183C30
+
+typedef struct	c_player	t_player;
+typedef struct	c_map		t_map;
 
 typedef enum	e_direction
 {
@@ -61,9 +67,15 @@ typedef struct	s_vec
 	float		y;
 }				t_vec;
 
+typedef struct	s_coord
+{
+	int			x;
+	int			y;
+}				t_coord;
+
 typedef struct	s_img
 {
-	void		*img;
+	void		*pointer;
 	int			*data;
 	int			bpp;
 	int			line_size;
@@ -81,6 +93,31 @@ typedef struct	s_xpm
 	int			height;
 }				t_xpm;
 
+struct			c_player
+{
+	void		(*move_player)(t_player *self, int keycode);
+	void		(*turn_player)(t_player *self, int keycode);
+	void		(*print_player)(t_player *self);
+	t_vec		pos;
+	t_vec		ray_dir;
+	float		player_direction;
+};
+
+typedef	void	(*t_print_map)(t_map *self);
+typedef void	(*t_draw_map)(t_map *self, t_player *player);
+
+struct			c_map
+{
+	void		(*draw_map)(t_map *self, t_player *player);
+	t_print_map	print_map;
+	t_draw_map	img;
+	int			array[ROW][COL];
+	int			col;
+	int			row;
+	int			height;
+	int			width;
+};
+
 typedef struct	s_data
 {
 	void		*mlx;
@@ -95,4 +132,9 @@ typedef struct	s_data
 	t_xpm		south_wall;
 	t_xpm		west_wall;
 	t_img		game;
+	t_map		test_map;
+	t_player	test_player;
 }				t_data;
+
+float			get_positive_value_of_angle(float angle);
+t_player		player_init(void);
