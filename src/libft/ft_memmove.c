@@ -3,33 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun-zhe <hyun-zhe@student.42kl.edu.m      +#+  +:+       +#+        */
+/*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/11 15:54:48 by hyun-zhe          #+#    #+#             */
-/*   Updated: 2021/06/06 19:43:38 by hyun-zhe         ###   ########.fr       */
+/*   Created: 2021/05/11 18:44:22 by wding-ha          #+#    #+#             */
+/*   Updated: 2021/05/25 19:02:20 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memmove(void *dst, const void *src, size_t len)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
 	size_t	i;
 
-	if (src < dst)
+	if (!dest && !src)
+		return (NULL);
+	if (src < dest)
 	{
-		i = len;
-		while (i--)
-			((char *)dst)[i] = ((char *)src)[i];
+		i = n;
+		while (i > 0)
+		{
+			((char *)dest)[i - 1] = ((char *)src)[i - 1];
+			i--;
+		}
 	}
-	else if (src != dst)
+	else
 	{
 		i = 0;
-		while (i < len)
+		while (i < n)
 		{
-			((char *)dst)[i] = ((char *)src)[i];
+			((char *)dest)[i] = ((char *)src)[i];
 			i++;
 		}
 	}
-	return (dst);
+	return (dest);
 }

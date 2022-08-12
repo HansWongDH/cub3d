@@ -3,70 +3,86 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun-zhe <hyun-zhe@student.42kl.edu.m      +#+  +:+       +#+        */
+/*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/18 17:04:58 by hyun-zhe          #+#    #+#             */
-/*   Updated: 2021/06/06 20:08:49 by hyun-zhe         ###   ########.fr       */
+/*   Created: 2021/05/17 12:32:34 by wding-ha          #+#    #+#             */
+/*   Updated: 2021/06/03 19:27:44 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	get_length(const char *s, char c)
+int	freemalloc(char **arr, int sep)
+{
+	sep -= 1;
+	while (sep >= 0)
+	{
+		free(arr[sep]);
+		sep--;
+	}
+	free(arr);
+	return (0);
+}
+
+int	numstr(char *s, char c)
 {
 	int	i;
 	int	len;
 
-	i = -1;
-	len = 0;
-	while (s[++i])
+	i = 0;
+	if (s[i] != c && s[i] != '\0')
+		len = 1;
+	else
+		len = 0;
+	while (s[i])
 	{
-		if ((i == 0 || s[i - 1] == c) && s[i] != c)
+		if (s[i] == c && s[i + 1] != c && s[i + 1] != '\0')
 			len++;
+		i++;
 	}
 	return (len);
 }
 
-static char	*get_word(const char *s, int pos, int len, int last)
+int	splitloc(char const *s, char c, char **arr, int sep)
 {
-	int		i;
-	int		j;
-	char	*word;
-
-	i = 0;
-	j = pos - len;
-	word = malloc(((len + last) * sizeof(char)) + 1);
-	while (j < (pos + last))
-		word[i++] = s[j++];
-	word[i] = 0;
-	return (word);
-}
-
-char	**ft_split(const char *s, char c)
-{
-	int		w;
 	int		i;
 	int		len;
-	char	**strs;
+	char	*str;
+
+	i = 0;
+	while (i < sep)
+	{
+		len = 0;
+		while (s[len] != c && s[len] != '\0')
+			len++;
+		if (len != 0)
+		{
+			str = ft_calloc(len + 1, 1);
+			if (!str)
+				return (freemalloc(arr, i));
+			arr[i] = ft_memcpy(str, s, len);
+			i++;
+			s += len + 1;
+		}
+		while (*s == c)
+			s++;
+	}
+	return (1);
+}
+
+char	**ft_split(char const *s, char c)
+{
+	char	**arr;
+	int		size;
 
 	if (!s)
 		return (NULL);
-	w = 0;
-	i = -1;
-	len = 0;
-	strs = malloc((get_length(s, c) + 1) * sizeof(char *));
-	if (!strs)
+	size = numstr((char *)s, c);
+	arr = malloc(sizeof(char *) * (size + 1));
+	if (!arr)
 		return (NULL);
-	while (s[++i])
-	{
-		if ((len > 0 && s[i] == c) || (!s[i + 1] && s[i] != c))
-		{
-			strs[w++] = get_word(s, i, len, s[i] != c);
-			len = 0;
-		}
-		else if (s[i] != c)
-			len++;
-	}
-	strs[w] = NULL;
-	return (strs);
+	if (splitloc(s, c, arr, size) != 1)
+		return (NULL);
+	arr[size] = NULL;
+	return (arr);
 }

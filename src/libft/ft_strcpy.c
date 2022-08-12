@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_numlen_bonus.c                                  :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun-zhe <hyun-zhe@student.42kl.edu.m      +#+  +:+       +#+        */
+/*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/24 18:54:42 by hyun-zhe          #+#    #+#             */
-/*   Updated: 2021/06/10 00:53:53 by hyun-zhe         ###   ########.fr       */
+/*   Created: 2021/05/19 15:53:02 by wding-ha          #+#    #+#             */
+/*   Updated: 2021/05/19 16:00:54 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_numlen(int n)
+char	*ft_strcpy(char *dest, const char *src)
 {
-	int	len;
+	size_t	i;
+	int		ret;
 
-	len = 0;
-	while (n != 0)
+	i = 0;
+	while (src[i])
 	{
-		n /= 10;
-		len++;
+		dest[i] = src[i];
+		i++;
 	}
-	return (len);
+	dest[i] = '\0';
 }

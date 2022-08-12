@@ -3,48 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun-zhe <hyun-zhe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/13 16:13:17 by hyun-zhe          #+#    #+#             */
-/*   Updated: 2022/05/09 13:52:16 by hyun-zhe         ###   ########.fr       */
+/*   Created: 2021/05/17 09:10:36 by wding-ha          #+#    #+#             */
+/*   Updated: 2021/06/01 17:41:57 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	is_space(char c)
-{
-	return (c == ' ' || (c >= 9 && c <= 13));
-}
-
-static int	is_num(char c)
-{
-	return (c >= '0' && c <= '9');
-}
-
 int	ft_atoi(const char *str)
 {
-	size_t	long_max;
-	size_t	num;
+	long	i;
 	int		sign;
 
-	long_max = 9223372036854775807;
-	num = 0;
 	sign = 1;
-	while (is_space(*str))
+	i = 0;
+	while (*str == 32 || (*str >= 9 && *str <= 13))
 		str++;
-	if (*str == '-' || *str == '+')
+	if (*str == '+' || *str == '-')
 	{
 		if (*str == '-')
-			sign = -1;
+			sign *= -1;
 		str++;
 	}
-	while (is_num(*str))
+	while (*str >= 48 && *str <= 57)
 	{
-		num *= 10;
-		num += *str++ - '0';
-		if (num > long_max)
-			return (-1 + (sign == -1));
+		i = i * 10 + (*str - '0');
+		str++;
+		if (i != (i * 2) / 2 && sign > 0)
+			return (-1);
+		if (i != (i * 2) / 2 && sign < 0)
+			return (0);
 	}
-	return (num * sign);
+	return ((long)sign * i);
 }

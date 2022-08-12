@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun-zhe <hyun-zhe@student.42kl.edu.m      +#+  +:+       +#+        */
+/*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/11 17:19:26 by hyun-zhe          #+#    #+#             */
-/*   Updated: 2021/06/06 19:42:30 by hyun-zhe         ###   ########.fr       */
+/*   Created: 2021/05/12 10:07:02 by wding-ha          #+#    #+#             */
+/*   Updated: 2021/05/25 21:04:29 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
 	size_t	i;
 
+	if (s1 == s2 || n == 0)
+		return (0);
 	i = 0;
 	while (i < n)
 	{

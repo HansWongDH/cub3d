@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/13 15:41:40 by wding-ha          #+#    #+#             */
-/*   Updated: 2021/06/03 19:27:03 by wding-ha         ###   ########.fr       */
+/*   Created: 2022/03/24 18:51:17 by wding-ha          #+#    #+#             */
+/*   Updated: 2022/03/24 18:52:25 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isalpha(int c)
+void	ft_putchar(char c)
 {
-	if (c >= 65 && c <= 90)
-		return (1);
-	if (c >= 97 && c <= 122)
-		return (1);
-	return (0);
+	write(1, &c, 1);
+}
+
+void	ft_putstr(char *s)
+{
+	while (*s)
+	{
+		ft_putchar(*s);
+		s++;
+	}
 }
