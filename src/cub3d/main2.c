@@ -6,7 +6,7 @@
 /*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 13:07:32 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/12 14:04:47 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/12 18:10:20 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,17 @@
 void	put_images(t_data *data)
 {
 	mlx_put_image_to_window(data->mlx, data->win, data->map.img.img_p, 0, 0);
-	mlx_put_image_to_window(data->mlx, data->win, data->north_wall.img_p, XPM_SIZE, HEIGHT);
-	mlx_put_image_to_window(data->mlx, data->win, data->east_wall.img_p, XPM_SIZE * 2, HEIGHT + XPM_SIZE);
-	mlx_put_image_to_window(data->mlx, data->win, data->south_wall.img_p, XPM_SIZE, HEIGHT + 2 * XPM_SIZE);
-	mlx_put_image_to_window(data->mlx, data->win, data->west_wall.img_p, 0, HEIGHT + XPM_SIZE);
-	mlx_put_image_to_window(data->mlx, data->win, data->game.img_p, WIDTH + 10, 0);
+	//mlx_put_image_to_window(data->mlx, data->win, data->north_wall.img_p, XPM_SIZE, HEIGHT);
+	//mlx_put_image_to_window(data->mlx, data->win, data->east_wall.img_p, XPM_SIZE * 2, HEIGHT + XPM_SIZE);
+	//mlx_put_image_to_window(data->mlx, data->win, data->south_wall.img_p, XPM_SIZE, HEIGHT + 2 * XPM_SIZE);
+	//mlx_put_image_to_window(data->mlx, data->win, data->west_wall.img_p, 0, HEIGHT + XPM_SIZE);
+	//mlx_put_image_to_window(data->mlx, data->win, data->game.img.img_p, WIDTH + 10, 0);
 }
 
 int			draw_loop(t_data *data)
 {
 	data->map.draw_map(&data->map, &data->player);
+	//data->game.draw_sky(&data->game);
 	mlx_put_image_to_window(data->mlx, data->win, data->map.img.img_p, 0, 0);
 	put_images(data);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 14:00:08 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/12 14:01:18 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/12 18:09:40 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void	init_images(t_data *data)
 	data->map.img.img_p = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	data->map.img.data = (int*)mlx_get_data_addr(data->map.img.img_p,
 			&data->map.img.bpp, &data->map.img.line_size, &data->map.img.endian);
-	data->game.img_p = mlx_new_image(data->mlx, GAME_WIDTH, GAME_HEIGHT);
-	data->game.data = (int*)mlx_get_data_addr(data->game.img_p,
-			&data->game.bpp, &data->game.line_size, &data->game.endian);
+	//data->game.img.img_p = mlx_new_image(data->mlx, GAME_WIDTH, GAME_HEIGHT);
+	//data->game.img.data = (int*)mlx_get_data_addr(data->game.img.img_p,
+	//		&data->game.img.bpp, &data->game.img.line_size, &data->game.img.endian);
 }
 
 void	init_data(t_data *data)
@@ -48,6 +48,7 @@ void	init_data(t_data *data)
 	data->win = mlx_new_window(data->mlx, 2500, 1080, "cub3d");
 	data->player = player_init();
 	data->map = map_init(ROW, COL, data->mlx);
+	//data->game = game_init(&data->map, data->mlx);
 	init_images(data);
 	init_xpm(data);
 }

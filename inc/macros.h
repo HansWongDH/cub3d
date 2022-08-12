@@ -27,8 +27,8 @@
 
 # define GAME_SCALE		16
 # define GAME_TILE		GAME_SCALE * TILE_SIZE //256
-# define GAME_WIDTH 	WIDTH * 3
-# define GAME_HEIGHT	HEIGHT * 3
+# define GAME_WIDTH 	WIDTH * 3 //needs to by dynamic
+# define GAME_HEIGHT	HEIGHT * 3 //needs to by dynamic
 # define X_SCALE		4
 # define Y_INV_SCALE	32000
 
