@@ -467,3 +467,18 @@ float	get_positive_value_of_angle(float angle)
 //      -PI/2
 //  PI/2        0  PI/2
 //       PI/2
+
+int	main(int ac, char **av)
+{
+	t_info data;
+	(void)ac;
+	map_info_init(&data);
+	map_parsing(av[1], &data);
+	map_initialize(av[1], &data);
+	if (!map_validation(&data))
+	{
+		perror("map is not enclosd\n");
+		return (0);
+	}
+	printmap(data.map);
+}

@@ -5,12 +5,12 @@ OBJ_DIR		= obj
 LIBFT_DIR	= src/libft
 INC_DIR		= inc
 
-SRC_FILES	= main.c main2.c player_class.c map_class.c handle_key.c init_data.c
+SRC_FILES	= main.c map_parsing.c
 
 GCC 		= gcc
 CFLAGS		= -Wall -Wextra -Werror
 MINIFLAGS	= -lmlx -framework OpenGl -framework Appkit
-SANITIZE	= -fsanitize=address -g3
+# SANITIZE	= -fsanitize=address -g3
 RM			= rm -f
 
 OBJ_FILES	= $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))

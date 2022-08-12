@@ -5,11 +5,15 @@
 # include <stdlib.h>
 # include <math.h>
 # include <float.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 
 # include "map_class.h"
 # include "player_class.h"
 # include "macros.h"
 # include "structs.h"
+# include "libft.h"
 
 typedef enum	e_direction
 {
@@ -37,11 +41,14 @@ typedef struct	s_data
 	t_player	player;
 }				t_data;
 
-float			get_positive_value_of_angle(float angle);
-int				handle_key(int keycode, t_data *data);
-int				handle_exit(int keycode, t_data *data);
-void			init_xpm(t_data *data);
-void			init_images(t_data *data);
-void			init_data(t_data *data);
-
+// float			get_positive_value_of_angle(float angle);
+// int				handle_key(int keycode, t_data *data);
+// int				handle_exit(int keycode, t_data *data);
+// void			init_xpm(t_data *data);
+// void			init_images(t_data *data);
+// void			init_data(t_data *data);
+void	printmap(char **map);
+void	map_initialize(char *file, t_info *data);
+int	map_parsing(char *file, t_info *data);
+void	map_info_init(t_info *data);
 #endif
