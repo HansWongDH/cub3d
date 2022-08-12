@@ -1,4 +1,4 @@
-#ifndef	PLAYER_CLASS_H
+ifndef	PLAYER_CLASS_H
 # define PLAYER_CLASS_H
 
 # include <mlx.h>
@@ -24,7 +24,7 @@ struct			c_player
 	t_print_player	print_player;
 	t_vec			pos;
 	t_vec			ray_dir;
-	float			direction;
+	double			direction;
 	int				size;
 };
 

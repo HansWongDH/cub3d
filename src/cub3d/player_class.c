@@ -6,7 +6,7 @@
 /*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:24:28 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/12 16:47:42 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/12 18:55:27 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 int			validate_move(t_player *player, int *map_data, int keycode)
 {
-	float	to_move_x;
-	float	to_move_y;
+	double	to_move_x;
+	double	to_move_y;
 	int		wall_padding;
 
 	wall_padding = 8;
@@ -93,12 +93,12 @@ t_player	player_init(void)
 	player.move_player = move_player;
 	player.print_player = print_player;
 	player.turn_player = turn_player;
-	player.pos.x = 200;
-	player.pos.y = 200;
-	player.direction = 3 * M_PI / 2;
+	player.pos.x = 208;
+	player.pos.y = 208;
+	player.direction = 5 * M_PI / 4;
 	player.ray_dir.x = cos(player.direction);
 	player.ray_dir.y = sin(player.direction);
-	player.size = 10;
+	player.size = 3;
 	player.print_player(&player);
 	return (player);
 }

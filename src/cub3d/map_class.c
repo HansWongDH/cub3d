@@ -6,7 +6,7 @@
 /*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:11:49 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/12 16:34:54 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/12 18:56:04 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,37 @@ void	draw_player(t_map *map, t_player *player)
 	}
 }
 
+//void	draw_vision_ray(t_map *map, double angle)
+//{
+//
+//}
+
+void	draw_player_direction(t_map *self, t_player *player)
+{
+	t_vec	ray;
+	t_vec	delta;
+	double	max;
+
+	ray.x = player->pos.x;
+	ray.y = player->pos.y;
+	delta.x = cos(0) * player->ray_dir.x - sin(0) * player->ray_dir.y;
+	delta.y = sin(0) * player->ray_dir.x + cos(0) * player->ray_dir.y;
+	max = fmax(fabs(delta.x), fabs(delta.y));
+	delta.x /= max;
+	delta.y /= max;
+	while (1)
+	{
+		if (self->img.data[self->width * (int)floor(ray.y)
+				+ (int)floor(ray.x)] != GREEN)
+			self->img.data[self->width * (int)floor(ray.y)
+				+ (int)floor(ray.x)] = RED;
+		else
+			break ;
+		ray.x += delta.x;
+		ray.y += delta.y;
+	}
+}
+
 void	draw_map(t_map *self, t_player *player)
 {
 	draw_tiles(self);
@@ -108,8 +139,8 @@ t_map	map_init(int row, int col, void	*mlx)
 		{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  1 ,  0 ,	1 },
 		{ 1 ,  1 ,	1 ,  0 ,  0 ,  1 ,	1 ,  0 ,  0 ,  0 ,	0 ,  0 ,  1 ,  0 ,	1 },
 		{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	1 ,  0 ,  0 ,  0 ,	1 ,  0 ,  1 ,  0 ,	1 },
-		{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	1 ,  0 ,  1 ,  0 ,	1 },
-		{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  1 ,  1 ,	1 ,  1 ,  1 ,  0 ,	1 },
+		{ 1 ,  0 ,	0 ,  0 ,  0 ,  1 ,	0 ,  0 ,  0 ,  0 ,	1 ,  0 ,  1 ,  0 ,	1 },
+		{ 1 ,  0 ,	0 ,  0 ,  1 ,  0 ,	0 ,  0 ,  1 ,  1 ,	1 ,  1 ,  1 ,  0 ,	1 },
 		{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	1 },
 		{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	1 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	1 },
 		{ 1 ,  1 ,	1 ,  1 ,  1 ,  1 ,	0 ,  0 ,  0 ,  1 ,	1 ,  1 ,  1 ,  0 ,	1 },
@@ -119,6 +150,7 @@ t_map	map_init(int row, int col, void	*mlx)
 
 	map.print_map = print_map;
 	map.draw_map = draw_map;
+	map.draw_player_direction = draw_player_direction;
 	map.row = row;
 	map.col = col;
 	map.width = col * TILE_SIZE;

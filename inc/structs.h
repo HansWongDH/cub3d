@@ -9,8 +9,8 @@
 
 typedef struct	s_vec
 {
-	float		x;
-	float		y;
+	double		x;
+	double		y;
 }				t_vec;
 
 typedef struct	s_coord

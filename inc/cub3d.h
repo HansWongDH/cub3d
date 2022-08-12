@@ -11,7 +11,7 @@
 # include "player_class.h"
 # include "macros.h"
 # include "structs.h"
-//# include "game_class.h"
+# include "game_class.h"
 
 typedef enum	e_direction
 {
@@ -30,12 +30,12 @@ typedef struct	s_data
 	//t_vec		fov;
 	//float		player_direction;
 	//t_img		img;
-	t_img		game;
+	//t_img		game;
 	t_xpm		north_wall;
 	t_xpm		east_wall;
 	t_xpm		south_wall;
 	t_xpm		west_wall;
-	//t_game		game;
+	t_game		game;
 	t_map		map;
 	t_player	player;
 }				t_data;

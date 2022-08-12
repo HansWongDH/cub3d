@@ -11,19 +11,19 @@
 # include "macros.h"
 # include "structs.h"
 
-//typedef struct	c_game		t_game;
-//
-//typedef void	(*t_draw_sky)(t_game *self);
-//
-//struct		c_game
-//{
-//	t_draw_sky	draw_sky;
-//	t_img		img;
-//	int			height;
-//	int			width;
-//};
-//
-//t_game	game_init(t_map *map, void *mlx);
-//void	draw_sky(t_game *self);
+typedef struct	c_game		t_game;
+
+typedef void	(*t_draw_sky)(t_game *self);
+
+struct		c_game
+{
+	t_draw_sky	draw_sky;
+	t_img		img;
+	int			height;
+	int			width;
+};
+
+t_game	game_init(t_map *map, void *mlx);
+void	draw_sky(t_game *self);
 
 #endif
