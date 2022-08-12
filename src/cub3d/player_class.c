@@ -6,12 +6,20 @@
 /*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:24:28 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/12 12:28:21 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/12 14:08:07 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "cub3d.h"
+
+int			validate_move(float x, float y, int keycode)
+{
+	(void)x;
+	(void)y;
+	(void)keycode;
+	return (0);
+}
 
 void		turn_player(t_player *self, int keycode)
 {
@@ -35,7 +43,7 @@ void		move_player(t_player *self, int keycode)
 {
 	if (keycode == KEY_W)
 	{
-		//validate_move(self->pos.x, self->pos.y, KEY_W);
+		validate_move(self->pos.x, self->pos.y, KEY_W);
 		self->pos.x += self->ray_dir.x * MOVE_GAP;
 		self->pos.y += self->ray_dir.y * MOVE_GAP;
 	}

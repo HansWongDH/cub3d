@@ -9,7 +9,7 @@
 //		colour = ((colour & 0x7E7E7E) >> 1) | (colour & 0x808080);
 //	return (colour);
 //}
-//
+
 //int	handle_key(int keycode, t_data *data)
 //{
 //	float	to_move_x;
@@ -95,7 +95,7 @@
 //	printf("Player direction = %f\n", data->player_direction);
 //	return (0);
 //}
-//
+
 //int	handle_exit(int keycode, t_data *data)
 //{
 //	(void)data;

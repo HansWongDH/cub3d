@@ -5,7 +5,7 @@ OBJ_DIR		= obj
 LIBFT_DIR	= src/libft
 INC_DIR		= inc
 
-SRC_FILES	= main.c player_class.c map_class.c
+SRC_FILES	= main.c main2.c player_class.c map_class.c handle_key.c init_data.c
 
 GCC 		= gcc
 CFLAGS		= -Wall -Wextra -Werror

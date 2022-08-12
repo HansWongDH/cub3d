@@ -6,7 +6,7 @@
 /*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:11:49 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/12 12:26:33 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/12 13:58:57 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,8 @@ t_map	map_init(int row, int col, void	*mlx)
 	map.width = col * TILE_SIZE;
 	map.height = row * TILE_SIZE;
 	ft_memcpy(map.array, array, sizeof(int) * row * col);
-	map.img.pointer = mlx_new_image(mlx, map.width, map.height);
-	map.img.data = (int *)mlx_get_data_addr(map.img.pointer,
+	map.img.img_p = mlx_new_image(mlx, map.width, map.height);
+	map.img.data = (int *)mlx_get_data_addr(map.img.img_p,
 			&map.img.bpp, &map.img.line_size, &map.img.endian);
 	return (map);
 }
