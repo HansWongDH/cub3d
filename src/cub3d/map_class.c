@@ -6,14 +6,14 @@
 /*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:11:49 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/11 18:57:02 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/12 12:26:33 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "cub3d.h"
 
-void		print_map(t_map *self)
+void	print_map(t_map *self)
 {
 	int	i;
 	int	j;
@@ -35,7 +35,7 @@ void		print_map(t_map *self)
 	}
 }
 
-void		draw_square(int *img_data, t_coord tile_coord, int width, int colour)
+void	draw_square(int *img_data, t_coord tile_coord, int width, int colour)
 {
 	int	i;
 	int	j;
@@ -46,14 +46,15 @@ void		draw_square(int *img_data, t_coord tile_coord, int width, int colour)
 		j = 0;
 		while (j < TILE_SIZE)
 		{
-			img_data[width * (i + tile_coord.x * TILE_SIZE) + (j + tile_coord.y * TILE_SIZE)] = colour;
+			img_data[width * (i + tile_coord.x * TILE_SIZE)
+				+ (j + tile_coord.y * TILE_SIZE)] = colour;
 			j++;
 		}
 		i++;
 	}
 }
 
-void		draw_tiles(t_map *map)
+void	draw_tiles(t_map *map)
 {
 	t_coord	tile_coord;
 
@@ -73,13 +74,33 @@ void		draw_tiles(t_map *map)
 	}
 }
 
-void		draw_map(t_map *self, t_player *player)
+void	draw_player(t_map *map, t_player *player)
 {
-	(void)player;
-	draw_tiles(self);
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < player->size)
+	{
+		j = 0;
+		while (j < player->size)
+		{
+			map->img.data[map->width
+				* ((int)player->pos.x + j - (player->size / 2))
+				+ ((int)player->pos.y + i - (player->size / 2))] = PINK;
+			j++;
+		}
+		i++;
+	}
 }
 
-t_map		map_init(int row, int col, void	*mlx)
+void	draw_map(t_map *self, t_player *player)
+{
+	draw_tiles(self);
+	draw_player(self, player);
+}
+
+t_map	map_init(int row, int col, void	*mlx)
 {
 	t_map	map;
 	int  array[ROW][COL] =  {
@@ -109,23 +130,23 @@ t_map		map_init(int row, int col, void	*mlx)
 	return (map);
 }
 
-int			draw_loop(t_data *data)
-{
-	(void)data;
-	data->test_map.draw_map(&data->test_map, &data->test_player);
-	mlx_put_image_to_window(data->mlx, data->win, data->test_map.img.pointer, 0, 0);
-	return (0);
-}
-
-int	main()
-{
-	t_data		data;
-
-	data.mlx = mlx_init();
-	data.win = mlx_new_window(data.mlx, 1920, 1080, "cub3d");
-	data.test_player = player_init();
-	data.test_map = map_init(ROW, COL, data.mlx);
-
-	mlx_loop_hook(data.mlx, draw_loop, &data);
-	mlx_loop(data.mlx);
-}
+//int			draw_loop(t_data *data)
+//{
+//	(void)data;
+//	data->test_map.draw_map(&data->test_map, &data->test_player);
+//	mlx_put_image_to_window(data->mlx, data->win, data->test_map.img.pointer, 0, 0);
+//	return (0);
+//}
+//
+//int	main()
+//{
+//	t_data		data;
+//
+//	data.mlx = mlx_init();
+//	data.win = mlx_new_window(data.mlx, 1920, 1080, "cub3d");
+//	data.test_player = player_init();
+//	data.test_map = map_init(ROW, COL, data.mlx);
+//
+//	mlx_loop_hook(data.mlx, draw_loop, &data);
+//	mlx_loop(data.mlx);
+//}

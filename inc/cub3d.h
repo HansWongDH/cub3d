@@ -93,14 +93,19 @@ typedef struct	s_xpm
 	int			height;
 }				t_xpm;
 
+typedef void		(*t_move_player)(t_player *self, int keycode);
+typedef void		(*t_turn_player)(t_player *self, int keycode);
+typedef void		(*t_print_player)(t_player *self);
+
 struct			c_player
 {
-	void		(*move_player)(t_player *self, int keycode);
-	void		(*turn_player)(t_player *self, int keycode);
-	void		(*print_player)(t_player *self);
-	t_vec		pos;
-	t_vec		ray_dir;
-	float		player_direction;
+	t_move_player	move_player;
+	t_turn_player	turn_player;
+	t_print_player	print_player;
+	t_vec			pos;
+	t_vec			ray_dir;
+	float			direction;
+	int				size;
 };
 
 typedef	void	(*t_print_map)(t_map *self);
@@ -108,9 +113,9 @@ typedef void	(*t_draw_map)(t_map *self, t_player *player);
 
 struct			c_map
 {
-	void		(*draw_map)(t_map *self, t_player *player);
+	t_draw_map	draw_map;
 	t_print_map	print_map;
-	t_draw_map	img;
+	t_img		img;
 	int			array[ROW][COL];
 	int			col;
 	int			row;
