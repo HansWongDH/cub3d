@@ -1,5 +1,5 @@
-#include "cub3d.h"
-#include "libft.h"
+//#include "cub3d.h"
+//#include "libft.h"
 
 //int shade_colour(int colour, int percent)
 //{
@@ -191,32 +191,6 @@
 //		i++;
 //	}
 //}
-
-int		equate_float(float a, float b)
-{
-	return (fabs(a - b) < FLT_EPSILON);
-}
-
-int		greater_than_float(float a, float b)
-{
-	return (a - b) > ( (fabs(a) < fabs(b) ? fabs(b) : fabs(a)) * FLT_EPSILON);
-}
-
-int		less_than_float(float a, float b)
-{
-	return (b - a) > ( (fabs(a) < fabs(b) ? fabs(b) : fabs(a)) * FLT_EPSILON);
-}
-
-float	get_positive_value_of_angle(float angle)
-{
-	if (equate_float(angle, 2 * PI))
-		return (0);
-	if (greater_than_float(angle, 2 * PI))
-		return (angle - (2 * PI));
-	if (less_than_float(angle, 0))
-		return (angle + (2 * PI));
-	return (angle);
-}
 
 //t_direction	get_direction_of_ray(float player_direction, float angle_offset)
 //{

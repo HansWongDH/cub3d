@@ -6,19 +6,37 @@
 /*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:24:28 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/12 14:08:07 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/12 16:47:42 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "cub3d.h"
 
-int			validate_move(float x, float y, int keycode)
+int			validate_move(t_player *player, int *map_data, int keycode)
 {
-	(void)x;
-	(void)y;
-	(void)keycode;
-	return (0);
+	float	to_move_x;
+	float	to_move_y;
+	int		wall_padding;
+
+	wall_padding = 8;
+	if (keycode == KEY_W)
+	{
+		to_move_x = (player->pos.x + player->ray_dir.x * (MOVE_GAP + wall_padding));
+		to_move_y = (player->pos.y + player->ray_dir.y * (MOVE_GAP + wall_padding));
+		if (map_data[WIDTH * (int)(to_move_y)
+				+ (int)(to_move_x)] == GREEN)
+			return (0);
+	}
+	else if (keycode == KEY_S)
+	{
+		to_move_x = (player->pos.x - player->ray_dir.x * MOVE_GAP + wall_padding);
+		to_move_y = (player->pos.y - player->ray_dir.y * MOVE_GAP + wall_padding);
+		if (map_data[WIDTH * (int)(to_move_y)
+				+ (int)(to_move_x)] == GREEN)
+			return (0);
+	}
+	return (1);
 }
 
 void		turn_player(t_player *self, int keycode)
@@ -39,17 +57,19 @@ void		turn_player(t_player *self, int keycode)
 	}
 }
 
-void		move_player(t_player *self, int keycode)
+void		move_player(t_player *self, int *map_data, int keycode)
 {
 	if (keycode == KEY_W)
 	{
-		validate_move(self->pos.x, self->pos.y, KEY_W);
+		if (validate_move(self, map_data, KEY_W) == 0)
+			return ;
 		self->pos.x += self->ray_dir.x * MOVE_GAP;
 		self->pos.y += self->ray_dir.y * MOVE_GAP;
 	}
 	else if (keycode == KEY_S)
 	{
-		//validate_move(self->pos.x, self->pos.y, KEY_S);
+		if (validate_move(self, map_data, KEY_S) == 0)
+			return ;
 		self->pos.x -= self->ray_dir.x * MOVE_GAP;
 		self->pos.y -= self->ray_dir.y * MOVE_GAP;
 	}
@@ -73,12 +93,13 @@ t_player	player_init(void)
 	player.move_player = move_player;
 	player.print_player = print_player;
 	player.turn_player = turn_player;
-	player.pos.x = 32;
-	player.pos.y = 32;
-	player.direction = 0;
+	player.pos.x = 200;
+	player.pos.y = 200;
+	player.direction = 3 * M_PI / 2;
 	player.ray_dir.x = cos(player.direction);
 	player.ray_dir.y = sin(player.direction);
 	player.size = 10;
+	player.print_player(&player);
 	return (player);
 }
 

@@ -7,11 +7,13 @@
 # include <math.h>
 # include <float.h>
 
+# include "map_class.h"
 # include "structs.h"
+# include "macros.h"
 
 typedef struct	c_player	t_player;
 
-typedef void		(*t_move_player)(t_player *self, int keycode);
+typedef void		(*t_move_player)(t_player *self, int *map_data, int keycode);
 typedef void		(*t_turn_player)(t_player *self, int keycode);
 typedef void		(*t_print_player)(t_player *self);
 
@@ -27,7 +29,7 @@ struct			c_player
 };
 
 t_player	player_init(void);
-void		move_player(t_player *self, int keycode);
+void		move_player(t_player *self, int *map_data, int keycode);
 void		turn_player(t_player *self, int keycode);
 void		print_player(t_player *self);
 #endif
