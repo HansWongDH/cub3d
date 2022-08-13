@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
+/*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 14:00:08 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/12 14:01:18 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/13 16:51:41 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ void	init_images(t_data *data)
 			&data->game.bpp, &data->game.line_size, &data->game.endian);
 }
 
-void	init_data(t_data *data)
+void	init_data(t_data *data, t_info *info)
 {
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, 2500, 1080, "cub3d");
 	data->player = player_init();
-	data->map = map_init(ROW, COL, data->mlx);
+	data->map = map_init(info, data->mlx);
 	init_images(data);
 	init_xpm(data);
 }

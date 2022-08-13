@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 15:09:33 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/08/12 18:06:16 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/13 16:53:27 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,12 +151,5 @@ void	printmap(char **map)
 		printf("%s\n", map[i]);
 		i++;
 	}
-	i = 0;
-	while(map[i])
-	{
-		free(map[i]);
-		i++;
-	}
-	free(map);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_class.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
+/*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:11:49 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/12 13:58:57 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/13 16:57:25 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ void	draw_tiles(t_map *map)
 		tile_coord.y = 0;
 		while (tile_coord.y < map->col)
 		{
-			if (map->array[tile_coord.x][tile_coord.y] == 1)
+			if (map->array[tile_coord.x][tile_coord.y] == '1')
 				draw_square(map->img.data, tile_coord, map->width, GREEN);
-			if (map->array[tile_coord.x][tile_coord.y] == 0)
+			if (map->array[tile_coord.x][tile_coord.y] == '0')
 				draw_square(map->img.data, tile_coord, map->width, WHITE);
 			tile_coord.y++;
 		}
@@ -99,31 +99,33 @@ void	draw_map(t_map *self, t_player *player)
 	draw_tiles(self);
 	draw_player(self, player);
 }
+char	**map_copy(t_info *info)
+{
+	char	**map;
+	int		i;
+	
+	i = 0;
+	map = ft_calloc(sizeof(char *), info->height + 1);
+	while (info->map[i])
+	{
+		map[i] = ft_strdup(info->map[i]);
+		i++;
+	}
+	return (map);
+}
 
-t_map	map_init(int row, int col, void	*mlx)
+t_map	map_init(t_info *info, void *mlx)
 {
 	t_map	map;
-	int  array[ROW][COL] =  {
-		{ 1 ,  1 ,	1 ,  1 ,  1 ,  1 ,	1 ,  1 ,  1 ,  1 ,	1 ,  1 ,  1 ,  1 ,	1 },
-		{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  1 ,  0 ,	1 },
-		{ 1 ,  0 ,	0 ,  0 ,  0 ,  1 ,	1 ,  0 ,  0 ,  0 ,	0 ,  0 ,  1 ,  0 ,	1 },
-		{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	1 ,  0 ,  0 ,  0 ,	1 ,  0 ,  1 ,  0 ,	1 },
-		{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	1 ,  0 ,  1 ,  0 ,	1 },
-		{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  1 ,  1 ,	1 ,  1 ,  1 ,  0 ,	1 },
-		{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	1 },
-		{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	1 },
-		{ 1 ,  1 ,	1 ,  1 ,  1 ,  1 ,	0 ,  0 ,  0 ,  1 ,	1 ,  1 ,  1 ,  0 ,	1 },
-		{ 1 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	0 ,  0 ,  0 ,  0 ,	1 },
-		{ 1 ,  1 ,	1 ,  1 ,  1 ,  1 ,	1 ,  1 ,  1 ,  1 ,	1 ,  1 ,  1 ,  1 ,	1 }
-	};
 
 	map.print_map = print_map;
 	map.draw_map = draw_map;
-	map.row = row;
-	map.col = col;
-	map.width = col * TILE_SIZE;
-	map.height = row * TILE_SIZE;
-	ft_memcpy(map.array, array, sizeof(int) * row * col);
+	map.col = info->width;
+	map.row = info->height;
+	map.width = map.col* TILE_SIZE;
+	map.height = map.row * TILE_SIZE;
+	map.array = map_copy(info);
+	// ft_memcpy(map.array, info->map, sizeof(int) * info->width * info->height);
 	map.img.img_p = mlx_new_image(mlx, map.width, map.height);
 	map.img.data = (int *)mlx_get_data_addr(map.img.img_p,
 			&map.img.bpp, &map.img.line_size, &map.img.endian);

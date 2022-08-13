@@ -21,14 +21,14 @@ struct			c_map
 	t_draw_map	draw_map;
 	t_print_map	print_map;
 	t_img		img;
-	int			array[ROW][COL];
+	char		**array;
 	int			col;
 	int			row;
 	int			height;
 	int			width;
 };
 
-t_map	map_init(int row, int col, void	*mlx);
+t_map   map_init(t_info *info, void *mlx);
 void	print_map(t_map *self);
 void	draw_map(t_map *self, t_player *player);
 

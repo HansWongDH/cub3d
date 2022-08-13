@@ -41,14 +41,15 @@ typedef struct	s_data
 	t_player	player;
 }				t_data;
 
-// float			get_positive_value_of_angle(float angle);
-// int				handle_key(int keycode, t_data *data);
-// int				handle_exit(int keycode, t_data *data);
-// void			init_xpm(t_data *data);
-// void			init_images(t_data *data);
-// void			init_data(t_data *data);
+float			get_positive_value_of_angle(float angle);
+int				handle_key(int keycode, t_data *data);
+int				handle_exit(int keycode, t_data *data);
+void			init_xpm(t_data *data);
+void			init_images(t_data *data);
+void			init_data(t_data *data, t_info *info);
 void	printmap(char **map);
 void	map_initialize(char *file, t_info *data);
-int	map_parsing(char *file, t_info *data);
+int		map_parsing(char *file, t_info *data);
 void	map_info_init(t_info *data);
+int		map_validation(t_info *data);
 #endif
