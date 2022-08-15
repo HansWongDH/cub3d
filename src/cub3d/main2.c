@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
+/*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 13:07:32 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/12 14:04:47 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/15 15:35:59 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ void	start_game(t_data *data)
 	mlx_loop(data->mlx);
 }
 
-int		main()
+int		main(int ac, char **av)
 {
 	t_data	data;
 
-	init_data(&data);
+	init_data(&data, av[1], ac);
 	start_game(&data);
 }

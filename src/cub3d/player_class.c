@@ -6,12 +6,23 @@
 /*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:24:28 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/12 14:08:07 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/15 16:01:24 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "cub3d.h"
+
+float		get_player_direction_angle(int player_direction)
+{
+	if (player_direction == 'N')
+		return (3 * M_PI / 2);
+	if (player_direction == 'E')
+		return (0);
+	if (player_direction == 'S')
+		return (M_PI / 2);
+	return (M_PI);
+}
 
 int			validate_move(float x, float y, int keycode)
 {
@@ -66,16 +77,16 @@ void		print_player(t_player *self)
 	printf("===================================\n");
 }
 
-t_player	player_init(void)
+t_player	player_init(t_coord player_pos, int player_direction)
 {
 	t_player	player;
 
 	player.move_player = move_player;
 	player.print_player = print_player;
 	player.turn_player = turn_player;
-	player.pos.x = 32;
-	player.pos.y = 32;
-	player.direction = 0;
+	player.pos.x = ((player_pos.x + 1) * TILE_SIZE) - (TILE_SIZE / 2);
+	player.pos.y = ((player_pos.y + 1) * TILE_SIZE) - (TILE_SIZE / 2);
+	player.direction = get_player_direction_angle(player_direction);
 	player.ray_dir.x = cos(player.direction);
 	player.ray_dir.y = sin(player.direction);
 	player.size = 10;
