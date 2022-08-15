@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:11:49 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/13 16:57:25 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/15 15:57:39 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	print_map(t_map *self)
 		j = 0;
 		while (j < self->col)
 		{
-			if (self->array[i][j] == 1)
-				printf("1 ");
-			else
-				printf("0 ");
+			if (self->array[i][j] == '1')
+				printf("1");
+			else if (self->array[i][j] == '0')
+				printf("0");
 			j++;
 		}
 		printf("\n");
@@ -66,8 +66,10 @@ void	draw_tiles(t_map *map)
 		{
 			if (map->array[tile_coord.x][tile_coord.y] == '1')
 				draw_square(map->img.data, tile_coord, map->width, GREEN);
-			if (map->array[tile_coord.x][tile_coord.y] == '0')
+			else if (map->array[tile_coord.x][tile_coord.y] == '0')
 				draw_square(map->img.data, tile_coord, map->width, WHITE);
+			else
+				draw_square(map->img.data, tile_coord, map->width, BLACK);
 			tile_coord.y++;
 		}
 		tile_coord.x++;
@@ -86,8 +88,8 @@ void	draw_player(t_map *map, t_player *player)
 		while (j < player->size)
 		{
 			map->img.data[map->width
-				* ((int)player->pos.x + j - (player->size / 2))
-				+ ((int)player->pos.y + i - (player->size / 2))] = PINK;
+				* ((int)player->pos.y + j - (player->size / 2))
+				+ ((int)player->pos.x + i - (player->size / 2))] = PINK;
 			j++;
 		}
 		i++;
@@ -99,38 +101,36 @@ void	draw_map(t_map *self, t_player *player)
 	draw_tiles(self);
 	draw_player(self, player);
 }
-char	**map_copy(t_info *info)
-{
-	char	**map;
-	int		i;
-	
-	i = 0;
-	map = ft_calloc(sizeof(char *), info->height + 1);
-	while (info->map[i])
-	{
-		map[i] = ft_strdup(info->map[i]);
-		i++;
-	}
-	return (map);
-}
 
-t_map	map_init(t_info *info, void *mlx)
+t_map	map_init(void *mlx, char *file, t_coord *player_pos, int *player_direction)
 {
 	t_map	map;
 
+	map.flag = 1;
 	map.print_map = print_map;
 	map.draw_map = draw_map;
-	map.col = info->width;
-	map.row = info->height;
+	if (!map_parsing(&map, file, player_pos, player_direction))
+	{
+		map.flag = 0;
+		return (map); //change later
+	}
+	map_create(&map, file, player_pos);
+	if (!map_validation(&map))
+	{
+		ft_putstr_fd("Map Is Not Enclosed\n", 2);
+		map.flag = 0;
+		return (map); //change later
+	}
 	map.width = map.col* TILE_SIZE;
 	map.height = map.row * TILE_SIZE;
-	map.array = map_copy(info);
-	// ft_memcpy(map.array, info->map, sizeof(int) * info->width * info->height);
+	map.print_map(&map);
 	map.img.img_p = mlx_new_image(mlx, map.width, map.height);
 	map.img.data = (int *)mlx_get_data_addr(map.img.img_p,
 			&map.img.bpp, &map.img.line_size, &map.img.endian);
 	return (map);
 }
+
+//HAVE TO FREE MAP ARRAY LATER ON WHEN DESTRUCTOR IS CALLED
 
 //int			draw_loop(t_data *data)
 //{

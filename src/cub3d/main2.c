@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 13:07:32 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/13 16:54:36 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/15 15:35:59 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,7 @@ void	start_game(t_data *data)
 int		main(int ac, char **av)
 {
 	t_data	data;
-	t_info	info;
-	(void)ac;
 
-	
-	map_info_init(&info);
-	map_parsing(av[1], &info);
-	map_initialize(av[1], &info);
-	if (!map_validation(&info))
-	{
-		perror("map is not enclosd\n");
-		return (0);
-	}
-	init_data(&data, &info);
+	init_data(&data, av[1], ac);
 	start_game(&data);
 }

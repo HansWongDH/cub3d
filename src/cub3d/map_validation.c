@@ -6,21 +6,21 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 18:08:17 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/08/12 20:03:39 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/15 15:35:25 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "libft.h"
 
-int		map_edgechecking(t_info *data)
+int		map_edgechecking(t_map *map)
 {
 	int		i;
 	char	*top;
 	char	*btm;
 
-	top = data->map[0];
-	btm = data->map[data->height - 1];
+	top = map->array[0];
+	btm = map->array[map->row - 1];
 	i = 0;
 	while (top[i])
 	{
@@ -37,48 +37,50 @@ int		map_edgechecking(t_info *data)
 	}
 	return (1);
 }
-int		map_spacechecking(t_info *data, int	x, int y)
+
+int		map_spacechecking(t_map *map, int x, int y)
 {
 	if (y > 0)
 	{
-		if (data->map[y - 1][x] != ' ' && data->map[y - 1][x] != '1')
+		if (map->array[y - 1][x] != ' ' && map->array[y - 1][x] != '1')
 			return (0);
 	}
-	if (y < data->height - 1)
+	if (y < map->row - 1)
 	{
-		if (data->map[y + 1][x] != ' ' && data->map[y + 1][x] != '1')
+		if (map->array[y + 1][x] != ' ' && map->array[y + 1][x] != '1')
 			return (0);
 	}
 	if (x > 0)
 	{
-		if (data->map[y][x - 1] != ' ' && data->map[y][x - 1] != '1')
+		if (map->array[y][x - 1] != ' ' && map->array[y][x - 1] != '1')
 			return (0);
 	}
-	if (x < data->width - 1)
+	if (x < map->col - 1)
 	{
-		if (data->map[y][x + 1] != ' ' && data->map[y][x + 1] != '1')
+		if (map->array[y][x + 1] != ' ' && map->array[y][x + 1] != '1')
 			return (0);
 	}
 	return (1);
 }
 
 
-int		map_validation(t_info *data)
+int		map_validation(t_map *map)
 {
 	int	x;
 	int	y;
 
 	y = 0;
-	if (!map_edgechecking(data))
+	(void)x;
+	if (!map_edgechecking(map))
 		return (0);
-	while (data->map[y])
+	while (map->array[y])
 	{
 		x = 0;
-		while (data->map[y][x])
+		while (map->array[y][x])
 		{
-			if (data->map[y][x] == ' ')
+			if (map->array[y][x] == ' ')
 			{
-				if (!map_spacechecking(data, x, y))
+				if (!map_spacechecking(map, x, y))
 					return (0);
 			}
 			x++;

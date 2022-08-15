@@ -26,7 +26,7 @@ struct			c_player
 	int				size;
 };
 
-t_player	player_init(void);
+t_player	player_init(t_coord player_pos, int player_direction);
 void		move_player(t_player *self, int keycode);
 void		turn_player(t_player *self, int keycode);
 void		print_player(t_player *self);

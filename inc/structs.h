@@ -27,15 +27,6 @@ typedef struct	s_img
 	int			endian;
 }				t_img;
 
-typedef struct s_info
-{
-	int			player_direction;
-	int			width;
-	int			height;
-	char		**map;
-
-}				t_info;
-
 typedef struct	s_xpm
 {
 	void		*img_p;

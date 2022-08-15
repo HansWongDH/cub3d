@@ -46,10 +46,10 @@ int				handle_key(int keycode, t_data *data);
 int				handle_exit(int keycode, t_data *data);
 void			init_xpm(t_data *data);
 void			init_images(t_data *data);
-void			init_data(t_data *data, t_info *info);
-void	printmap(char **map);
-void	map_initialize(char *file, t_info *data);
-int		map_parsing(char *file, t_info *data);
-void	map_info_init(t_info *data);
-int		map_validation(t_info *data);
+void			init_data(t_data *data, char *file, int ac);
+void			printmap(char **map);
+void			map_create(t_map *map, char *file, t_coord *player_pos);
+int				map_parsing(t_map *map, char *file, t_coord *player_pos, int *player_direction);
+void			map_info_init(t_info *data);
+int				map_validation(t_map *map);
 #endif

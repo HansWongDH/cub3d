@@ -6,40 +6,33 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 15:09:33 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/08/13 16:53:27 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/15 15:33:56 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "libft.h"
 
-int	get_next_line(int fd, char **line);
+int		get_next_line(int fd, char **line);
 int		ft_strcmp(const char *s1, const char *s2);
 
-void	map_info_init(t_info *data)
+int	map_filetype(char *file)
 {
-	data->player_direction = 0;
-	data->width = 0;
-	data->height = 0;
-}
+	char	*file_type;
 
-int	map_filetype(char *s)
-{
-	char	*file;
-
-	if (ft_strlen(s) < 5)
+	if (ft_strlen(file) < 5)
 		return (0);
-	file = ft_substr(s, ft_strlen(s) - 4, 4);
-	if (ft_strcmp(file, ".cub"))
+	file_type = ft_substr(file, ft_strlen(file) - 4, 4);
+	if (ft_strcmp(file_type, ".cub"))
 	{
-		free(file);
+		free(file_type);
 		return (0);
 	}
-	free(file);
+	free(file_type);
 	return (1);
 }
 
-int	map_character_checking(char *line, t_info *data)
+int	map_character_checking(t_map *map, char *line, t_coord *player_pos, int *player_direction)
 {
 	int	i;
 
@@ -50,17 +43,21 @@ int	map_character_checking(char *line, t_info *data)
 		{
 			if (ft_strchr("NWSE", line[i]))
 			{
-				if (!(data->player_direction))
-					data->player_direction = line[i];
+				if (!(*player_direction))
+				{
+					*player_direction = line[i];
+					player_pos->x = i;
+					player_pos->y = map->row;
+				}
 				else
 				{
-					perror("more than 1 player\n");
+					ft_putstr_fd("More than 1 Player\n", 2);
 					return (0);
 				}
 			}
 			else
 			{
-				perror("error\n");
+				ft_putstr_fd("Invalid Character Found In Map\n", 2);
 				return (0);
 			}
 		}
@@ -69,34 +66,36 @@ int	map_character_checking(char *line, t_info *data)
 	return (1);
 }
 
-int	map_getinfo(int fd, t_info *data)
+int	map_getinfo(t_map *map, int fd, t_coord *player_pos, int *player_direction)
 {
-	char	*l;
-	int		flag;
+	char	*line;
 
-	flag = 0;
-
-	while(get_next_line(fd, &l))
+	while(get_next_line(fd, &line))
 	{
-		if (ft_strlen(l) > (size_t)data->width)
-			data->width = ft_strlen(l);
-		if (!map_character_checking(l, data))
+		if (ft_strlen(line) > (size_t)map->col)
+			map->col = ft_strlen(line);
+		if (!map_character_checking(map, line, player_pos, player_direction))
 			return (0);
-		free(l);
-		data->height++;
+		free(line);
+		map->row++;
 	}
-	free(l);
+	free(line);
+	if (!player_direction)
+		return (0);
 	return (1);
 }
 
-int	map_parsing(char *file, t_info *data)
+int	map_parsing(t_map *map, char *file, t_coord *player_pos, int *player_direction)
 {
 	int	fd;
+
+	map->col = 0;
+	map->row = 0;
 	if (map_filetype(file) < 0)
 		return (0);
 	fd = open(file, O_RDONLY);
-	if (!map_getinfo(fd, data))
-	{	
+	if (!map_getinfo(map, fd, player_pos, player_direction))
+	{
 		close(fd);
 		return (0);
 	}
@@ -117,39 +116,28 @@ char	*map_padding(char *line, int size)
 	}
 	return (ret);
 }
-void	map_initialize(char *file, t_info *data)
+
+void	map_create(t_map *map, char *file, t_coord *player_pos)
 {
 	int		fd;
-	char	*l;
+	char	*line;
 	int		i;
 
 	i = 0;
-	data->map = ft_calloc(sizeof(char *), data->height);
+	map->array = ft_calloc(sizeof(char *), map->row);
 	fd = open(file, O_RDONLY);
-	while (get_next_line(fd, &l))
+	while (get_next_line(fd, &line))
 	{
-		if (ft_strlen(l) < (size_t)data->width)
-			data->map[i] = ft_strdup(map_padding(l, data->width - ft_strlen(l)));
+		if (ft_strlen(line) < (size_t)map->col)
+			map->array[i] = ft_strdup(map_padding(line, map->col - ft_strlen(line)));
 		else
 		{
-			data->map[i] = ft_strdup(l);
-			free(l);
+			map->array[i] = ft_strdup(line);
+			free(line);
 		}
 		i++;
 	}
-	data->map[i] = NULL;
- 	close(fd);
+	map->array[i] = NULL;
+	map->array[player_pos->y][player_pos->x] = '0';
+	close(fd);
 }
-
-void	printmap(char **map)
-{
-	int	i;
-
-	i = 0;
-	while (map[i])
-	{
-		printf("%s\n", map[i]);
-		i++;
-	}
-}
-
