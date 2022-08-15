@@ -1,22 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/13 15:41:40 by wding-ha          #+#    #+#             */
-/*   Updated: 2021/06/03 19:27:03 by wding-ha         ###   ########.fr       */
+/*   Created: 2021/05/19 15:17:23 by wding-ha          #+#    #+#             */
+/*   Updated: 2021/05/19 15:17:52 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isalpha(int c)
+char	*ft_strstr(const char *s1, const char *s2)
 {
-	if (c >= 65 && c <= 90)
-		return (1);
-	if (c >= 97 && c <= 122)
-		return (1);
-	return (0);
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (s1[i])
+	{
+		j = 0;
+		while (s1[i + j] == s2[j])
+		{
+			if (s2[j + 1] == '\0')
+				return ((char *)s1 + i);
+			j++;
+		}
+		i++;
+	}
+	return (NULL);
 }

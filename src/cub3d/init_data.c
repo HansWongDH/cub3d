@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
+/*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 14:00:08 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/12 18:19:40 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/15 17:12:13 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	init_xpm(t_data *data)
 
 void	init_images(t_data *data)
 {
-	data->map.img.img_p = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	data->map.img.img_p = mlx_new_image(data->mlx, data->map.width, data->map.height);
 	data->map.img.data = (int*)mlx_get_data_addr(data->map.img.img_p,
 			&data->map.img.bpp, &data->map.img.line_size, &data->map.img.endian);
 	data->game.img.img_p = mlx_new_image(data->mlx, GAME_WIDTH, GAME_HEIGHT);
@@ -42,13 +42,27 @@ void	init_images(t_data *data)
 			&data->game.img.bpp, &data->game.img.line_size, &data->game.img.endian);
 }
 
-void	init_data(t_data *data)
+void	init_data(t_data *data, char *file, int ac)
 {
+	t_coord	player_pos;
+	int		player_direction;
+
+	player_direction = 0;
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, 2500, 1080, "cub3d");
-	data->player = player_init();
-	data->map = map_init(ROW, COL, data->mlx);
-	data->game = game_init(&data->map, data->mlx);
-	init_images(data);
-	init_xpm(data);
+	if (ac != 2)
+	{
+		printf("Wrong argument count\n"); //change later
+		return ;
+	}
+	data->map = map_init(data->mlx, file, &player_pos, &player_direction);
+	if (data->map.flag == 0)
+	{
+		//free all data
+		return ; 
+	}
+	data->player = player_init(player_pos, player_direction);
+	//data->game = game_init(&data->map, data->mlx);
+	//init_images(data);
+	//init_xpm(data);
 }

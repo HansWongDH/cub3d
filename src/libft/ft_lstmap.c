@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun-zhe <hyun-zhe@student.42kl.edu.m      +#+  +:+       +#+        */
+/*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/24 17:28:57 by hyun-zhe          #+#    #+#             */
-/*   Updated: 2021/06/02 00:25:54 by hyun-zhe         ###   ########.fr       */
+/*   Created: 2021/05/24 21:11:11 by wding-ha          #+#    #+#             */
+/*   Updated: 2021/05/25 22:21:32 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,24 @@
 
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*newlst;
-	t_list	*temp;
+	t_list	*hold;
+	t_list	*elem;
 
-	if (!lst || !f)
+	if (!lst && !del)
 		return (NULL);
-	newlst = ft_lstnew((*f)(lst->content));
-	temp = newlst;
-	lst = lst->next;
-	while (lst && newlst)
+	hold = NULL;
+	while (lst != NULL)
 	{
-		newlst->next = ft_lstnew((*f)(lst->content));
-		if (!newlst->next)
-			ft_lstclear(&temp, del);
-		newlst = newlst->next;
+		elem = ft_lstnew(f(lst->content));
+		if (!elem)
+		{
+			ft_lstclear(&hold, del);
+			free(hold);
+			lst = NULL;
+			return (NULL);
+		}
+		ft_lstadd_back(&hold, elem);
 		lst = lst->next;
 	}
-	return (temp);
+	return (hold);
 }

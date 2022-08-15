@@ -3,49 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun-zhe <hyun-zhe@student.42kl.edu.m      +#+  +:+       +#+        */
+/*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/17 19:28:23 by hyun-zhe          #+#    #+#             */
-/*   Updated: 2021/06/06 20:37:49 by hyun-zhe         ###   ########.fr       */
+/*   Created: 2021/05/19 14:51:58 by wding-ha          #+#    #+#             */
+/*   Updated: 2021/06/03 19:28:12 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	char_in_set(char c, const char *set)
+int	searchchr(char const *set, char c)
 {
-	if (set)
+	int	i;
+
+	i = 0;
+	while (set[i])
 	{
-		while (*set)
-		{
-			if (c == *set++)
-				return (1);
-		}
+		if (set[i] == c)
+			return (1);
+		i++;
 	}
 	return (0);
 }
 
-char	*ft_strtrim(const char *s1, const char *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
-	int		i;
 	int		start;
 	int		end;
-	char	*newstr;
+	int		i;
+	char	*ret;
 
 	if (!s1)
 		return (NULL);
-	i = 0;
-	start = -1;
+	start = 0;
+	while (s1[start] && searchchr(set, s1[start]))
+		start++;
 	end = ft_strlen(s1);
-	while (++start < end && char_in_set(s1[start], set))
-		;
-	while (--end >= 0 && char_in_set(s1[end], set))
-		;
-	newstr = malloc(((end > 0) * (end - start + 1) * sizeof(char)) + 1);
-	if (!newstr)
+	while (end > start && searchchr(set, s1[end - 1]))
+		end--;
+	ret = malloc(sizeof(char) * end - start + 1);
+	if (ret == NULL)
 		return (NULL);
-	while (start <= end)
-		newstr[i++] = s1[start++];
-	newstr[i] = 0;
-	return (newstr);
+	i = 0;
+	while (start < end)
+	{
+		ret[i++] = s1[start++];
+	}
+	ret[i] = '\0';
+	return (ret);
 }

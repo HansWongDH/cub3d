@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyun-zhe <hyun-zhe@student.42kl.edu.m      +#+  +:+       +#+        */
+/*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/24 15:57:28 by hyun-zhe          #+#    #+#             */
-/*   Updated: 2021/05/24 15:59:42 by hyun-zhe         ###   ########.fr       */
+/*   Created: 2021/05/23 21:43:43 by wding-ha          #+#    #+#             */
+/*   Updated: 2021/05/23 21:50:30 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ t_list	*ft_lstlast(t_list *lst)
 	{
 		if (!lst->next)
 			return (lst);
-		else
-			lst = lst->next;
+		lst = lst->next;
 	}
 	return (lst);
 }
