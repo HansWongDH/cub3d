@@ -50,6 +50,6 @@ void			init_data(t_data *data, char *file, int ac);
 void			printmap(char **map);
 void			map_create(t_map *map, char *file, t_coord *player_pos);
 int				map_parsing(t_map *map, char *file, t_coord *player_pos, int *player_direction);
-void			map_info_init(t_info *data);
 int				map_validation(t_map *map);
+
 #endif
