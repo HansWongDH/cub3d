@@ -49,7 +49,7 @@ int				handle_key(int keycode, t_data *data);
 int				handle_exit(int keycode, t_data *data);
 void			init_xpm(t_data *data);
 void			init_images(t_data *data);
-void			init_data(t_data *data, char *file, int ac);
+void			init_data(t_data *data, char *file);
 void			printmap(char **map);
 void			map_create(t_map *map, char *file, t_coord *player_pos);
 int				map_parsing(t_map *map, char *file, t_coord *player_pos, int *player_direction);

@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 14:00:08 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/15 17:53:52 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/15 19:38:43 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	init_images(t_data *data)
 			&data->game.img.bpp, &data->game.img.line_size, &data->game.img.endian);
 }
 
-void	init_data(t_data *data, char *file, int ac)
+void	init_data(t_data *data, char *file)
 {
 	t_coord	player_pos;
 	int		player_direction;
@@ -50,16 +50,11 @@ void	init_data(t_data *data, char *file, int ac)
 	player_direction = 0;
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, 2500, 1080, "cub3d");
-	if (ac != 2)
-	{
-		printf("Wrong argument count\n"); //change later
-		return ;
-	}
 	data->map = map_init(data->mlx, file, &player_pos, &player_direction);
 	if (data->map.flag == 0)
 	{
 		//free all data
-		return ; 
+		exit(1);
 	}
 	data->player = player_init(player_pos, player_direction);
 	data->game = game_init(&data->map, data->mlx);

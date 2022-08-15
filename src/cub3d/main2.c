@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 13:07:32 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/15 18:44:39 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/15 19:31:01 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,13 @@ int		main(int ac, char **av)
 {
 	t_data	data;
 
-	init_data(&data, av[1], ac);
+	if (ac != 2)
+	{
+		printf("Wrong argument count\n");
+		printf("Usage: ./cub3d <.cub file>\n");
+		return (1);
+	}
+	init_data(&data, av[1]);
 	start_game(&data);
+	return (0);
 }
