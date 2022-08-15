@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:11:49 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/15 17:14:22 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/15 19:05:42 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	draw_player_direction(t_map *self, t_player *player)
 		if (self->img.data[self->width * (int)floor(ray.y)
 				+ (int)floor(ray.x)] != GREEN)
 			self->img.data[self->width * (int)floor(ray.y)
-				+ (int)floor(ray.x)] = RED;
+				+ (int)floor(ray.x)] = BLUE;
 		else
 			break ;
 		ray.x += delta.x;
@@ -140,7 +140,7 @@ t_map	map_init(void *mlx, char *file, t_coord *player_pos, int *player_direction
 	map.flag = 1;
 	map.print_map = print_map;
 	map.draw_map = draw_map;
-	//map.draw_player_direction = draw_player_direction;
+	map.draw_player_direction = draw_player_direction;
 	if (!map_parsing(&map, file, player_pos, player_direction))
 	{
 		map.flag = 0;

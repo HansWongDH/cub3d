@@ -6,7 +6,7 @@
 /*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:24:28 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/15 17:10:11 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/15 19:08:39 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,37 @@ float		get_player_direction_angle(int player_direction)
 	return (M_PI);
 }
 
-int			validate_move(t_player *player, int *map_data, int keycode)
+int				validate_move(t_player *player, t_map *map, int keycode)
 {
-	double	to_move_x;
-	double	to_move_y;
-	int		wall_padding;
+	t_vec	ray;
+	t_vec	delta;
+	double	max;
+	int		i;
 
-	wall_padding = 8;
-	if (keycode == KEY_W)
+	i = 0;
+	ray.x = player->pos.x;
+	ray.y = player->pos.y;
+	delta.x = cos(0) * player->ray_dir.x - sin(0) * player->ray_dir.y;
+	delta.y = sin(0) * player->ray_dir.x + cos(0) * player->ray_dir.y;
+	max = fmax(fabs(delta.x), fabs(delta.y));
+	delta.x /= max;
+	delta.y /= max;
+	while (i < 12)
 	{
-		to_move_x = (player->pos.x + player->ray_dir.x * (MOVE_GAP + wall_padding));
-		to_move_y = (player->pos.y + player->ray_dir.y * (MOVE_GAP + wall_padding));
-		if (map_data[WIDTH * (int)(to_move_y)
-				+ (int)(to_move_x)] == GREEN)
+		if (map->img.data[map->width * (int)floor(ray.y)
+				+ (int)floor(ray.x)] == GREEN)
 			return (0);
-	}
-	else if (keycode == KEY_S)
-	{
-		to_move_x = (player->pos.x - player->ray_dir.x * MOVE_GAP + wall_padding);
-		to_move_y = (player->pos.y - player->ray_dir.y * MOVE_GAP + wall_padding);
-		if (map_data[WIDTH * (int)(to_move_y)
-				+ (int)(to_move_x)] == GREEN)
-			return (0);
+		if (keycode == KEY_S)
+		{
+			ray.x -= delta.x;
+			ray.y -= delta.y;
+		}
+		else
+		{
+			ray.x += delta.x;
+			ray.y += delta.y;
+		}
+		i++;
 	}
 	return (1);
 }
@@ -68,18 +77,19 @@ void		turn_player(t_player *self, int keycode)
 	}
 }
 
-void		move_player(t_player *self, int *map_data, int keycode)
+void		move_player(t_player *self, int *map_data, int keycode, t_map *map)
 {
+	(void)map_data;
 	if (keycode == KEY_W)
 	{
-		if (validate_move(self, map_data, KEY_W) == 0)
+		if (validate_move(self, map, KEY_W) == 0)
 			return ;
 		self->pos.x += self->ray_dir.x * MOVE_GAP;
 		self->pos.y += self->ray_dir.y * MOVE_GAP;
 	}
 	else if (keycode == KEY_S)
 	{
-		if (validate_move(self, map_data, KEY_S) == 0)
+		if (validate_move(self, map, KEY_S) == 0)
 			return ;
 		self->pos.x -= self->ray_dir.x * MOVE_GAP;
 		self->pos.y -= self->ray_dir.y * MOVE_GAP;
@@ -109,7 +119,7 @@ t_player	player_init(t_coord player_pos, int player_direction)
 	player.direction = get_player_direction_angle(player_direction);
 	player.ray_dir.x = cos(player.direction);
 	player.ray_dir.y = sin(player.direction);
-	player.size = 3;
+	player.size = 6;
 	player.print_player(&player);
 	return (player);
 }

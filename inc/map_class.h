@@ -12,6 +12,7 @@
 # include "macros.h"
 
 typedef struct	c_map		t_map;
+typedef struct	c_player	t_player;
 
 typedef	void	(*t_print_map)(t_map *self);
 typedef void	(*t_draw_map)(t_map *self, t_player *player);
