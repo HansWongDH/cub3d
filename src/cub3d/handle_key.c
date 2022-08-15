@@ -6,7 +6,7 @@
 /*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 13:45:10 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/15 18:09:20 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/15 20:30:37 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,29 @@ int	handle_exit(int keycode, t_data *data)
 	(void)data;
 	(void)keycode;
 	exit(0);
+}
+
+int	handle_mouse(int x, int y, t_data *data)
+{
+	(void)y;
+	if (data->mouse_pos.x == -1)
+	{
+		data->mouse_pos.x = x;
+		return (0);
+	}
+	printf("================\n");
+	printf("old = %d\n", data->mouse_pos.x);
+	printf("new = %d\n", x);
+	if (x >= 0)
+	{
+		if (x > data->mouse_pos.x)
+			data->player.turn_player(&data->player, KEY_D);
+		else if (x < data->mouse_pos.x)
+			data->player.turn_player(&data->player, KEY_A);
+		else
+			return (0);
+		printf("================\n");
+		data->mouse_pos.x = x;
+	}
+	return (0);
 }

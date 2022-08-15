@@ -6,6 +6,7 @@
 # define X_KEY_PRESS	2
 # define X_KEY_RELEASE	3
 # define X_KEY_EXIT		17
+# define X_MOUSE_MOVE	6
 
 # define KEY_ESC	53
 # define KEY_W		13
@@ -17,7 +18,7 @@
 
 # define MOVE_GAP		3
 # define PLAYER_SIZE	10
-# define ROTATE_FACTOR	PI / 72
+# define ROTATE_FACTOR	PI / 54
 
 # define ROW			11 //remove to be dynamic
 # define COL			15 //remove to be dynamic
