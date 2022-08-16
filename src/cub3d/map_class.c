@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:11:49 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/16 13:44:47 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/16 15:07:56 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,11 @@ void	draw_tiles(t_map *map)
 		while (tile_coord.y < map->col)
 		{
 			if (map->array[tile_coord.x][tile_coord.y] == '1')
-				draw_square(map->img.data, tile_coord, map->width, get_argb_val(GREEN, MAP_TRANSPARENCY));
+				draw_square(map->img.data, tile_coord, map->width, get_argb_val(WALLCOL, MAP_TRANSPARENCY));
 			else if (map->array[tile_coord.x][tile_coord.y] == '0')
 				draw_square(map->img.data, tile_coord, map->width, get_argb_val(WHITE, MAP_TRANSPARENCY));
 			else
-				draw_square(map->img.data, tile_coord, map->width, get_argb_val(BLACK, MAP_TRANSPARENCY));
+				draw_square(map->img.data, tile_coord, map->width, get_argb_val(CIELCOL, MAP_TRANSPARENCY));
 			tile_coord.y++;
 		}
 		tile_coord.x++;
@@ -101,17 +101,12 @@ void	draw_player(t_map *map, t_player *player)
 		{
 			map->img.data[map->width
 				* ((int)player->pos.y + j - (player->size / 2))
-				+ ((int)player->pos.x + i - (player->size / 2))] = PINK;
+				+ ((int)player->pos.x + i - (player->size / 2))] = get_argb_val(RED, MAP_TRANSPARENCY - 20);
 			j++;
 		}
 		i++;
 	}
 }
-
-//void	draw_vision_ray(t_map *map, double angle)
-//{
-//
-//}
 
 void	draw_player_direction(t_map *self, t_player *player)
 {
@@ -129,7 +124,7 @@ void	draw_player_direction(t_map *self, t_player *player)
 	while (1)
 	{
 		if (self->img.data[self->width * (int)floor(ray.y)
-				+ (int)floor(ray.x)] != (int)get_argb_val(GREEN, MAP_TRANSPARENCY))
+				+ (int)floor(ray.x)] != (int)get_argb_val(WALLCOL, MAP_TRANSPARENCY))
 			self->img.data[self->width * (int)floor(ray.y)
 				+ (int)floor(ray.x)] = BLUE;
 		else
@@ -139,10 +134,58 @@ void	draw_player_direction(t_map *self, t_player *player)
 	}
 }
 
+void	draw_vision_line(t_map *self, t_player *player, double angle)
+{
+	t_vec	ray;
+	t_vec	delta;
+	double	max;
+	float	distance;
+
+	ray.x = player->pos.x;
+	ray.y = player->pos.y;
+	delta.x = cos(angle) * player->ray_dir.x - sin(angle) * player->ray_dir.y;
+	delta.y = sin(angle) * player->ray_dir.x + cos(angle) * player->ray_dir.y;
+	max = fmax(fabs(delta.x), fabs(delta.y));
+	delta.x /= max;
+	delta.y /= max;
+	distance = 0;
+	//while ((int)distance < (15 * (1/(fabs(angle) + 0.5))))
+	//while ((int)distance < 30)
+	//int i = 0;
+	//while (i++ < 10)
+	while (1)
+	{
+		if (self->img.data[self->width * (int)floor(ray.y)
+				+ (int)floor(ray.x)] != (int)get_argb_val(WALLCOL, MAP_TRANSPARENCY))
+			self->img.data[self->width * (int)floor(ray.y)
+				+ (int)floor(ray.x)] = GRAY;
+		else
+			break ;
+		distance = sqrt(pow(player->pos.x - ray.x, 2) + pow(player->pos.y - ray.y, 2)) * cos(angle);
+		ray.x += delta.x;
+		ray.y += delta.y;
+	}
+}
+
+void	draw_player_fov(t_map *self, t_player *player)
+{
+	double	angle;
+
+	angle = 0;
+	//while (angle < 2 * M_PI)
+	while (angle < 45 * M_PI / 180)
+	{
+		draw_vision_line(self, player, angle);
+		draw_vision_line(self, player, -angle);
+		angle += (1 * M_PI / 180);
+	}
+}
+
 void	draw_map(t_map *self, t_player *player)
 {
 	draw_tiles(self);
 	draw_player(self, player);
+	draw_player_fov(self, player);
 }
 
 t_map	map_init(void *mlx, char *file, t_coord *player_pos, int *player_direction)

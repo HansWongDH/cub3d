@@ -6,7 +6,7 @@
 /*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:24:28 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/16 13:41:23 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/16 13:51:44 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int				validate_move(t_player *player, t_map *map, int keycode)
 	while (i < 12)
 	{
 		if (map->img.data[map->width * (int)floor(ray.y)
-				+ (int)floor(ray.x)] == (int)get_argb_val(GREEN, MAP_TRANSPARENCY))
+				+ (int)floor(ray.x)] == (int)get_argb_val(WALLCOL, MAP_TRANSPARENCY))
 			return (0);
 		if (keycode == KEY_S)
 		{

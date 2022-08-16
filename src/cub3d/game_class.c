@@ -6,7 +6,7 @@
 /*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 17:40:40 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/12 18:22:26 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/16 13:50:00 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@ t_game	game_init(t_map *map, void *mlx)
 {
 	t_game	game;
 
-	game.height = map->height * 3; //i have no idea why its 3
-	game.width = map->width * 3;
+	//game.height = map->height * 3; //i have no idea why its 3
+	//game.width = map->width * 3;
+	(void)map;
+	game.width = WINDOW_WIDTH;
+	game.height = WINDOW_HEIGHT;
 	game.draw_sky = draw_sky;
 	game.img.img_p = mlx_new_image(mlx, game.width, game.height);
 	game.img.data = (int *)mlx_get_data_addr(game.img.img_p,

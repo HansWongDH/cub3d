@@ -8,6 +8,9 @@
 # define X_KEY_EXIT		17
 # define X_MOUSE_MOVE	6
 
+# define WINDOW_WIDTH	1200
+# define WINDOW_HEIGHT	900
+
 # define KEY_ESC	53
 # define KEY_W		13
 # define KEY_A		0
@@ -48,5 +51,6 @@
 # define BROWN			0xAB3428
 # define FLOORCOL		0x1E1E18
 # define CIELCOL		0x183C30
+# define WALLCOL		GRAY
 
 #endif

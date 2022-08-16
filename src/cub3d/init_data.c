@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 14:00:08 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/15 19:38:43 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/16 13:50:14 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	init_images(t_data *data)
 	data->map.img.img_p = mlx_new_image(data->mlx, data->map.width, data->map.height);
 	data->map.img.data = (int*)mlx_get_data_addr(data->map.img.img_p,
 			&data->map.img.bpp, &data->map.img.line_size, &data->map.img.endian);
-	data->game.img.img_p = mlx_new_image(data->mlx, GAME_WIDTH, GAME_HEIGHT);
+	data->game.img.img_p = mlx_new_image(data->mlx, data->game.width, data->game.height);
 	data->game.img.data = (int*)mlx_get_data_addr(data->game.img.img_p,
 			&data->game.img.bpp, &data->game.img.line_size, &data->game.img.endian);
 }
@@ -49,7 +49,7 @@ void	init_data(t_data *data, char *file)
 
 	player_direction = 0;
 	data->mlx = mlx_init();
-	data->win = mlx_new_window(data->mlx, 2500, 1080, "cub3d");
+	data->win = mlx_new_window(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3d");
 	data->map = map_init(data->mlx, file, &player_pos, &player_direction);
 	if (data->map.flag == 0)
 	{

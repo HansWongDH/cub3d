@@ -6,7 +6,7 @@
 /*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 13:45:10 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/15 20:30:37 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/16 14:59:47 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ int	handle_exit(int keycode, t_data *data)
 
 int	handle_mouse(int x, int y, t_data *data)
 {
+	//idk what how the fuck im supposed to achive mouse 
+	//movement based on mouse displacemnt NOT relative to pixel pos
+	//can ntry to reset mouse to middle everytime but all mouse prototyeps dont fucking work
 	(void)y;
 	if (data->mouse_pos.x == -1)
 	{
@@ -48,16 +51,19 @@ int	handle_mouse(int x, int y, t_data *data)
 	printf("================\n");
 	printf("old = %d\n", data->mouse_pos.x);
 	printf("new = %d\n", x);
-	if (x >= 0)
+	if (x >= 0 && x <= WINDOW_WIDTH)
 	{
-		if (x > data->mouse_pos.x)
-			data->player.turn_player(&data->player, KEY_D);
-		else if (x < data->mouse_pos.x)
-			data->player.turn_player(&data->player, KEY_A);
-		else
-			return (0);
-		printf("================\n");
-		data->mouse_pos.x = x;
+		if (abs(x - data->mouse_pos.x) > 10)
+		{
+			if (x > data->mouse_pos.x)
+				data->player.turn_player(&data->player, KEY_D);
+			else if (x < data->mouse_pos.x)
+				data->player.turn_player(&data->player, KEY_A);
+			else
+				return (0);
+			printf("================\n");
+			data->mouse_pos.x = x;
+		}
 	}
 	return (0);
 }
