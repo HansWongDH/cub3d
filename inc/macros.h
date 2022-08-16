@@ -16,13 +16,14 @@
 # define KEY_Q		12
 # define KEY_E		14
 
-# define MOVE_GAP		3
-# define PLAYER_SIZE	10
-# define ROTATE_FACTOR	PI / 54
+# define MOVE_GAP			3
+# define PLAYER_SIZE		10
+# define ROTATE_FACTOR		PI / 54
+# define MAP_TRANSPARENCY	88
 
 # define ROW			11 //remove to be dynamic
 # define COL			15 //remove to be dynamic
-# define TILE_SIZE		32
+# define TILE_SIZE		16
 # define WIDTH			COL * TILE_SIZE //480 //remove to be dynamic
 # define HEIGHT			ROW * TILE_SIZE //352 //remove to be dynamic
 

@@ -6,12 +6,24 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:11:49 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/15 19:05:42 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/16 13:44:47 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "cub3d.h"
+
+unsigned int	get_argb_val(int colour, int transparency)
+{
+	float	trasparency_percentage;
+	int		col_in_argb;
+
+	if (transparency < 0 || transparency > 100)
+		return (colour);
+	trasparency_percentage = (float)transparency / 100 * 255;
+	col_in_argb = colour | ((int)trasparency_percentage << 24);
+	return (col_in_argb);
+}
 
 void	print_map(t_map *self)
 {
@@ -65,11 +77,11 @@ void	draw_tiles(t_map *map)
 		while (tile_coord.y < map->col)
 		{
 			if (map->array[tile_coord.x][tile_coord.y] == '1')
-				draw_square(map->img.data, tile_coord, map->width, GREEN);
+				draw_square(map->img.data, tile_coord, map->width, get_argb_val(GREEN, MAP_TRANSPARENCY));
 			else if (map->array[tile_coord.x][tile_coord.y] == '0')
-				draw_square(map->img.data, tile_coord, map->width, WHITE);
+				draw_square(map->img.data, tile_coord, map->width, get_argb_val(WHITE, MAP_TRANSPARENCY));
 			else
-				draw_square(map->img.data, tile_coord, map->width, BLACK);
+				draw_square(map->img.data, tile_coord, map->width, get_argb_val(BLACK, MAP_TRANSPARENCY));
 			tile_coord.y++;
 		}
 		tile_coord.x++;
@@ -117,7 +129,7 @@ void	draw_player_direction(t_map *self, t_player *player)
 	while (1)
 	{
 		if (self->img.data[self->width * (int)floor(ray.y)
-				+ (int)floor(ray.x)] != GREEN)
+				+ (int)floor(ray.x)] != (int)get_argb_val(GREEN, MAP_TRANSPARENCY))
 			self->img.data[self->width * (int)floor(ray.y)
 				+ (int)floor(ray.x)] = BLUE;
 		else

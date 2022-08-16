@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 13:07:32 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/15 20:23:53 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/16 13:34:40 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 
 void	put_images(t_data *data)
 {
-	mlx_put_image_to_window(data->mlx, data->win, data->map.img.img_p, 0, 0);
 	mlx_put_image_to_window(data->mlx, data->win, data->north_wall.img_p, XPM_SIZE, HEIGHT);
 	mlx_put_image_to_window(data->mlx, data->win, data->east_wall.img_p, XPM_SIZE * 2, HEIGHT + XPM_SIZE);
 	mlx_put_image_to_window(data->mlx, data->win, data->south_wall.img_p, XPM_SIZE, HEIGHT + 2 * XPM_SIZE);
 	mlx_put_image_to_window(data->mlx, data->win, data->west_wall.img_p, 0, HEIGHT + XPM_SIZE);
-	mlx_put_image_to_window(data->mlx, data->win, data->game.img.img_p, WIDTH + 10, 0);
+	//mlx_put_image_to_window(data->mlx, data->win, data->game.img.img_p, WIDTH + 10, 0);
+	mlx_put_image_to_window(data->mlx, data->win, data->game.img.img_p, 0, 0);
+	mlx_put_image_to_window(data->mlx, data->win, data->map.img.img_p, 0, 0);
 }
 
 int			draw_loop(t_data *data)
@@ -28,8 +29,7 @@ int			draw_loop(t_data *data)
 	data->map.draw_map(&data->map, &data->player);
 	data->game.draw_sky(&data->game);
 	data->map.draw_player_direction(&data->map, &data->player);
-	mlx_put_image_to_window(data->mlx, data->win, data->map.img.img_p, 0, 0);
-	//put_images(data);
+	put_images(data);
 	return (0);
 }
 
@@ -38,7 +38,7 @@ void	start_game(t_data *data)
 	data->mouse_pos.x = -1;
 	mlx_hook(data->win, X_KEY_PRESS, 0, handle_key, data);
 	mlx_hook(data->win, X_KEY_EXIT, 0, handle_exit, data);
-	mlx_hook(data->win, X_MOUSE_MOVE, 0, handle_mouse, data);
+	//mlx_hook(data->win, X_MOUSE_MOVE, 0, handle_mouse, data);
 	mlx_loop_hook(data->mlx, draw_loop, data);
 	mlx_loop(data->mlx);
 }
