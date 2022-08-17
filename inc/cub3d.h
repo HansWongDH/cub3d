@@ -45,7 +45,7 @@ typedef struct	s_data
 	t_coord		mouse_pos;
 }				t_data;
 
-float			get_positive_value_of_angle(float angle);
+float			get_positive_value_of_angle(double angle);
 int				handle_key(int keycode, t_data *data);
 int				handle_exit(int keycode, t_data *data);
 int				handle_mouse(int x, int y, t_data *data);

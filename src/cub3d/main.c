@@ -232,7 +232,8 @@
 //		for (int j = 0; j < y_scale; j++)
 //		{
 //			if (direction == NORTH)
-//				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 24) - X_SCALE/2)] =
+//				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - y_scale/2)
+//				+ (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 24) - X_SCALE/2)] =
 //					data->north_wall.data[XPM_SIZE * (int)((float)j/(float)y_scale * 64) + (int)x_offset];
 //			else if (direction == EAST)
 //				data->game.data[GAME_WIDTH * (j + GAME_HEIGHT/2 - y_scale/2) + (i + GAME_WIDTH/2 + (int)(angle * 180 / PI * 24) - X_SCALE/2)] =

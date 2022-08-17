@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:11:49 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/16 15:07:56 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/17 09:43:36 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ void	draw_player_fov(t_map *self, t_player *player)
 	{
 		draw_vision_line(self, player, angle);
 		draw_vision_line(self, player, -angle);
-		angle += (1 * M_PI / 180);
+		angle += (0.1 * M_PI / 180);
 	}
 }
 

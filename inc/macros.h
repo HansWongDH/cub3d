@@ -8,8 +8,8 @@
 # define X_KEY_EXIT		17
 # define X_MOUSE_MOVE	6
 
-# define WINDOW_WIDTH	1200
-# define WINDOW_HEIGHT	900
+# define WINDOW_WIDTH	1440 //1200
+# define WINDOW_HEIGHT	1056 //900
 
 # define KEY_ESC	53
 # define KEY_W		13
@@ -24,18 +24,19 @@
 # define ROTATE_FACTOR		PI / 54
 # define MAP_TRANSPARENCY	88
 
-# define ROW			11 //remove to be dynamic
-# define COL			15 //remove to be dynamic
-# define TILE_SIZE		16
-# define WIDTH			COL * TILE_SIZE //480 //remove to be dynamic
-# define HEIGHT			ROW * TILE_SIZE //352 //remove to be dynamic
+# define ROW				11 //remove to be dynamic
+# define COL				15 //remove to be dynamic
+# define TILE_SIZE			32
+# define WIDTH				COL * TILE_SIZE //480 //remove to be dynamic
+# define HEIGHT				ROW * TILE_SIZE //352 //remove to be dynamic
 
-# define GAME_SCALE		16
-# define GAME_TILE		GAME_SCALE * TILE_SIZE //256
-# define GAME_WIDTH 	WIDTH * 3 //needs to by dynamic
-# define GAME_HEIGHT	HEIGHT * 3 //needs to by dynamic
-# define X_SCALE		4
-# define Y_INV_SCALE	32000
+# define GAME_SCALE			16
+# define GAME_TILE			GAME_SCALE * TILE_SIZE //256
+# define GAME_WIDTH 		WIDTH * 3 //needs to by dynamic
+# define GAME_HEIGHT		HEIGHT * 3 //needs to by dynamic
+# define X_SCALE			4
+# define Y_INV_SCALE		32000
+# define Y_SCALE(distance)	(8000/distance)
 
 # define XPM_SIZE		64
 
