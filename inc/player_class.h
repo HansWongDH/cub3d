@@ -25,6 +25,7 @@ struct			c_player
 	t_print_player	print_player;
 	t_vec			pos;
 	t_vec			ray_dir;
+	t_vec			plane_dir;
 	double			direction;
 	int				size;
 };

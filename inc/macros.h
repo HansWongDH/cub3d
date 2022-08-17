@@ -36,7 +36,7 @@
 # define GAME_HEIGHT		HEIGHT * 3 //needs to by dynamic
 # define X_SCALE			4
 # define Y_INV_SCALE		32000
-# define Y_SCALE(distance)	(8000/distance)
+# define Y_SCALE(distance)	(28000/distance)
 
 # define XPM_SIZE		64
 

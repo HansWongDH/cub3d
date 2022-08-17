@@ -39,4 +39,14 @@ typedef struct	s_xpm
 	int			height;
 }				t_xpm;
 
+typedef struct	s_math
+{
+	double		camera_x;
+	t_vec		ray_dir;
+	t_vec		delta_dist;
+	t_vec		side_dist;
+	t_coord		map_pos;
+	t_coord		step;
+}				t_math;
+
 #endif
