@@ -6,7 +6,7 @@
 /*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 17:40:40 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/17 11:48:09 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/17 12:50:49 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,15 +98,15 @@ void	render_walls(t_data *data, t_vec ray, double angle)
 	direction = get_direction_of_ray(data->player.direction, angle);
 	x_offset = get_x_offset_for_tile_position(direction, ray);
 
-	printf("====================\n");
-	printf("distance  | %f\n", distance);
-	printf("x_scale   | %d\n", X_SCALE);
-	printf("y_scale   | %d\n", (int)Y_SCALE(distance));
-	printf("direction | %d\n", direction);
-	printf("x_offset  | %f\n", x_offset);
-	printf("width     | %d\n", data->game.width);
-	printf("height    | %d\n", data->game.height);
-	printf("====================\n");
+	//printf("====================\n");
+	//printf("distance  | %f\n", distance);
+	//printf("x_scale   | %d\n", X_SCALE);
+	//printf("y_scale   | %d\n", (int)Y_SCALE(distance));
+	//printf("direction | %d\n", direction);
+	//printf("x_offset  | %f\n", x_offset);
+	//printf("width     | %d\n", data->game.width);
+	//printf("height    | %d\n", data->game.height);
+	//printf("====================\n");
 	//loop.y = 0;
 	//printf("y_val     | %d\n", (int)(loop.y + data->game.height / 2 - Y_SCALE(distance) / 2));
 	//printf("p1        | %d\n", (int)(loop.y + data->game.height / 2));
@@ -119,9 +119,9 @@ void	render_walls(t_data *data, t_vec ray, double angle)
 		loop.y = 0;
 		while (loop.y < Y_SCALE(distance))
 		{
-			//game_pos_to_draw = data->game.width * (loop.y + data->game.height / 2 - Y_SCALE(distance) / 2)
-			//	+ (loop.x + data->game.width / 2 + (int)(angle * 180 / M_PI * 24) - X_SCALE / 2);
-			game_pos_to_draw = data->game.width * (loop.y + data->game.height/2 - Y_SCALE(distance)/2);
+			game_pos_to_draw = data->game.width * (loop.y + data->game.height / 2 - Y_SCALE(distance) / 2)
+				+ (loop.x + data->game.width / 2 + (int)(angle * 180 / M_PI * 24) - X_SCALE / 2);
+			//game_pos_to_draw = data->game.width * (loop.y + data->game.height/2 - Y_SCALE(distance)/2);
 			xpm_pos = XPM_SIZE * (int)((float)loop.y/(float)Y_SCALE(distance) * XPM_SIZE) + (int)x_offset;
 			//printf("================\n");
 			//printf("x     | %d\n", loop.x);
@@ -129,7 +129,7 @@ void	render_walls(t_data *data, t_vec ray, double angle)
 			//printf("game  | %d\n", game_pos_to_draw);
 			//printf("wall  | %d\n", xpm_pos);
 			//printf("================\n");
-			data->game.img.data[game_pos_to_draw] = GREEN;
+			data->game.img.data[game_pos_to_draw] = data->north_wall.data[xpm_pos];
 			loop.y++;
 		}
 		loop.x++;
@@ -176,17 +176,18 @@ void	draw_game(t_game *self, t_map *map, t_player *player, t_xpm *wall)
 	data.map = *map;
 	data.player = *player;
 	data.north_wall = *wall;
-	find_wall_collision(&data, 0);
+	//find_wall_collision(&data, 0);
 	//find_wall_collision(&data, 1);
 	//find_wall_collision(&data, -1);
-	//while (angle < (M_PI * 30/180))
-	//{
-	//	//find_wall_collision(self, map, player, angle);
-	//	//find_wall_collision(self, map, player, -angle);
-	//	find_wall_collision(&data, angle);
-	//	find_wall_collision(&data, -angle);
-	//	angle += (M_PI * 0.1/180);
-	//}
+
+	while (angle < (M_PI * 30/180))
+	{
+		//find_wall_collision(self, map, player, angle);
+		//find_wall_collision(self, map, player, -angle);
+		find_wall_collision(&data, angle);
+		find_wall_collision(&data, -angle);
+		angle += (M_PI * 0.1/180);
+	}
 }
 
 t_game	game_init(t_map *map, void *mlx)

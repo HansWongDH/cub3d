@@ -6,7 +6,7 @@
 /*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 14:52:10 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/17 10:52:23 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/17 12:49:42 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		equate_float(float a, float b)
 
 int		greater_than_float(float a, float b)
 {
-	return (a - b) > ( (fabs(a) < fabs(b) ? fabs(b) : fabs(a)) * FLT_EPSILON);
+	return (a - b) > ((fabs(a) < fabs(b) ? fabs(b) : fabs(a)) * FLT_EPSILON);
 }
 
 int		less_than_float(float a, float b)
