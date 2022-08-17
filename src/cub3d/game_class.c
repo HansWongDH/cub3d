@@ -6,7 +6,7 @@
 /*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 17:40:40 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/17 12:50:49 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/17 13:21:40 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	render_walls(t_data *data, t_vec ray, double angle)
 	x_offset = get_x_offset_for_tile_position(direction, ray);
 
 	//printf("====================\n");
+	//printf("player xy | %f,%f\n", data->player.pos.x, data->player.pos.y);
 	//printf("distance  | %f\n", distance);
 	//printf("x_scale   | %d\n", X_SCALE);
 	//printf("y_scale   | %d\n", (int)Y_SCALE(distance));
@@ -107,28 +108,15 @@ void	render_walls(t_data *data, t_vec ray, double angle)
 	//printf("width     | %d\n", data->game.width);
 	//printf("height    | %d\n", data->game.height);
 	//printf("====================\n");
-	//loop.y = 0;
-	//printf("y_val     | %d\n", (int)(loop.y + data->game.height / 2 - Y_SCALE(distance) / 2));
-	//printf("p1        | %d\n", (int)(loop.y + data->game.height / 2));
-	//printf("p2        | %d\n", (int)(Y_SCALE(distance) / 2));
 	loop.x = 0;
-	//(void)game_pos_to_draw;
-	//(void)xpm_pos;
 	while (loop.x < X_SCALE)
 	{
 		loop.y = 0;
 		while (loop.y < Y_SCALE(distance))
 		{
-			game_pos_to_draw = data->game.width * (loop.y + data->game.height / 2 - Y_SCALE(distance) / 2)
-				+ (loop.x + data->game.width / 2 + (int)(angle * 180 / M_PI * 24) - X_SCALE / 2);
-			//game_pos_to_draw = data->game.width * (loop.y + data->game.height/2 - Y_SCALE(distance)/2);
+			game_pos_to_draw = data->game.width * (loop.y + data->game.height/2 - (int)Y_SCALE(distance)/2)
+				+ (loop.x + data->game.width/2 + - X_SCALE/2 + (int)(angle * 180 / M_PI * 20) - X_SCALE/2);
 			xpm_pos = XPM_SIZE * (int)((float)loop.y/(float)Y_SCALE(distance) * XPM_SIZE) + (int)x_offset;
-			//printf("================\n");
-			//printf("x     | %d\n", loop.x);
-			//printf("y     | %d\n", loop.y);
-			//printf("game  | %d\n", game_pos_to_draw);
-			//printf("wall  | %d\n", xpm_pos);
-			//printf("================\n");
 			data->game.img.data[game_pos_to_draw] = data->north_wall.data[xpm_pos];
 			loop.y++;
 		}
