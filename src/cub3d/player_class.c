@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:24:28 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/17 20:32:22 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/18 12:26:17 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,15 +79,15 @@ void		turn_player(t_player *self, int keycode)
 {
 	double	oldray_dirX;
 	double	oldplane_dirX;
-	
+
 	oldray_dirX = self->ray_dir.x;
 	oldplane_dirX = self->plane_dir.x;
 	if (keycode == KEY_A)
 	{
 		self->ray_dir.x =  self->ray_dir.x * cos(-ROTATE_FACTOR) - self->ray_dir.y * sin(-ROTATE_FACTOR);
 		self->ray_dir.y = oldray_dirX * sin(-ROTATE_FACTOR) + self->ray_dir.y * cos(-ROTATE_FACTOR);
-    	self->plane_dir.x = self->plane_dir.x * cos(-ROTATE_FACTOR) - self->plane_dir.y * sin(-ROTATE_FACTOR);
-    	self->plane_dir.y = oldplane_dirX * sin(-ROTATE_FACTOR) + self->plane_dir.y * cos(-ROTATE_FACTOR);
+		self->plane_dir.x = self->plane_dir.x * cos(-ROTATE_FACTOR) - self->plane_dir.y * sin(-ROTATE_FACTOR);
+		self->plane_dir.y = oldplane_dirX * sin(-ROTATE_FACTOR) + self->plane_dir.y * cos(-ROTATE_FACTOR);
 		// printf("plane x = %f\n", self->plane_dir.x);
 		// printf("plane y = %f\n", self->plane_dir.x);
 		// printf("dir x   = %f\n", self->ray_dir.x);
@@ -97,8 +97,8 @@ void		turn_player(t_player *self, int keycode)
 	{
 		self->ray_dir.x =  self->ray_dir.x * cos(ROTATE_FACTOR) - self->ray_dir.y * sin(ROTATE_FACTOR);
 		self->ray_dir.y = oldray_dirX * sin(ROTATE_FACTOR) + self->ray_dir.y * cos(ROTATE_FACTOR);
-    	self->plane_dir.x = self->plane_dir.x * cos(ROTATE_FACTOR) - self->plane_dir.y * sin(ROTATE_FACTOR);
-    	self->plane_dir.y = oldplane_dirX * sin(ROTATE_FACTOR) + self->plane_dir.y * cos(ROTATE_FACTOR);
+		self->plane_dir.x = self->plane_dir.x * cos(ROTATE_FACTOR) - self->plane_dir.y * sin(ROTATE_FACTOR);
+		self->plane_dir.y = oldplane_dirX * sin(ROTATE_FACTOR) + self->plane_dir.y * cos(ROTATE_FACTOR);
 		// printf("plane x = %f\n", self->plane_dir.x);
 		// printf("plane y = %f\n", self->plane_dir.x);
 		// printf("dir x   = %f\n", self->ray_dir.x);

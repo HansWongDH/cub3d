@@ -57,5 +57,6 @@ void			map_create(t_map *map, char *file, t_coord *player_pos);
 int				map_parsing(t_map *map, char *file, t_coord *player_pos, int *player_direction);
 int				map_validation(t_map *map);
 unsigned int	get_argb_val(int colour, int transparency);
+int				shade_colour(int colour, int percent);
 
 #endif

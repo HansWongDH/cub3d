@@ -1,14 +1,14 @@
 //#include "cub3d.h"
 //#include "libft.h"
 
-//int shade_colour(int colour, int percent)
-//{
-//	(void)percent;
-//	int i = 0;
-//	while (i++ < percent)
-//		colour = ((colour & 0x7E7E7E) >> 1) | (colour & 0x808080);
-//	return (colour);
-//}
+int shade_colour(int colour, int percent)
+{
+	(void)percent;
+	int i = 0;
+	while (i++ < percent)
+		colour = ((colour & 0x7E7E7E) >> 1) | (colour & 0x808080);
+	return (colour);
+}
 
 //int	handle_key(int keycode, t_data *data)
 //{
