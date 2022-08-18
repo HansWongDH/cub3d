@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 17:40:40 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/18 14:51:23 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/18 17:11:11 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,42 +115,43 @@ double		get_x_offset_for_tile_position(t_direction direction, t_vec vec)
 // 		{
 // 			game_pos_to_draw = data->game.width * (loop.y + data->game.height / 2 - Y_SCALE(distance) / 2)
 // 				+ (loop.x + data->game.width / 2 + (int)(angle * 180 / M_PI * 24) - X_SCALE / 2);
-// 			xpm_pos = XPM_SIZE * (int)((float)loop.y/(float)Y_SCALE(distance) * XPM_SIZE) + (int)x_offset;
-// 			data->game.img.data[game_pos_to_draw] = data->north_wall.data[xpm_pos];
+			// xpm_pos = XPM_SIZE * (int)((float)loop.y/(float)Y_SCALE(distance) * XPM_SIZE) + (int)x_offset;
+			// data->game.img.data[game_pos_to_draw] = data->north_wall.data[xpm_pos];
 // 			loop.y++;
 // 		}
 // 		loop.x++;
 // 	}
 // }
 
-void	render_walls2(t_data *data, int index, double wall_distance, double wall)
+void	render_walls2(t_data *data, int index, double wall_distance, double wall, int side)
 {
 	int		j;
 	int		game_pos_to_draw;
 	int		factor;
+	double	xpm_pos;
 
-
-	//printf("wall_distanse     | %f\n", wall_distance);
-	factor = 4000/wall_distance;
 	j = 0;
+	factor = 12000/wall_distance;
 	while (j < factor)
 	{
 		game_pos_to_draw = data->game.width * (j + (data->game.height / 2)) + (GAME_WIDTH - index);
-		if (game_pos_to_draw <= data->game.width * data->game.height)
+		if (game_pos_to_draw <= data->game.width * data->game.height) //bottom part
 		{
-			if ((int)wall % 2 == 0)
-				data->game.img.data[game_pos_to_draw] = 0x006400;
+			xpm_pos = XPM_SIZE * (round(((float)j/(float)factor) * XPM_SIZE/2 + XPM_SIZE/2)) + ((float)((int)wall % TILE_SIZE)/TILE_SIZE * XPM_SIZE);
+			if (side == 0)
+				data->game.img.data[game_pos_to_draw] = data->north_wall.data[(int)xpm_pos];
 			else
-				data->game.img.data[game_pos_to_draw] = 0x31572c; //dark
+				data->game.img.data[game_pos_to_draw] = data->south_wall.data[(int)xpm_pos]; //dark
 		}
 
 		game_pos_to_draw = data->game.width * (factor - j + (data->game.height / 2) - 1) + (index);
-		if (data->game.width * data->game.height - game_pos_to_draw >= 0)
+		if (data->game.width * data->game.height - game_pos_to_draw >= 0) //top part
 		{
-			if ((int)wall % 2 == 0)
-				data->game.img.data[data->game.width * data->game.height - game_pos_to_draw] = 0x006400;
+			xpm_pos = XPM_SIZE * (round(((float)j/(float)factor)/2 * XPM_SIZE)) + ((float)((int)wall % TILE_SIZE)/TILE_SIZE * XPM_SIZE);
+			if (side == 0)
+				data->game.img.data[data->game.width * data->game.height - game_pos_to_draw] = data->north_wall.data[(int)xpm_pos];
 			else
-				data->game.img.data[data->game.width * data->game.height - game_pos_to_draw] = 0x31572c; //dark
+				data->game.img.data[data->game.width * data->game.height - game_pos_to_draw] = data->south_wall.data[(int)xpm_pos]; //dark
 		}
 		j++;
 	}
@@ -238,6 +239,8 @@ void	draw_game(t_data *data)
 	i = 1; //to handle overflow on the left side
 	while (i < data->game.width)
 	{
+		// if (i >= data->game.width / 2 && i <= data->game.width / 2)
+		// {
 		math.camera_x = 2 * i / (double)data->game.width - 1;
 		math.ray_dir.x = data->player.ray_dir.x + data->player.plane_dir.x * math.camera_x;
 		math.ray_dir.y = data->player.ray_dir.y + data->player.plane_dir.y * math.camera_x;
@@ -248,7 +251,8 @@ void	draw_game(t_data *data)
 		get_side_magtitude(&math, &data->player);
 		wall_distance = execute_dda(&math, &data->map, &data->player, &side);
 		wall = wall_collision(&math, data, side, wall_distance);
-		render_walls2(data, i, wall_distance, wall);
+		render_walls2(data, i, wall_distance, wall, side);
+		// }
 		i++;
 	}
 }
