@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 17:40:40 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/18 14:15:22 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/18 14:51:23 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ double		get_x_offset_for_tile_position(t_direction direction, t_vec vec)
 // 	}
 // }
 
-void	render_walls2(t_data *data, int index, double wall_distance, int side)
+void	render_walls2(t_data *data, int index, double wall_distance, double wall)
 {
 	int		j;
 	int		game_pos_to_draw;
@@ -138,7 +138,7 @@ void	render_walls2(t_data *data, int index, double wall_distance, int side)
 		game_pos_to_draw = data->game.width * (j + (data->game.height / 2)) + (GAME_WIDTH - index);
 		if (game_pos_to_draw <= data->game.width * data->game.height)
 		{
-			if (side == 1)
+			if ((int)wall % 2 == 0)
 				data->game.img.data[game_pos_to_draw] = 0x006400;
 			else
 				data->game.img.data[game_pos_to_draw] = 0x31572c; //dark
@@ -147,7 +147,7 @@ void	render_walls2(t_data *data, int index, double wall_distance, int side)
 		game_pos_to_draw = data->game.width * (factor - j + (data->game.height / 2) - 1) + (index);
 		if (data->game.width * data->game.height - game_pos_to_draw >= 0)
 		{
-			if (side == 1)
+			if ((int)wall % 2 == 0)
 				data->game.img.data[data->game.width * data->game.height - game_pos_to_draw] = 0x006400;
 			else
 				data->game.img.data[data->game.width * data->game.height - game_pos_to_draw] = 0x31572c; //dark
@@ -218,10 +218,19 @@ double	execute_dda(t_math *math, t_map *map, t_player *player, int *side)
 	}
 	return (dist);
 }
-
+double	wall_collision(t_math *math, t_data *data, int side, double distance)
+{
+	double	wall;
+	if (side == 0)
+		wall = data->player.pos.y + distance * math->ray_dir.y;
+	else
+		wall = data->player.pos.x + distance * math->ray_dir.x;
+	return (floor(wall));
+}
 void	draw_game(t_data *data)
 {
 	t_math	math;
+	double	wall;
 	double	wall_distance;
 	int		i;
 	int		side;
@@ -238,7 +247,8 @@ void	draw_game(t_data *data)
 		math.map_pos.y = (int)data->player.pos.y;
 		get_side_magtitude(&math, &data->player);
 		wall_distance = execute_dda(&math, &data->map, &data->player, &side);
-		render_walls2(data, i, wall_distance, side);
+		wall = wall_collision(&math, data, side, wall_distance);
+		render_walls2(data, i, wall_distance, wall);
 		i++;
 	}
 }
