@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 13:07:32 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/17 13:33:43 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/18 14:38:56 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 
 void	put_images(t_data *data)
 {
-	mlx_put_image_to_window(data->mlx, data->win, data->north_wall.img_p, XPM_SIZE, HEIGHT);
-	mlx_put_image_to_window(data->mlx, data->win, data->east_wall.img_p, XPM_SIZE * 2, HEIGHT + XPM_SIZE);
-	mlx_put_image_to_window(data->mlx, data->win, data->south_wall.img_p, XPM_SIZE, HEIGHT + 2 * XPM_SIZE);
-	mlx_put_image_to_window(data->mlx, data->win, data->west_wall.img_p, 0, HEIGHT + XPM_SIZE);
-	//mlx_put_image_to_window(data->mlx, data->win, data->game.img.img_p, WIDTH + 10, 0);
+	//mlx_put_image_to_window(data->mlx, data->win, data->north_wall.img_p, XPM_SIZE, HEIGHT);
+	//mlx_put_image_to_window(data->mlx, data->win, data->east_wall.img_p, XPM_SIZE * 2, HEIGHT + XPM_SIZE);
+	//mlx_put_image_to_window(data->mlx, data->win, data->south_wall.img_p, XPM_SIZE, HEIGHT + 2 * XPM_SIZE);
+	//mlx_put_image_to_window(data->mlx, data->win, data->west_wall.img_p, 0, HEIGHT + XPM_SIZE);
 	mlx_put_image_to_window(data->mlx, data->win, data->game.img.img_p, 0, 0);
 	mlx_put_image_to_window(data->mlx, data->win, data->map.img.img_p, 0, 0);
 }
@@ -27,9 +26,9 @@ void	put_images(t_data *data)
 int			draw_loop(t_data *data)
 {
 	data->map.draw_map(&data->map, &data->player);
-	data->map.draw_player_direction(&data->map, &data->player);
+	//data->map.draw_player_direction(&data->map, &data->player);
 	data->game.draw_sky(&data->game);
-	data->game.draw_game(&data->game, &data->map, &data->player, &data->north_wall);
+	data->game.draw_game(data);
 	put_images(data);
 	return (0);
 }

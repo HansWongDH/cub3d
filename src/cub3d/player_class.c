@@ -3,25 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   player_class.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
+/*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:24:28 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/16 13:51:44 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/18 12:26:17 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "cub3d.h"
 
-float		get_player_direction_angle(int player_direction)
+t_vec	get_player_direction_angle(int player_direction)
 {
+	t_vec	vec;
+
 	if (player_direction == 'N')
-		return (3 * M_PI / 2);
-	if (player_direction == 'E')
-		return (0);
-	if (player_direction == 'S')
-		return (M_PI / 2);
-	return (M_PI);
+	{
+		vec.x = 0;
+		vec.y = -1;
+	}
+	else if (player_direction == 'E')
+	{
+		vec.x = 1;
+		vec.y = 0;
+	}
+	else if (player_direction == 'S')
+	{
+		vec.x = 0;
+		vec.y = 1;
+	}
+	else
+	{
+		vec.x = -1;
+		vec.y = 0;
+	}
+	return (vec);
 }
 
 int				validate_move(t_player *player, t_map *map, int keycode)
@@ -61,19 +77,32 @@ int				validate_move(t_player *player, t_map *map, int keycode)
 
 void		turn_player(t_player *self, int keycode)
 {
+	double	oldray_dirX;
+	double	oldplane_dirX;
+
+	oldray_dirX = self->ray_dir.x;
+	oldplane_dirX = self->plane_dir.x;
 	if (keycode == KEY_A)
 	{
-		self->direction -= ROTATE_FACTOR;
-		self->direction = get_positive_value_of_angle(self->direction);
-		self->ray_dir.x = cos(self->direction);
-		self->ray_dir.y = sin(self->direction);
+		self->ray_dir.x =  self->ray_dir.x * cos(-ROTATE_FACTOR) - self->ray_dir.y * sin(-ROTATE_FACTOR);
+		self->ray_dir.y = oldray_dirX * sin(-ROTATE_FACTOR) + self->ray_dir.y * cos(-ROTATE_FACTOR);
+		self->plane_dir.x = self->plane_dir.x * cos(-ROTATE_FACTOR) - self->plane_dir.y * sin(-ROTATE_FACTOR);
+		self->plane_dir.y = oldplane_dirX * sin(-ROTATE_FACTOR) + self->plane_dir.y * cos(-ROTATE_FACTOR);
+		// printf("plane x = %f\n", self->plane_dir.x);
+		// printf("plane y = %f\n", self->plane_dir.x);
+		// printf("dir x   = %f\n", self->ray_dir.x);
+		// printf("dir y   = %f\n", self->ray_dir.x);
 	}
 	else if (keycode == KEY_D)
 	{
-		self->direction += ROTATE_FACTOR;
-		self->direction = get_positive_value_of_angle(self->direction);
-		self->ray_dir.x = cos(self->direction);
-		self->ray_dir.y = sin(self->direction);
+		self->ray_dir.x =  self->ray_dir.x * cos(ROTATE_FACTOR) - self->ray_dir.y * sin(ROTATE_FACTOR);
+		self->ray_dir.y = oldray_dirX * sin(ROTATE_FACTOR) + self->ray_dir.y * cos(ROTATE_FACTOR);
+		self->plane_dir.x = self->plane_dir.x * cos(ROTATE_FACTOR) - self->plane_dir.y * sin(ROTATE_FACTOR);
+		self->plane_dir.y = oldplane_dirX * sin(ROTATE_FACTOR) + self->plane_dir.y * cos(ROTATE_FACTOR);
+		// printf("plane x = %f\n", self->plane_dir.x);
+		// printf("plane y = %f\n", self->plane_dir.x);
+		// printf("dir x   = %f\n", self->ray_dir.x);
+		// printf("dir y   = %f\n", self->ray_dir.x);
 	}
 }
 
@@ -104,6 +133,8 @@ void		print_player(t_player *self)
 	printf("player direction       : %0.4f\n", self->direction);
 	printf("player ray direction x : %f\n", self->ray_dir.x);
 	printf("player ray direction y : %f\n", self->ray_dir.y);
+	printf("plane dir x            : %f\n", self->plane_dir.x);
+	printf("plane dir y            : %f\n", self->plane_dir.y);
 	printf("===================================\n");
 }
 
@@ -116,9 +147,11 @@ t_player	player_init(t_coord player_pos, int player_direction)
 	player.turn_player = turn_player;
 	player.pos.x = ((player_pos.x + 1) * TILE_SIZE) - (TILE_SIZE / 2);
 	player.pos.y = ((player_pos.y + 1) * TILE_SIZE) - (TILE_SIZE / 2);
-	player.direction = get_player_direction_angle(player_direction);
-	player.ray_dir.x = cos(player.direction);
-	player.ray_dir.y = sin(player.direction);
+	player.ray_dir = get_player_direction_angle(player_direction);
+	player.plane_dir.x = fabs(0.66 * player.ray_dir.y);
+	player.plane_dir.y = fabs(0.66 * player.ray_dir.x);
+	printf("plane dir x : %f\n", player.ray_dir.x);
+	printf("plane dir y : %f\n", player.ray_dir.y);
 	player.size = 6;
 	player.print_player(&player);
 	return (player);

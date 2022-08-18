@@ -22,7 +22,7 @@
 # define MOVE_GAP			3
 # define PLAYER_SIZE		10
 # define ROTATE_FACTOR		PI / 54
-# define MAP_TRANSPARENCY	88
+# define MAP_TRANSPARENCY	75
 
 # define ROW				11 //remove to be dynamic
 # define COL				15 //remove to be dynamic
@@ -36,7 +36,7 @@
 # define GAME_HEIGHT		HEIGHT * 3 //needs to by dynamic
 # define X_SCALE			4
 # define Y_INV_SCALE		32000
-# define Y_SCALE(distance)	((TILE_SIZE * 1000)/distance)
+# define Y_SCALE(distance)	(28000/distance)
 
 # define XPM_SIZE		64
 
@@ -52,6 +52,7 @@
 # define BROWN			0xAB3428
 # define FLOORCOL		0x1E1E18
 # define CIELCOL		0x183C30
+
 # define WALLCOL		GRAY
 
 #endif

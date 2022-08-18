@@ -1,5 +1,7 @@
 {
 	"files.associations": {
-		"iterator": "c"
+		"iterator": "c",
+		"math.h": "c",
+		"complex": "c"
 	}
 }
