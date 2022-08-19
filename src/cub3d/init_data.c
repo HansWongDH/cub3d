@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 14:00:08 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/18 16:14:27 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/19 15:15:39 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	init_xpm(t_data *data)
 
 void	init_images(t_data *data)
 {
-	data->map.img.img_p = mlx_new_image(data->mlx, data->map.width, data->map.height);
-	data->map.img.data = (int*)mlx_get_data_addr(data->map.img.img_p,
-			&data->map.img.bpp, &data->map.img.line_size, &data->map.img.endian);
+	//data->map.img.img_p = mlx_new_image(data->mlx, data->map.width, data->map.height);
+	//data->map.img.data = (int*)mlx_get_data_addr(data->map.img.img_p,
+	//		&data->map.img.bpp, &data->map.img.line_size, &data->map.img.endian);
 	data->game.img.img_p = mlx_new_image(data->mlx, data->game.width, data->game.height);
 	data->game.img.data = (int*)mlx_get_data_addr(data->game.img.img_p,
 			&data->game.img.bpp, &data->game.img.line_size, &data->game.img.endian);

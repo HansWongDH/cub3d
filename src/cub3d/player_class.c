@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:24:28 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/18 14:39:54 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/19 15:18:32 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,8 +140,8 @@ t_player	player_init(t_coord player_pos, int player_direction)
 	player.pos.x = ((player_pos.x + 1) * TILE_SIZE) - (TILE_SIZE / 2);
 	player.pos.y = ((player_pos.y + 1) * TILE_SIZE) - (TILE_SIZE / 2);
 	player.ray_dir = get_player_direction_angle(player_direction);
-	player.plane_dir.x = fabs(0.66 * player.ray_dir.y);
-	player.plane_dir.y = fabs(0.66 * player.ray_dir.x);
+	player.plane_dir.x = (0.66 * player.ray_dir.y);
+	player.plane_dir.y = -(0.66 * player.ray_dir.x);
 	player.size = 6;
 	player.print_player(&player);
 	return (player);

@@ -30,7 +30,7 @@ ${NAME}:	${LIBFT} ${OBJ_FILES} ${OBJ_BANNER}
 	${GCC} -o ${NAME} ${OBJ_FILES} $(LIBRARIES) $(SANITIZE) $(MINIFLAGS)
 
 test: $(NAME)
-	./$(NAME) map.cub
+	./$(NAME) map2.cub
 
 clean:
 	$(RM) $(OBJ_DIR)/*

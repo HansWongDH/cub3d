@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 13:07:32 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/18 14:38:56 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/19 15:40:43 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	put_images(t_data *data)
 	//mlx_put_image_to_window(data->mlx, data->win, data->south_wall.img_p, XPM_SIZE, HEIGHT + 2 * XPM_SIZE);
 	//mlx_put_image_to_window(data->mlx, data->win, data->west_wall.img_p, 0, HEIGHT + XPM_SIZE);
 	mlx_put_image_to_window(data->mlx, data->win, data->game.img.img_p, 0, 0);
-	mlx_put_image_to_window(data->mlx, data->win, data->map.img.img_p, 0, 0);
+	mlx_put_image_to_window(data->mlx, data->win, data->map.display.img_p, 0, 0);
+	//mlx_put_image_to_window(data->mlx, data->win, data->map.img.img_p, 0, 0);
 }
 
 int			draw_loop(t_data *data)
@@ -38,7 +39,7 @@ void	start_game(t_data *data)
 	data->mouse_pos.x = -1;
 	mlx_hook(data->win, X_KEY_PRESS, 0, handle_key, data);
 	mlx_hook(data->win, X_KEY_EXIT, 0, handle_exit, data);
-	mlx_hook(data->win, X_MOUSE_MOVE, 0, handle_mouse, data);
+	//mlx_hook(data->win, X_MOUSE_MOVE, 0, handle_mouse, data);
 	mlx_loop_hook(data->mlx, draw_loop, data);
 	mlx_loop(data->mlx);
 }

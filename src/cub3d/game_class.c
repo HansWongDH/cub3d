@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 17:40:40 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/19 13:38:52 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/19 15:15:07 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,14 +205,14 @@ double	execute_dda(t_math *math, t_map *map, int *side)
 		{
 			math->side_dist.x += math->delta_dist.x;
 			math->map_pos.x += math->step.x;
-			map->img.data[map->width * (math->map_pos.y) + (math->map_pos.x)] = get_argb_val(RED, MAP_TRANSPARENCY);
+			//map->img.data[map->width * (math->map_pos.y) + (math->map_pos.x)] = get_argb_val(RED, MAP_TRANSPARENCY);
 			*side = 0;
 		}
 		else //if hit vertical side
 		{
 			math->side_dist.y += math->delta_dist.y;
 			math->map_pos.y += math->step.y;
-			map->img.data[map->width * (math->map_pos.y) + (math->map_pos.x)] = get_argb_val(RED, MAP_TRANSPARENCY);
+			//map->img.data[map->width * (math->map_pos.y) + (math->map_pos.x)] = get_argb_val(RED, MAP_TRANSPARENCY);
 			*side = 1;
 		}
 		if (map->array[math->map_pos.y / TILE_SIZE][math->map_pos.x / TILE_SIZE] == '1') //check collision

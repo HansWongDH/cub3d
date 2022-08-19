@@ -24,11 +24,14 @@ struct			c_map
 	t_print_map				print_map;
 	t_draw_player_direction draw_player_direction;
 	t_img					img;
+	t_img					display;
 	char					**array;
 	int						col;
 	int						row;
 	int						height;
 	int						width;
+	int						display_height;
+	int						display_width;
 	int						flag;
 };
 
