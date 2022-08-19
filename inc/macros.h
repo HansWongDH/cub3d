@@ -26,7 +26,7 @@
 
 # define ROW				11 //remove to be dynamic
 # define COL				15 //remove to be dynamic
-# define TILE_SIZE			32
+# define TILE_SIZE			16
 # define WIDTH				COL * TILE_SIZE //480 //remove to be dynamic
 # define HEIGHT				ROW * TILE_SIZE //352 //remove to be dynamic
 

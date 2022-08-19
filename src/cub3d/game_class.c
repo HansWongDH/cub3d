@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 17:40:40 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/18 18:26:50 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/19 11:34:05 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,18 +148,14 @@ void	render_walls2(t_data *data, int index, double wall_distance, double wall, i
 	t_xpm	img;
 
 	j = 0;
-	factor = 12000/wall_distance;
+	factor = (TILE_SIZE * 375)/wall_distance; //height scaling for game
 	img = get_texture(data, math, side);
 	while (j < factor)
 	{
-		game_pos_to_draw = data->game.width * (j + (data->game.height / 2)) + (GAME_WIDTH - index);
+		game_pos_to_draw = data->game.width * (j + (data->game.height / 2)) + (data->game.width - index);
 		if (game_pos_to_draw <= data->game.width * data->game.height) //bottom part
 		{
 			xpm_pos = XPM_SIZE * (round(((float)j/(float)factor) * XPM_SIZE/2 + XPM_SIZE/2)) + ((float)((int)wall % TILE_SIZE)/TILE_SIZE * XPM_SIZE);
-			// if (side == 0)
-			// 	data->game.img.data[game_pos_to_draw] = data->north_wall.data[(int)xpm_pos];
-			// else
-			// 	data->game.img.data[game_pos_to_draw] = data->south_wall.data[(int)xpm_pos]; //dark
 			data->game.img.data[game_pos_to_draw] = img.data[(int)xpm_pos];
 		}
 
@@ -168,10 +164,6 @@ void	render_walls2(t_data *data, int index, double wall_distance, double wall, i
 		{
 			xpm_pos = XPM_SIZE * (round(((float)j/(float)factor)/2 * XPM_SIZE)) + ((float)((int)wall % TILE_SIZE)/TILE_SIZE * XPM_SIZE);
 			data->game.img.data[data->game.width * data->game.height - game_pos_to_draw] = img.data[(int)xpm_pos];
-			// if (side == 0)
-			// 	data->game.img.data[data->game.width * data->game.height - game_pos_to_draw] = data->north_wall.data[(int)xpm_pos];
-			// else
-			// 	data->game.img.data[data->game.width * data->game.height - game_pos_to_draw] = data->south_wall.data[(int)xpm_pos]; //dark
 		}
 		j++;
 	}
