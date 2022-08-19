@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:11:49 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/18 14:03:08 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/18 14:40:08 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,10 +149,6 @@ void	draw_vision_line(t_map *self, t_player *player, double angle)
 	delta.x /= max;
 	delta.y /= max;
 	distance = 0;
-	//while ((int)distance < (15 * (1/(fabs(angle) + 0.5))))
-	//while ((int)distance < 30)
-	//int i = 0;
-	//while (i++ < 10)
 	while (1)
 	{
 		if (self->img.data[self->width * (int)floor(ray.y)
@@ -185,7 +181,7 @@ void	draw_map(t_map *self, t_player *player)
 {
 	draw_tiles(self);
 	draw_player(self, player);
-	draw_player_fov(self, player);
+	// draw_player_fov(self, player);
 }
 
 t_map	map_init(void *mlx, char *file, t_coord *player_pos, int *player_direction)

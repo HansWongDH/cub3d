@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 17:40:40 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/18 14:38:25 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/19 13:38:52 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,42 +115,55 @@ double		get_x_offset_for_tile_position(t_direction direction, t_vec vec)
 // 		{
 // 			game_pos_to_draw = data->game.width * (loop.y + data->game.height / 2 - Y_SCALE(distance) / 2)
 // 				+ (loop.x + data->game.width / 2 + (int)(angle * 180 / M_PI * 24) - X_SCALE / 2);
-// 			xpm_pos = XPM_SIZE * (int)((float)loop.y/(float)Y_SCALE(distance) * XPM_SIZE) + (int)x_offset;
-// 			data->game.img.data[game_pos_to_draw] = data->north_wall.data[xpm_pos];
+			// xpm_pos = XPM_SIZE * (int)((float)loop.y/(float)Y_SCALE(distance) * XPM_SIZE) + (int)x_offset;
+			// data->game.img.data[game_pos_to_draw] = data->north_wall.data[xpm_pos];
 // 			loop.y++;
 // 		}
 // 		loop.x++;
 // 	}
 // }
-
-void	render_walls2(t_data *data, int index, double wall_distance, int side)
+t_xpm	get_texture(t_data *data, t_math *math, int side)
+{
+	if (!side)
+	{
+		if (math->ray_dir.x < 0)
+			return (data->east_wall);
+		else
+			return (data->west_wall);
+	}
+	else
+	{
+		if (math->ray_dir.y < 0)
+			return (data->north_wall);
+		else
+			return (data->south_wall);
+	}
+}
+void	render_walls2(t_data *data, int index, double wall_distance, double wall, int side, t_math *math)
 {
 	int		j;
 	int		game_pos_to_draw;
 	int		factor;
+	double	xpm_pos;
+	t_xpm	img;
 
-
-	//printf("wall_distanse     | %f\n", wall_distance);
-	factor = 4000/wall_distance;
 	j = 0;
+	factor = (TILE_SIZE * 375)/wall_distance; //height scaling for game
+	img = get_texture(data, math, side);
 	while (j < factor)
 	{
-		game_pos_to_draw = data->game.width * (j + (data->game.height / 2)) + (GAME_WIDTH - index);
-		if (game_pos_to_draw <= data->game.width * data->game.height)
+		game_pos_to_draw = data->game.width * (j + (data->game.height / 2)) + (data->game.width - index);
+		if (game_pos_to_draw <= data->game.width * data->game.height) //bottom part
 		{
-			if (side == 1)
-				data->game.img.data[game_pos_to_draw] = 0x006400;
-			else
-				data->game.img.data[game_pos_to_draw] = 0x31572c; //dark
+			xpm_pos = XPM_SIZE * (round(((float)j/(float)factor) * XPM_SIZE/2 + XPM_SIZE/2)) + ((float)((int)wall % TILE_SIZE)/TILE_SIZE * XPM_SIZE);
+			data->game.img.data[game_pos_to_draw] = img.data[(int)xpm_pos];
 		}
 
 		game_pos_to_draw = data->game.width * (factor - j + (data->game.height / 2) - 1) + (index);
-		if (data->game.width * data->game.height - game_pos_to_draw >= 0)
+		if (data->game.width * data->game.height - game_pos_to_draw >= 0) //top part
 		{
-			if (side == 1)
-				data->game.img.data[data->game.width * data->game.height - game_pos_to_draw] = 0x006400;
-			else
-				data->game.img.data[data->game.width * data->game.height - game_pos_to_draw] = 0x31572c; //dark
+			xpm_pos = XPM_SIZE * (round(((float)j/(float)factor)/2 * XPM_SIZE)) + ((float)((int)wall % TILE_SIZE)/TILE_SIZE * XPM_SIZE);
+			data->game.img.data[data->game.width * data->game.height - game_pos_to_draw] = img.data[(int)xpm_pos];
 		}
 		j++;
 	}
@@ -180,9 +193,8 @@ void	get_side_magtitude(t_math *math, t_player *player)
 	}
 }
 
-double	execute_dda(t_math *math, t_map *map, t_player *player, int *side)
+double	execute_dda(t_math *math, t_map *map, int *side)
 {
-	double	wallX;
 	double	dist;
 	int		hit;
 
@@ -207,21 +219,24 @@ double	execute_dda(t_math *math, t_map *map, t_player *player, int *side)
 			hit = 1;
 	}
 	if (*side == 0)
-	{
 		dist = math->side_dist.x - math->delta_dist.x;
-		wallX = player->pos.y + dist * player->ray_dir.y;
-	}
 	else
-	{
 		dist = math->side_dist.y - math->delta_dist.y;
-		wallX = player->pos.x + dist * player->ray_dir.x;
-	}
 	return (dist);
 }
-
+double	wall_collision(t_math *math, t_data *data, int side, double distance)
+{
+	double	wall;
+	if (side == 0)
+		wall = data->player.pos.y + distance * math->ray_dir.y;
+	else
+		wall = data->player.pos.x + distance * math->ray_dir.x;
+	return (floor(wall));
+}
 void	draw_game(t_data *data)
 {
 	t_math	math;
+	double	wall;
 	double	wall_distance;
 	int		i;
 	int		side;
@@ -229,6 +244,9 @@ void	draw_game(t_data *data)
 	i = 1; //to handle overflow on the left side
 	while (i < data->game.width)
 	{
+		// if (i >= data->game.width / 2 && i <= data->game.width / 2)
+		// if (i == data->game.width - 1)
+		// {
 		math.camera_x = 2 * i / (double)data->game.width - 1;
 		math.ray_dir.x = data->player.ray_dir.x + data->player.plane_dir.x * math.camera_x;
 		math.ray_dir.y = data->player.ray_dir.y + data->player.plane_dir.y * math.camera_x;
@@ -237,8 +255,10 @@ void	draw_game(t_data *data)
 		math.map_pos.x = (int)data->player.pos.x;
 		math.map_pos.y = (int)data->player.pos.y;
 		get_side_magtitude(&math, &data->player);
-		wall_distance = execute_dda(&math, &data->map, &data->player, &side);
-		render_walls2(data, i, wall_distance, side);
+		wall_distance = execute_dda(&math, &data->map, &side);
+		wall = wall_collision(&math, data, side, wall_distance);
+		render_walls2(data, i, wall_distance, wall, side, &math);
+		// }
 		i++;
 	}
 }

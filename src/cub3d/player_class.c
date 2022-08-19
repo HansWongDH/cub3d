@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:24:28 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/18 12:26:17 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/18 14:39:54 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,6 @@ void		turn_player(t_player *self, int keycode)
 		self->ray_dir.y = oldray_dirX * sin(-ROTATE_FACTOR) + self->ray_dir.y * cos(-ROTATE_FACTOR);
 		self->plane_dir.x = self->plane_dir.x * cos(-ROTATE_FACTOR) - self->plane_dir.y * sin(-ROTATE_FACTOR);
 		self->plane_dir.y = oldplane_dirX * sin(-ROTATE_FACTOR) + self->plane_dir.y * cos(-ROTATE_FACTOR);
-		// printf("plane x = %f\n", self->plane_dir.x);
-		// printf("plane y = %f\n", self->plane_dir.x);
-		// printf("dir x   = %f\n", self->ray_dir.x);
-		// printf("dir y   = %f\n", self->ray_dir.x);
 	}
 	else if (keycode == KEY_D)
 	{
@@ -99,10 +95,6 @@ void		turn_player(t_player *self, int keycode)
 		self->ray_dir.y = oldray_dirX * sin(ROTATE_FACTOR) + self->ray_dir.y * cos(ROTATE_FACTOR);
 		self->plane_dir.x = self->plane_dir.x * cos(ROTATE_FACTOR) - self->plane_dir.y * sin(ROTATE_FACTOR);
 		self->plane_dir.y = oldplane_dirX * sin(ROTATE_FACTOR) + self->plane_dir.y * cos(ROTATE_FACTOR);
-		// printf("plane x = %f\n", self->plane_dir.x);
-		// printf("plane y = %f\n", self->plane_dir.x);
-		// printf("dir x   = %f\n", self->ray_dir.x);
-		// printf("dir y   = %f\n", self->ray_dir.x);
 	}
 }
 
@@ -150,8 +142,6 @@ t_player	player_init(t_coord player_pos, int player_direction)
 	player.ray_dir = get_player_direction_angle(player_direction);
 	player.plane_dir.x = fabs(0.66 * player.ray_dir.y);
 	player.plane_dir.y = fabs(0.66 * player.ray_dir.x);
-	printf("plane dir x : %f\n", player.ray_dir.x);
-	printf("plane dir y : %f\n", player.ray_dir.y);
 	player.size = 6;
 	player.print_player(&player);
 	return (player);
