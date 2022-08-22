@@ -29,8 +29,8 @@
 # define TILE_SIZE			16
 # define WIDTH				COL * TILE_SIZE //480 //remove to be dynamic
 # define HEIGHT				ROW * TILE_SIZE //352 //remove to be dynamic
-# define DISPLAY_ROW		10
-# define DISPLAY_COL		10
+# define DISPLAY_ROW		23
+# define DISPLAY_COL		23
 
 # define GAME_SCALE			16
 # define GAME_TILE			GAME_SCALE * TILE_SIZE //256

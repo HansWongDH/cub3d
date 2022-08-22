@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:11:49 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/19 17:39:20 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/22 14:40:34 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void	draw_display_player_direction(t_map *map, t_player *player)
 	delta.x /= max;
 	delta.y /= max;
 	i = 0;
-	while (i < 15)
+	while (i < player->size * 2)
 	{
 		if (map->display.data[map->display_width * (int)floor(ray.y)
 				+ (int)floor(ray.x)] != (int)get_argb_val(WALLCOL, MAP_TRANSPARENCY))
@@ -206,17 +206,15 @@ void	draw_player_fov(t_map *self, t_player *player)
 	}
 }
 
-//void	draw_square(int *img_data, t_coord tile_coord, int width, int colour)
-
 void	draw_display_border(t_map *map)
 {
 	t_coord	coord;
 
 	coord.x = 0;
-	while (coord.x < 10)
+	while (coord.x < DISPLAY_ROW)
 	{
 		coord.y = 0;
-		while (coord.y < 10)
+		while (coord.y < DISPLAY_COL)
 		{
 			if ((coord.x == 0 || coord.x == DISPLAY_ROW - 1)
 				|| (coord.y == 0 || coord.y == DISPLAY_COL - 1))
@@ -249,79 +247,44 @@ void	draw_display_player(t_map *map, t_player *player)
 	}
 }
 
-//if (map->array[tile_coord.x][tile_coord.y] == '1')
-//	draw_square(map->img.data, tile_coord, map->width, get_argb_val(WALLCOL, MAP_TRANSPARENCY));
-//else if (map->array[tile_coord.x][tile_coord.y] == '0')
-//	draw_square(map->img.data, tile_coord, map->width, get_argb_val(BLACK, MAP_TRANSPARENCY));
-//else
-//	draw_square(map->img.data, tile_coord, map->width, get_argb_val(CIELCOL, MAP_TRANSPARENCY));
-//tile_coord.y++;
-
 void	draw_display_map(t_map *map, t_player *player)
 {
 	t_coord	coord;
 	t_coord	loop;
 
-	(void)map;
-	coord.x = (player->pos.x / TILE_SIZE) - 2;
-	coord.y = (player->pos.y / TILE_SIZE) - 2; //remove ltr
-	printf("player init coord       | %d %d\n", (int)(player->pos.x / TILE_SIZE), (int)(player->pos.y / TILE_SIZE));
-	printf("player top left coord   | %d %d\n", coord.x, coord.y);
-	loop.y = 1;
-	while (loop.y < DISPLAY_ROW - 1)
+	loop.x = 1;
+	coord.y = (int)(player->pos.y / TILE_SIZE) - (DISPLAY_COL / 2 - 1);
+	while (loop.x < DISPLAY_COL - 1)
 	{
-		loop.x = 1;
-		coord.x = (player->pos.x / TILE_SIZE) - 2;
-		while (loop.x < DISPLAY_COL - 1)
+		loop.y = 1;
+		coord.x = (int)(player->pos.x / TILE_SIZE) - (DISPLAY_ROW / 2 - 1);
+		while (loop.y < DISPLAY_ROW - 1)
 		{
-			printf("========================\n");
-			printf("place to draw    | %d %d\n", loop.x, loop.y);
-			printf("tile to check    | %d %d\n", coord.x, coord.y);
-			if ((coord.x >= 0 && coord.x < map->row)
-				&& (coord.y >= 0 && coord.y < map->col))
+			if ((coord.x >= 0 && coord.x < map->col)
+				&& (coord.y >= 0 && coord.y < map->row))
 			{
-				printf("tile             |[%c]\n", map->array[coord.x][coord.y]);
-				if (map->array[coord.x][coord.y] == '1')
-				{
-					printf("wall drawn       | %d %d\n", loop.x, loop.y);
-					draw_square(map->display.data, loop, map->display_width, RED);
-				}
+				if (map->array[coord.y][coord.x] == '1')
+					draw_square(map->display.data, loop, map->display_width, get_argb_val(BLACK, MAP_TRANSPARENCY));
 			}
-			printf("========================\n");
+			else
+				draw_square(map->display.data, loop, map->display_width, get_argb_val(BLACK, MAP_TRANSPARENCY));
+			loop.y++;
 			coord.x++;
-			loop.x++;
 		}
+		loop.x++;
 		coord.y++;
-		loop.y++;
 	}
-	exit(0);
 }
 
 void	draw_map(t_map *self, t_player *player)
 {
-	printf("row = %d\n", self->row);
-	printf("col = %d\n", self->col);
-	//for (int i = 0; i < self->row; i++)
-	//{
-	//	for (int j = 0; j < self->col; j++)
-	//		printf("%c", self->array[i][j]);
-	//		printf("\n");
-	//}
-	//for (int i = 0; self->array[i]; i++)
-	//{
-	//	for (int j = 0; self->array[i][j]; j++)
-	//	{
-	//		printf("j = %d\n", j);
-	//	}
-	//	printf("i = %d\n", i);
-	//}
 	draw_tiles(self);
 	draw_player(self, player);
 	// draw_player_fov(self, player);
 	draw_display_border(self);
+	draw_display_map(self, player);
 	draw_display_player(self, player);
 	draw_display_player_direction(self, player);
-	draw_display_map(self, player);
 }
 
 t_map	map_init(void *mlx, char *file, t_coord *player_pos, int *player_direction)
