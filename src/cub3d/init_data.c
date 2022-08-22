@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 14:00:08 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/22 16:27:44 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/22 17:11:29 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	init_data(t_data *data, char *file)
 		exit(1);
 	}
 	data->player = player_init(player_pos, player_direction);
-	data->game = game_init(&data->map, data->mlx);
+	data->game = game_init(data->mlx);
 	init_images(data);
 	init_xpm(data);
 }

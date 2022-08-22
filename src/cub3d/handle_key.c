@@ -6,7 +6,7 @@
 /*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 13:45:10 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/16 14:59:47 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/22 17:11:14 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	handle_key(int keycode, t_data *data)
 		data->player.move_player(&data->player, data->map.img.data, KEY_S, &data->map);
 	if (keycode == KEY_D)
 		data->player.turn_player(&data->player, KEY_D);
+	if (keycode == KEY_SPACE)
+		data->game.shoot_gun(data);
 	if (keycode == KEY_ESC)
 		exit(0);
 	if (keycode == KEY_W || keycode == KEY_A || keycode == KEY_S || keycode == KEY_D)
