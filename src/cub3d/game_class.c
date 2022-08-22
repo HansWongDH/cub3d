@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 17:40:40 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/19 15:15:07 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/22 16:55:34 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,6 +224,7 @@ double	execute_dda(t_math *math, t_map *map, int *side)
 		dist = math->side_dist.y - math->delta_dist.y;
 	return (dist);
 }
+
 double	wall_collision(t_math *math, t_data *data, int side, double distance)
 {
 	double	wall;
@@ -233,6 +234,35 @@ double	wall_collision(t_math *math, t_data *data, int side, double distance)
 		wall = data->player.pos.x + distance * math->ray_dir.x;
 	return (floor(wall));
 }
+
+void	draw_gun(t_data *data)
+{
+	t_xpm	texture;
+	t_coord	loop;
+
+	//select texture somewhere here;
+	texture.img_p = mlx_xpm_file_to_image(data->mlx, "./textures/Gun_01.xpm", &texture.width, &texture.height);
+	texture.data = (int *)mlx_get_data_addr(texture.img_p,
+			&texture.bpp, &texture.line_size, &texture.endian);
+	loop.x = 0;
+	while (loop.x < GUN_HEIGHT * GUN_X_SCALE)
+	{
+		loop.y = 0;
+		while (loop.y < GUN_WIDTH * GUN_Y_SCALE)
+		{
+			if (loop.y % GUN_Y_SCALE == 0)
+				data->game.gun.data[GUN_WIDTH * GUN_X_SCALE * loop.y + loop.x]
+					= texture.data[GUN_WIDTH * (loop.y / GUN_Y_SCALE) + (loop.x / GUN_X_SCALE)];
+			else
+				data->game.gun.data[GUN_WIDTH * GUN_X_SCALE * loop.y + loop.x]
+					= texture.data[GUN_WIDTH * ((loop.y - loop.y % GUN_Y_SCALE) / GUN_Y_SCALE)
+					+ ((loop.x - loop.x % GUN_X_SCALE) / GUN_X_SCALE)];
+			loop.y++;
+		}
+		loop.x++;
+	}
+}
+
 void	draw_game(t_data *data)
 {
 	t_math	math;
@@ -261,6 +291,7 @@ void	draw_game(t_data *data)
 		// }
 		i++;
 	}
+	draw_gun(data);
 }
 
 t_game	game_init(t_map *map, void *mlx)
@@ -275,5 +306,8 @@ t_game	game_init(t_map *map, void *mlx)
 	game.img.img_p = mlx_new_image(mlx, game.width, game.height);
 	game.img.data = (int *)mlx_get_data_addr(game.img.img_p,
 			&game.img.bpp, &game.img.line_size, &game.img.endian);
+	game.gun.img_p = mlx_new_image(mlx, GUN_WIDTH * GUN_X_SCALE, GUN_HEIGHT * GUN_Y_SCALE);
+	game.gun.data = (int *)mlx_get_data_addr(game.gun.img_p,
+			&game.gun.bpp, &game.gun.line_size, &game.gun.endian);
 	return (game);
 }

@@ -40,6 +40,11 @@
 # define Y_INV_SCALE		32000
 # define Y_SCALE(distance)	(28000/distance)
 
+# define GUN_WIDTH			128
+# define GUN_HEIGHT			128
+# define GUN_X_SCALE		3
+# define GUN_Y_SCALE		3
+
 # define XPM_SIZE		64
 
 # define RED			0xFF0000

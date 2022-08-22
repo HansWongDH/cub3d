@@ -23,6 +23,7 @@ struct		c_game
 	t_draw_sky	draw_sky;
 	t_draw_game	draw_game;
 	t_img		img;
+	t_img		gun;
 	int			height;
 	int			width;
 };

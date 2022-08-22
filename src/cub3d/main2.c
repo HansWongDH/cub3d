@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 13:07:32 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/19 15:40:43 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/22 16:53:53 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ void	put_images(t_data *data)
 	//mlx_put_image_to_window(data->mlx, data->win, data->west_wall.img_p, 0, HEIGHT + XPM_SIZE);
 	mlx_put_image_to_window(data->mlx, data->win, data->game.img.img_p, 0, 0);
 	mlx_put_image_to_window(data->mlx, data->win, data->map.display.img_p, 0, 0);
-	//mlx_put_image_to_window(data->mlx, data->win, data->map.img.img_p, 0, 0);
+	mlx_put_image_to_window(data->mlx, data->win, data->game.gun.img_p,
+			WINDOW_WIDTH / 2 - (GUN_WIDTH * GUN_X_SCALE)/2,
+			WINDOW_HEIGHT - (GUN_HEIGHT * GUN_Y_SCALE));
 }
 
 int			draw_loop(t_data *data)
