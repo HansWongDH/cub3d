@@ -39,6 +39,7 @@ typedef struct	s_data
 	t_xpm		east_wall;
 	t_xpm		south_wall;
 	t_xpm		west_wall;
+	t_xpm		door;
 	t_game		game;
 	t_map		map;
 	t_player	player;

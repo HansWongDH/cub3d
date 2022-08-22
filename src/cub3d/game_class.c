@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 17:40:40 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/22 17:48:30 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/22 21:12:26 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,38 @@ void	draw_sky(t_game *self)
 //	}
 //}
 
+	
+
+void	open_door(t_data *data)
+{
+	int	direction;
+	int	x;
+	int	y;
+
+	x = data->player.pos.x / TILE_SIZE;
+	y = data->player.pos.y / TILE_SIZE;
+	if (fabs(data->player.ray_dir.y) < fabs(data->player.ray_dir.x))
+	{
+		if (data->player.ray_dir.x > 0)
+			direction = 1;
+		else
+			direction = -1;
+		printf("x is %d\n y is %d\n character is %c\n", x, y, data->map.array[y][x + direction]);
+		if (data->map.array[y][x + direction] == 'D')
+			data->map.array[y][x + direction] = '0';
+	}
+	else
+	{
+		if (data->player.ray_dir.y > 0)
+			direction = 1;
+		else
+			direction = -1;
+		printf("x is %d\n y is %d\n character is %c\n", x, y, data->map.array[y + direction][x]);
+		if (data->map.array[y + direction][x] == 'D')
+			data->map.array[y + direction][x] = '0';
+	}
+
+}
 t_direction	get_direction_of_ray(double player_direction, double angle_offset)
 {
 	double	angle;
@@ -124,6 +156,8 @@ double		get_x_offset_for_tile_position(t_direction direction, t_vec vec)
 // }
 t_xpm	get_texture(t_data *data, t_math *math, int side)
 {
+	if (math->door)
+		return (data->door);
 	if (!side)
 	{
 		if (math->ray_dir.x < 0)
@@ -148,7 +182,7 @@ void	render_walls2(t_data *data, int index, double wall_distance, double wall, i
 	t_xpm	img;
 
 	j = 0;
-	factor = (TILE_SIZE * 375)/wall_distance; //height scaling for game
+	factor = (TILE_SIZE * 375)/(wall_distance + (math->door * 2)); //height scaling for game
 	img = get_texture(data, math, side);
 	while (j < factor)
 	{
@@ -215,8 +249,12 @@ double	execute_dda(t_math *math, t_map *map, int *side)
 			//map->img.data[map->width * (math->map_pos.y) + (math->map_pos.x)] = get_argb_val(RED, MAP_TRANSPARENCY);
 			*side = 1;
 		}
-		if (map->array[math->map_pos.y / TILE_SIZE][math->map_pos.x / TILE_SIZE] == '1') //check collision
+		if (map->array[math->map_pos.y / TILE_SIZE][math->map_pos.x / TILE_SIZE] != '0')
+		{ //check collision
 			hit = 1;
+			if (map->array[math->map_pos.y / TILE_SIZE][math->map_pos.x / TILE_SIZE] == 'D')
+				math->door = 1;
+		}
 	}
 	if (*side == 0)
 		dist = math->side_dist.x - math->delta_dist.x;
@@ -241,7 +279,7 @@ void	draw_gun(t_data *data, char *path_to_xpm)
 	t_coord	loop;
 
 	//select texture somewhere here;
-	printf("ENTERED WITH %s\n", path_to_xpm);
+	// printf("ENTERED WITH %s\n", path_to_xpm);
 	texture.img_p = mlx_xpm_file_to_image(data->mlx, path_to_xpm, &texture.width, &texture.height);
 	texture.data = (int *)mlx_get_data_addr(texture.img_p,
 			&texture.bpp, &texture.line_size, &texture.endian);
@@ -275,6 +313,7 @@ void	draw_game_render(t_data *data)
 	i = 1; //to handle overflow on the left side
 	while (i < data->game.width)
 	{
+		math.door = 0;
 		math.camera_x = 2 * i / (double)data->game.width - 1;
 		math.ray_dir.x = data->player.ray_dir.x + data->player.plane_dir.x * math.camera_x;
 		math.ray_dir.y = data->player.ray_dir.y + data->player.plane_dir.y * math.camera_x;
@@ -295,16 +334,16 @@ void	shoot_gun(t_data *data)
 	int	start_fps;
 	int	end_fps;
 
-	printf("GUN SHOT AT FPS %d\n", data->game.fps);
+	// printf("GUN SHOT AT FPS %d\n", data->game.fps);
 	start_fps = data->game.fps;
 	end_fps = (start_fps + 100) % 120;
-	printf("math fps    | %d\n", (start_fps + 100) % 120);
+	// printf("math fps    | %d\n", (start_fps + 100) % 120);
 	data->game.shot = 1;
 	draw_gun(data, "./textures/Gun_02.xpm");
 	mlx_put_image_to_window(data->mlx, data->win, data->game.gun.img_p, WINDOW_WIDTH / 2 - (GUN_WIDTH * GUN_X_SCALE)/2, WINDOW_HEIGHT - (GUN_HEIGHT * GUN_Y_SCALE));
 	while (start_fps != end_fps)
 	{
-		printf("start_fps   | %d\n", start_fps);
+		// printf("start_fps   | %d\n", start_fps);
 		start_fps++;
 		if (start_fps == 120)
 			start_fps = 0;
@@ -314,7 +353,7 @@ void	shoot_gun(t_data *data)
 	mlx_put_image_to_window(data->mlx, data->win, data->game.gun.img_p, WINDOW_WIDTH / 2 - (GUN_WIDTH * GUN_X_SCALE)/2, WINDOW_HEIGHT - (GUN_HEIGHT * GUN_Y_SCALE));
 	while (start_fps != end_fps)
 	{
-		printf("start_fps   | %d\n", start_fps);
+		// printf("start_fps   | %d\n", start_fps);
 		start_fps++;
 		if (start_fps == 120)
 			start_fps = 0;
@@ -324,7 +363,7 @@ void	shoot_gun(t_data *data)
 	mlx_put_image_to_window(data->mlx, data->win, data->game.gun.img_p, WINDOW_WIDTH / 2 - (GUN_WIDTH * GUN_X_SCALE)/2, WINDOW_HEIGHT - (GUN_HEIGHT * GUN_Y_SCALE));
 	while (start_fps != end_fps)
 	{
-		printf("start_fps   | %d\n", start_fps);
+		// printf("start_fps   | %d\n", start_fps);
 		start_fps++;
 		if (start_fps == 120)
 			start_fps = 0;
@@ -338,8 +377,8 @@ void	draw_game(t_data *data)
 	(data->game.fps)++;
 	if (data->game.fps == 120)
 		data->game.fps = 0;
-	printf("fps        | %d\n", data->game.fps);
-	printf("gun_shot   | %d\n", data->game.shot);
+	// printf("fps        | %d\n", data->game.fps);
+	// printf("gun_shot   | %d\n", data->game.shot);
 	draw_game_render(data);
 	if (data->game.shot == 0)
 		draw_gun(data, "./textures/Gun_01.xpm");

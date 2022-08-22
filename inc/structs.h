@@ -47,6 +47,7 @@ typedef struct	s_math
 	t_vec		side_dist;
 	t_coord		map_pos;
 	t_coord		step;
+	int			door;
 }				t_math;
 
 #endif

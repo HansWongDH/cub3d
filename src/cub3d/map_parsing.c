@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 15:09:33 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/08/15 15:33:56 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/22 18:36:33 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	map_character_checking(t_map *map, char *line, t_coord *player_pos, int *pla
 	i = 0;
 	while(line[i])
 	{
-		if (!ft_strchr("01 \n", line[i]))
+		if (!ft_strchr("01 D\n", line[i]))
 		{
 			if (ft_strchr("NWSE", line[i]))
 			{

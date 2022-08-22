@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
+/*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 13:45:10 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/22 17:11:14 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/22 21:22:19 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ int	handle_key(int keycode, t_data *data)
 		exit(0);
 	if (keycode == KEY_W || keycode == KEY_A || keycode == KEY_S || keycode == KEY_D)
 		data->player.print_player(&data->player);
+	if (keycode == KEY_E)
+	{
+		open_door(data);
+		data->mouse_pos.x = GAME_WIDTH / 2;
+	}
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:11:49 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/22 14:40:34 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/22 18:44:18 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	draw_tiles(t_map *map)
 		tile_coord.y = 0;
 		while (tile_coord.y < map->col)
 		{
-			if (map->array[tile_coord.x][tile_coord.y] == '1')
+			if (map->array[tile_coord.x][tile_coord.y] == '1' || map->array[tile_coord.x][tile_coord.y] == 'D')
 				draw_square(map->img.data, tile_coord, map->width, get_argb_val(WALLCOL, MAP_TRANSPARENCY));
 			else if (map->array[tile_coord.x][tile_coord.y] == '0')
 				draw_square(map->img.data, tile_coord, map->width, get_argb_val(BLACK, MAP_TRANSPARENCY));
