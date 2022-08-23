@@ -8,8 +8,8 @@
 # define X_KEY_EXIT		17
 # define X_MOUSE_MOVE	6
 
-# define WINDOW_WIDTH	1920 //1200 1440
-# define WINDOW_HEIGHT	1080 //900 1056
+# define WINDOW_WIDTH	1200 //1200 1440
+# define WINDOW_HEIGHT	900 //900 1056
 
 # define KEY_ESC	53
 # define KEY_W		13
@@ -30,8 +30,8 @@
 # define TILE_SIZE			16
 # define WIDTH				COL * TILE_SIZE //480 //remove to be dynamic
 # define HEIGHT				ROW * TILE_SIZE //352 //remove to be dynamic
-# define DISPLAY_ROW		23
-# define DISPLAY_COL		23
+# define DISPLAY_ROW		15
+# define DISPLAY_COL		15
 
 # define GAME_SCALE			16
 # define GAME_TILE			GAME_SCALE * TILE_SIZE //256
@@ -46,7 +46,7 @@
 # define GUN_X_SCALE		3
 # define GUN_Y_SCALE		3
 
-# define HUD_Y_SCALE		3
+# define HUD_Y_SCALE		2
 
 # define XPM_SIZE			64
 

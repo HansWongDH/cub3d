@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 17:40:40 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/23 16:06:55 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/23 16:10:58 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -337,18 +337,18 @@ void	shoot_gun(t_data *data)
 	i = 0;
 	draw_gun(data, "./textures/Gun_02.xpm");
 	mlx_put_image_to_window(data->mlx, data->win, data->game.gun.img_p, WINDOW_WIDTH / 2 - (GUN_WIDTH * GUN_X_SCALE)/2 - 50, WINDOW_HEIGHT - (GUN_HEIGHT * GUN_Y_SCALE));
-	mlx_put_image_to_window(data->mlx, data->win, data->game.background.img_p, 0, WINDOW_HEIGHT - XPM_SIZE * 3);
+	mlx_put_image_to_window(data->mlx, data->win, data->game.background.img_p, 0, WINDOW_HEIGHT - XPM_SIZE * HUD_Y_SCALE);
 	while (i++ < 50)
 		;
 	draw_gun(data, "./textures/Gun_03.xpm");
 	mlx_put_image_to_window(data->mlx, data->win, data->game.gun.img_p, WINDOW_WIDTH / 2 - (GUN_WIDTH * GUN_X_SCALE)/2 - 50, WINDOW_HEIGHT - (GUN_HEIGHT * GUN_Y_SCALE));
-	mlx_put_image_to_window(data->mlx, data->win, data->game.background.img_p, 0, WINDOW_HEIGHT - XPM_SIZE * 3);
+	mlx_put_image_to_window(data->mlx, data->win, data->game.background.img_p, 0, WINDOW_HEIGHT - XPM_SIZE * HUD_Y_SCALE);
 	i = 0;
 	while (i++ < 50)
 		;
 	draw_gun(data, "./textures/Gun_04.xpm");
 	mlx_put_image_to_window(data->mlx, data->win, data->game.gun.img_p, WINDOW_WIDTH / 2 - (GUN_WIDTH * GUN_X_SCALE)/2 - 50, WINDOW_HEIGHT - (GUN_HEIGHT * GUN_Y_SCALE));
-	mlx_put_image_to_window(data->mlx, data->win, data->game.background.img_p, 0, WINDOW_HEIGHT - XPM_SIZE * 3);
+	mlx_put_image_to_window(data->mlx, data->win, data->game.background.img_p, 0, WINDOW_HEIGHT - XPM_SIZE * HUD_Y_SCALE);
 	i = 0;
 	while (i++ < 50)
 		;

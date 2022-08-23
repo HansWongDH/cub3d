@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 14:00:08 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/23 15:26:20 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/23 16:07:58 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	init_textures(t_data *data) //change name later (initialize all textures he
 	data->north_wall.data = (int*)mlx_get_data_addr(data->north_wall.img_p,
 			&data->north_wall.bpp, &data->north_wall.line_size, &data->north_wall.endian);
 
-	data->east_wall.img_p = mlx_xpm_file_to_image(data->mlx, "./textures/CONSOLE_1D.xpm", &data->east_wall.width, &data->east_wall.height);
+	data->east_wall.img_p = mlx_xpm_file_to_image(data->mlx, "./textures/Labwall_East.xpm", &data->east_wall.width, &data->east_wall.height);
 	data->east_wall.data = (int*)mlx_get_data_addr(data->east_wall.img_p,
 			&data->east_wall.bpp, &data->east_wall.line_size, &data->east_wall.endian);
 
