@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 17:40:40 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/23 11:05:33 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/23 16:06:55 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ double		get_x_offset_for_tile_position(t_direction direction, t_vec vec)
 // 		loop.x++;
 // 	}
 // }
+
 t_xpm	get_texture(t_data *data, t_math *math, int side)
 {
 	if (math->door)
@@ -279,9 +280,10 @@ void	draw_gun(t_data *data, char *path_to_xpm)
 
 	//select texture somewhere here;
 	// printf("ENTERED WITH %s\n", path_to_xpm);
-	texture.img_p = mlx_xpm_file_to_image(data->mlx, path_to_xpm, &texture.width, &texture.height);
-	texture.data = (int *)mlx_get_data_addr(texture.img_p,
-			&texture.bpp, &texture.line_size, &texture.endian);
+	init_xpm(data->mlx, &texture, path_to_xpm);
+	//texture.img_p = mlx_xpm_file_to_image(data->mlx, path_to_xpm, &texture.width, &texture.height);
+	//texture.data = (int *)mlx_get_data_addr(texture.img_p,
+	//		&texture.bpp, &texture.line_size, &texture.endian);
 	loop.x = 0;
 	while (loop.x < GUN_HEIGHT * GUN_X_SCALE)
 	{
@@ -330,57 +332,60 @@ void	draw_game_render(t_data *data)
 
 void	shoot_gun(t_data *data)
 {
-	int	start_fps;
-	int	end_fps;
+	int	 i;
 
-	// printf("GUN SHOT AT FPS %d\n", data->game.fps);
-	start_fps = data->game.fps;
-	end_fps = (start_fps + 100) % 120;
-	// printf("math fps    | %d\n", (start_fps + 100) % 120);
-	data->game.shot = 1;
+	i = 0;
 	draw_gun(data, "./textures/Gun_02.xpm");
-	mlx_put_image_to_window(data->mlx, data->win, data->game.gun.img_p, WINDOW_WIDTH / 2 - (GUN_WIDTH * GUN_X_SCALE)/2, WINDOW_HEIGHT - (GUN_HEIGHT * GUN_Y_SCALE));
-	while (start_fps != end_fps)
-	{
-		// printf("start_fps   | %d\n", start_fps);
-		start_fps++;
-		if (start_fps == 120)
-			start_fps = 0;
-	}
-	end_fps = (start_fps + 100) % 120;
+	mlx_put_image_to_window(data->mlx, data->win, data->game.gun.img_p, WINDOW_WIDTH / 2 - (GUN_WIDTH * GUN_X_SCALE)/2 - 50, WINDOW_HEIGHT - (GUN_HEIGHT * GUN_Y_SCALE));
+	mlx_put_image_to_window(data->mlx, data->win, data->game.background.img_p, 0, WINDOW_HEIGHT - XPM_SIZE * 3);
+	while (i++ < 50)
+		;
 	draw_gun(data, "./textures/Gun_03.xpm");
-	mlx_put_image_to_window(data->mlx, data->win, data->game.gun.img_p, WINDOW_WIDTH / 2 - (GUN_WIDTH * GUN_X_SCALE)/2, WINDOW_HEIGHT - (GUN_HEIGHT * GUN_Y_SCALE));
-	while (start_fps != end_fps)
-	{
-		// printf("start_fps   | %d\n", start_fps);
-		start_fps++;
-		if (start_fps == 120)
-			start_fps = 0;
-	}
-	end_fps = (start_fps + 100) % 120;
+	mlx_put_image_to_window(data->mlx, data->win, data->game.gun.img_p, WINDOW_WIDTH / 2 - (GUN_WIDTH * GUN_X_SCALE)/2 - 50, WINDOW_HEIGHT - (GUN_HEIGHT * GUN_Y_SCALE));
+	mlx_put_image_to_window(data->mlx, data->win, data->game.background.img_p, 0, WINDOW_HEIGHT - XPM_SIZE * 3);
+	i = 0;
+	while (i++ < 50)
+		;
 	draw_gun(data, "./textures/Gun_04.xpm");
-	mlx_put_image_to_window(data->mlx, data->win, data->game.gun.img_p, WINDOW_WIDTH / 2 - (GUN_WIDTH * GUN_X_SCALE)/2, WINDOW_HEIGHT - (GUN_HEIGHT * GUN_Y_SCALE));
-	while (start_fps != end_fps)
+	mlx_put_image_to_window(data->mlx, data->win, data->game.gun.img_p, WINDOW_WIDTH / 2 - (GUN_WIDTH * GUN_X_SCALE)/2 - 50, WINDOW_HEIGHT - (GUN_HEIGHT * GUN_Y_SCALE));
+	mlx_put_image_to_window(data->mlx, data->win, data->game.background.img_p, 0, WINDOW_HEIGHT - XPM_SIZE * 3);
+	i = 0;
+	while (i++ < 50)
+		;
+}
+
+void	draw_hud(t_data *data)
+{
+	t_xpm	background_tex;
+	t_coord	loop;
+	int		x_scale;
+
+	init_xpm(data->mlx, &background_tex, "./textures/Steel_2A.xpm");
+	x_scale = round((float)data->game.width / XPM_SIZE);
+	loop.x = 0;
+	while (loop.x < XPM_SIZE * x_scale)
 	{
-		// printf("start_fps   | %d\n", start_fps);
-		start_fps++;
-		if (start_fps == 120)
-			start_fps = 0;
+		loop.y = 0;
+		while (loop.y < XPM_SIZE * HUD_Y_SCALE)
+		{
+			if (loop.y % HUD_Y_SCALE == 0)
+				data->game.background.data[data->game.width * loop.y + loop.x]
+					= background_tex.data[XPM_SIZE * (loop.y / HUD_Y_SCALE) + (loop.x / x_scale)];
+			else
+				data->game.background.data[data->game.width * loop.y + loop.x]
+					= background_tex.data[XPM_SIZE * ((loop.y - loop.y % HUD_Y_SCALE) / HUD_Y_SCALE)
+					+ ((loop.x - loop.x % x_scale) / x_scale)];
+			loop.y++;
+		}
+		loop.x++;
 	}
-	data->game.shot = 0;
-	//data->game.shot = 0;
 }
 
 void	draw_game(t_data *data)
 {
-	(data->game.fps)++;
-	if (data->game.fps == 120)
-		data->game.fps = 0;
-	// printf("fps        | %d\n", data->game.fps);
-	// printf("gun_shot   | %d\n", data->game.shot);
 	draw_game_render(data);
-	if (data->game.shot == 0)
-		draw_gun(data, "./textures/Gun_01.xpm");
+	draw_gun(data, "./textures/Gun_01.xpm");
+	draw_hud(data);
 }
 
 t_game	game_init(void *mlx)
@@ -397,8 +402,13 @@ t_game	game_init(void *mlx)
 	game.img.img_p = mlx_new_image(mlx, game.width, game.height);
 	game.img.data = (int *)mlx_get_data_addr(game.img.img_p,
 			&game.img.bpp, &game.img.line_size, &game.img.endian);
+
 	game.gun.img_p = mlx_new_image(mlx, GUN_WIDTH * GUN_X_SCALE, GUN_HEIGHT * GUN_Y_SCALE);
 	game.gun.data = (int *)mlx_get_data_addr(game.gun.img_p,
 			&game.gun.bpp, &game.gun.line_size, &game.gun.endian);
+
+	game.background.img_p = mlx_new_image(mlx, game.width, XPM_SIZE * HUD_Y_SCALE);
+	game.background.data = (int *)mlx_get_data_addr(game.background.img_p,
+			&game.background.bpp, &game.background.line_size, &game.background.endian);
 	return (game);
 }

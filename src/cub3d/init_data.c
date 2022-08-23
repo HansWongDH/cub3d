@@ -6,14 +6,14 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 14:00:08 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/23 11:04:00 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/23 15:26:20 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "libft.h"
 
-void	init_xpm(t_data *data)
+void	init_textures(t_data *data) //change name later (initialize all textures here)
 {
 	data->north_wall.img_p = mlx_xpm_file_to_image(data->mlx, "./textures/Labwall_North.xpm", &data->north_wall.width, &data->north_wall.height);
 	data->north_wall.data = (int*)mlx_get_data_addr(data->north_wall.img_p,
@@ -36,7 +36,7 @@ void	init_xpm(t_data *data)
 			&data->door.bpp, &data->door.line_size, &data->door.endian);
 }
 
-void	init_images(t_data *data)
+void	init_images(t_data *data) //change name later (initialize all images here instead of classes)
 {
 	(void)data;
 	//data->map.img.img_p = mlx_new_image(data->mlx, data->map.width, data->map.height);
@@ -64,5 +64,5 @@ void	init_data(t_data *data, char *file)
 	data->player = player_init(player_pos, player_direction);
 	data->game = game_init(data->mlx);
 	init_images(data);
-	init_xpm(data);
+	init_textures(data);
 }

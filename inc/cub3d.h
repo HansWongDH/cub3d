@@ -50,7 +50,6 @@ float			get_positive_value_of_angle(double angle);
 int				handle_key(int keycode, t_data *data);
 int				handle_exit(int keycode, t_data *data);
 int				handle_mouse(int x, int y, t_data *data);
-void			init_xpm(t_data *data);
 void			init_images(t_data *data);
 void			init_data(t_data *data, char *file);
 void			printmap(char **map);
@@ -59,5 +58,6 @@ int				map_parsing(t_map *map, char *file, t_coord *player_pos, int *player_dire
 int				map_validation(t_map *map);
 unsigned int	get_argb_val(int colour, int transparency);
 int				shade_colour(int colour, int percent);
+void			init_xpm(void *mlx, t_xpm *xpm, char *path_to_xpm);
 
 #endif

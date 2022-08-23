@@ -28,6 +28,7 @@ struct		c_game
 	t_open_door	open_door;
 	t_img		img;
 	t_img		gun;
+	t_img		background;
 	int			fps;
 	int			shot;
 	int			height;
