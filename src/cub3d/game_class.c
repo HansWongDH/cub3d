@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 17:40:40 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/22 21:12:26 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/23 11:05:33 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ void	draw_sky(t_game *self)
 //	}
 //}
 
-	
-
 void	open_door(t_data *data)
 {
 	int	direction;
@@ -95,6 +93,7 @@ void	open_door(t_data *data)
 	}
 
 }
+
 t_direction	get_direction_of_ray(double player_direction, double angle_offset)
 {
 	double	angle;
@@ -182,7 +181,7 @@ void	render_walls2(t_data *data, int index, double wall_distance, double wall, i
 	t_xpm	img;
 
 	j = 0;
-	factor = (TILE_SIZE * 375)/(wall_distance + (math->door * 2)); //height scaling for game
+	factor = (TILE_SIZE * 375) / (wall_distance); //height scaling for game
 	img = get_texture(data, math, side);
 	while (j < factor)
 	{

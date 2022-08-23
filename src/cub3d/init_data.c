@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 14:00:08 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/22 18:45:57 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/23 11:04:00 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	init_xpm(t_data *data)
 	data->west_wall.img_p = mlx_xpm_file_to_image(data->mlx, "./textures/Labwall_West.xpm", &data->west_wall.width, &data->west_wall.height);
 	data->west_wall.data = (int*)mlx_get_data_addr(data->west_wall.img_p,
 			&data->west_wall.bpp, &data->west_wall.line_size, &data->west_wall.endian);
-	
-	data->door.img_p = mlx_xpm_file_to_image(data->mlx, "./textures/DOOR_1E.xpm", &data->door.width, &data->door.height);
+
+	data->door.img_p = mlx_xpm_file_to_image(data->mlx, "./textures/DOOR_3B.xpm", &data->door.width, &data->door.height);
 	data->door.data = (int*)mlx_get_data_addr(data->door.img_p,
 			&data->door.bpp, &data->door.line_size, &data->door.endian);
 }

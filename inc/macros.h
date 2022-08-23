@@ -22,7 +22,7 @@
 
 # define MOVE_GAP			3
 # define PLAYER_SIZE		10
-# define ROTATE_FACTOR		PI / 54
+# define ROTATE_FACTOR		PI / 27
 # define MAP_TRANSPARENCY	75
 
 # define ROW				11 //remove to be dynamic
@@ -60,6 +60,7 @@
 # define BROWN			0xAB3428
 # define FLOORCOL		0x1E1E18
 # define CIELCOL		0x183C30
+# define DOORCOL		0xffba08
 
 # define WALLCOL		GRAY
 

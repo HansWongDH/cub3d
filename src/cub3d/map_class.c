@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:11:49 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/22 18:44:18 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/23 11:12:19 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,6 +265,8 @@ void	draw_display_map(t_map *map, t_player *player)
 			{
 				if (map->array[coord.y][coord.x] == '1')
 					draw_square(map->display.data, loop, map->display_width, get_argb_val(BLACK, MAP_TRANSPARENCY));
+				else if (map->array[coord.y][coord.x] == 'D')
+					draw_square(map->display.data, loop, map->display_width, get_argb_val(DOORCOL, MAP_TRANSPARENCY - 30));
 			}
 			else
 				draw_square(map->display.data, loop, map->display_width, get_argb_val(BLACK, MAP_TRANSPARENCY));
