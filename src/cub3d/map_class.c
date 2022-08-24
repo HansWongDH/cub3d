@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:11:49 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/24 08:58:10 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/24 20:12:22 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,7 +291,7 @@ void	draw_map(t_map *self, t_player *player)
 	draw_display_player_direction(self, player);
 }
 
-t_map	map_init(void *mlx, char *file, t_coord *player_pos, int *player_direction)
+t_map	map_init(void *mlx, t_data *data, char *file, t_coord *player_pos, int *player_direction)
 {
 	t_map	map;
 
@@ -299,12 +299,16 @@ t_map	map_init(void *mlx, char *file, t_coord *player_pos, int *player_direction
 	map.print_map = print_map;
 	map.draw_map = draw_map;
 	map.draw_player_direction = draw_player_direction;
-	if (!map_parsing(&map, file, player_pos, player_direction))
+	data->north_wall.path = NULL;
+	data->east_wall.path = NULL;
+	data->south_wall.path = NULL;
+	data->west_wall.path = NULL;
+	if (!map_parsing(&map, data, file, player_pos, player_direction))
 	{
 		map.flag = 0;
 		return (map); //change later
 	}
-	map_create(&map, file, player_pos);
+	map_create(&map, file, player_pos, data->index);
 	if (!map_validation(&map))
 	{
 		ft_putstr_fd("Map Is Not Enclosed\n", 2);

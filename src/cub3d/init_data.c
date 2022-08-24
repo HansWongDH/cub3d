@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 14:00:08 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/23 16:07:58 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/24 18:35:21 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	init_data(t_data *data, char *file)
 	player_direction = 0;
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3d");
-	data->map = map_init(data->mlx, file, &player_pos, &player_direction);
+	data->map = map_init(data->mlx, data, file, &player_pos, &player_direction);
 	if (data->map.flag == 0)
 	{
 		//free all data

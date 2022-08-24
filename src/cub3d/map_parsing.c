@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 15:09:33 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/08/24 14:11:45 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/24 20:25:39 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,14 @@ int	map_getinfo(t_map *map, int fd, t_coord *player_pos, int *player_direction)
 		free(line);
 		map->row++;
 	}
+	printf("map row is %d\n", map->row);
 	free(line);
 	if (!player_direction)
 		return (0);
 	return (1);
 }
 
-int	map_parsing(t_map *map, char *file, t_coord *player_pos, int *player_direction)
+int	map_parsing(t_map *map, t_data *data, char *file, t_coord *player_pos, int *player_direction)
 {
 	int	fd;
 
@@ -91,11 +92,17 @@ int	map_parsing(t_map *map, char *file, t_coord *player_pos, int *player_directi
 	if (map_filetype(file) < 0)
 		return (0);
 	fd = open(file, O_RDONLY);
+	if (!parse_element(fd, data))
+	{
+		close(fd);
+		return (0);
+	}
 	if (!map_getinfo(map, fd, player_pos, player_direction))
 	{
 		close(fd);
 		return (0);
 	}
+	// printf("map row is 				| %d\n", map->row);
 	close(fd);
 	return (1);
 }
@@ -114,7 +121,7 @@ char	*map_padding(char *line, int size)
 	return (ret);
 }
 
-void	map_create(t_map *map, char *file, t_coord *player_pos)
+void	map_create(t_map *map, char *file, t_coord *player_pos, int index)
 {
 	int		fd;
 	char	*line;
@@ -123,6 +130,12 @@ void	map_create(t_map *map, char *file, t_coord *player_pos)
 	i = 0;
 	map->array = ft_calloc(sizeof(char *), map->row);
 	fd = open(file, O_RDONLY);
+	while (index > 0)
+	{
+		get_next_line(fd, &line);
+		free(line);
+		index--;
+	}
 	while (get_next_line(fd, &line))
 	{
 		if (ft_strlen(line) < (size_t)map->col)
