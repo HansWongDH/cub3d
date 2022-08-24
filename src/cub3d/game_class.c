@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 17:40:40 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/24 08:51:27 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/24 18:09:49 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,14 +193,13 @@ void	render_walls2(t_data *data, int index, double wall_distance, double wall, i
 		game_pos_to_draw = data->game.width * (j + (data->game.height / 2)) + (data->game.width - index);
 		if (game_pos_to_draw <= data->game.width * data->game.height) //bottom part
 		{
-			xpm_pos = XPM_SIZE * (round(((float)j/(float)factor) * XPM_SIZE/2 + XPM_SIZE/2)) + ((float)((int)wall % TILE_SIZE)/TILE_SIZE * XPM_SIZE);
+			xpm_pos = XPM_SIZE * (round(((float)j/(float)factor) * XPM_SIZE/2 + XPM_SIZE/2)) + round((float)XPM_SIZE * wall);
 			data->game.img.data[game_pos_to_draw] = img.data[(int)xpm_pos];
 		}
-
 		game_pos_to_draw = data->game.width * (factor - j + (data->game.height / 2) - 1) + (index);
 		if (data->game.width * data->game.height - game_pos_to_draw >= 0) //top part
 		{
-			xpm_pos = XPM_SIZE * (round(((float)j/(float)factor)/2 * XPM_SIZE)) + ((float)((int)wall % TILE_SIZE)/TILE_SIZE * XPM_SIZE);
+			xpm_pos = XPM_SIZE * (round(((float)j/(float)factor)/2 * XPM_SIZE)) + round((float)XPM_SIZE * wall);
 			data->game.img.data[data->game.width * data->game.height - game_pos_to_draw] = img.data[(int)xpm_pos];
 		}
 		j++;
@@ -274,11 +273,13 @@ double	execute_dda(t_math *math, t_map *map, int *side)
 double	wall_collision(t_math *math, t_data *data, int side, double distance)
 {
 	double	wall;
+
 	if (side == 0)
 		wall = data->player.pos.y + distance * math->ray_dir.y;
 	else
 		wall = data->player.pos.x + distance * math->ray_dir.x;
-	return (floor(wall));
+	wall /= TILE_SIZE;
+	return (wall - floor(wall));
 }
 
 void	draw_gun(t_data *data, char *path_to_xpm)
@@ -322,18 +323,21 @@ void	draw_game_render(t_data *data)
 	i = 1; //to handle overflow on the left side
 	while (i < data->game.width)
 	{
-		math.door = 0;
-		math.camera_x = 2 * i / (double)data->game.width - 1;
-		math.ray_dir.x = data->player.ray_dir.x + data->player.plane_dir.x * math.camera_x;
-		math.ray_dir.y = data->player.ray_dir.y + data->player.plane_dir.y * math.camera_x;
-		math.delta_dist.x = fabs(1 / (math.ray_dir.x));
-		math.delta_dist.y = fabs(1 / (math.ray_dir.y));
-		math.map_pos.x = (int)data->player.pos.x;
-		math.map_pos.y = (int)data->player.pos.y;
-		get_side_magtitude(&math, &data->player);
-		wall_distance = execute_dda(&math, &data->map, &side);
-		wall = wall_collision(&math, data, side, wall_distance);
-		render_walls2(data, i, wall_distance, wall, side, &math);
+		//if (i >= data->game.width / 2 - 303 && i <= data->game.width / 2 + 303)
+		//{
+			math.door = 0;
+			math.camera_x = 2 * i / (double)data->game.width - 1;
+			math.ray_dir.x = data->player.ray_dir.x + data->player.plane_dir.x * math.camera_x;
+			math.ray_dir.y = data->player.ray_dir.y + data->player.plane_dir.y * math.camera_x;
+			math.delta_dist.x = fabs(1 / (math.ray_dir.x));
+			math.delta_dist.y = fabs(1 / (math.ray_dir.y));
+			math.map_pos.x = (int)data->player.pos.x;
+			math.map_pos.y = (int)data->player.pos.y;
+			get_side_magtitude(&math, &data->player);
+			wall_distance = execute_dda(&math, &data->map, &side);
+			wall = wall_collision(&math, data, side, wall_distance);
+			render_walls2(data, i, wall_distance, wall, side, &math);
+		//}
 		i++;
 	}
 }
@@ -392,8 +396,8 @@ void	draw_hud(t_data *data)
 void	draw_game(t_data *data)
 {
 	draw_game_render(data);
-	draw_gun(data, "./textures/Gun_01.xpm");
-	draw_hud(data);
+	//draw_gun(data, "./textures/Gun_01.xpm");
+	//draw_hud(data);
 }
 
 t_game	game_init(void *mlx)
@@ -411,12 +415,12 @@ t_game	game_init(void *mlx)
 	game.img.data = (int *)mlx_get_data_addr(game.img.img_p,
 			&game.img.bpp, &game.img.line_size, &game.img.endian);
 
-	game.gun.img_p = mlx_new_image(mlx, GUN_WIDTH * GUN_X_SCALE, GUN_HEIGHT * GUN_Y_SCALE);
-	game.gun.data = (int *)mlx_get_data_addr(game.gun.img_p,
-			&game.gun.bpp, &game.gun.line_size, &game.gun.endian);
+	//game.gun.img_p = mlx_new_image(mlx, GUN_WIDTH * GUN_X_SCALE, GUN_HEIGHT * GUN_Y_SCALE);
+	//game.gun.data = (int *)mlx_get_data_addr(game.gun.img_p,
+	//		&game.gun.bpp, &game.gun.line_size, &game.gun.endian);
 
-	game.background.img_p = mlx_new_image(mlx, game.width, XPM_SIZE * HUD_Y_SCALE);
-	game.background.data = (int *)mlx_get_data_addr(game.background.img_p,
-			&game.background.bpp, &game.background.line_size, &game.background.endian);
+	//game.background.img_p = mlx_new_image(mlx, game.width, XPM_SIZE * HUD_Y_SCALE);
+	//game.background.data = (int *)mlx_get_data_addr(game.background.img_p,
+	//		&game.background.bpp, &game.background.line_size, &game.background.endian);
 	return (game);
 }
