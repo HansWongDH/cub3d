@@ -11,14 +11,18 @@
 # define WINDOW_WIDTH	1200 //1200 1440
 # define WINDOW_HEIGHT	900 //900 1056
 
-# define KEY_ESC	53
-# define KEY_W		13
-# define KEY_A		0
-# define KEY_S  	1
-# define KEY_D  	2
-# define KEY_Q		12
-# define KEY_E		14
-# define KEY_SPACE	49
+# define KEY_ESC		53
+# define KEY_W			13
+# define KEY_A			0
+# define KEY_S  		1
+# define KEY_D  		2
+# define KEY_Q			12
+# define KEY_E			14
+# define KEY_U_ARROW	126
+# define KEY_R_ARROW	124
+# define KEY_D_ARROW	125
+# define KEY_L_ARROW	123
+# define KEY_SPACE		49
 
 # define MOVE_GAP			3
 # define PLAYER_SIZE		10
@@ -62,7 +66,8 @@
 # define BROWN			0xAB3428
 # define FLOORCOL		0x1E1E18
 # define CIELCOL		0x183C30
-# define DOORCOL		0xffba08
+# define DOOR_CL_COL	0xffba08
+# define DOOR_OP_COL	0x4daa57
 
 # define WALLCOL		GRAY
 

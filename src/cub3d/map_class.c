@@ -6,14 +6,14 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:11:49 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/23 11:12:19 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/24 08:58:10 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "cub3d.h"
 
-unsigned int	get_argb_val(int colour, int transparency)
+unsigned int	get_argb_val(int colour, int transparency) //move to utils folder
 {
 	float	trasparency_percentage;
 	int		col_in_argb;
@@ -266,7 +266,9 @@ void	draw_display_map(t_map *map, t_player *player)
 				if (map->array[coord.y][coord.x] == '1')
 					draw_square(map->display.data, loop, map->display_width, get_argb_val(BLACK, MAP_TRANSPARENCY));
 				else if (map->array[coord.y][coord.x] == 'D')
-					draw_square(map->display.data, loop, map->display_width, get_argb_val(DOORCOL, MAP_TRANSPARENCY - 30));
+					draw_square(map->display.data, loop, map->display_width, get_argb_val(DOOR_OP_COL, MAP_TRANSPARENCY - 30));
+				else if (map->array[coord.y][coord.x] == 'd')
+					draw_square(map->display.data, loop, map->display_width, get_argb_val(DOOR_CL_COL, MAP_TRANSPARENCY - 30));
 			}
 			else
 				draw_square(map->display.data, loop, map->display_width, get_argb_val(BLACK, MAP_TRANSPARENCY));

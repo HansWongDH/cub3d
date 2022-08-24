@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:24:28 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/22 14:02:27 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/24 09:41:08 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,15 @@ t_vec	get_player_direction_angle(int player_direction)
 		vec.y = 0;
 	}
 	return (vec);
+}
+
+t_vec	get_plane_dir(t_vec ray_dir)
+{
+	t_vec	plane_dir;
+
+	plane_dir.x = (0.66 * ray_dir.y);
+	plane_dir.y = -(0.66 * ray_dir.x);
+	return (plane_dir);
 }
 
 int				validate_move(t_player *player, t_map *map, int keycode)
@@ -84,17 +93,39 @@ void		turn_player(t_player *self, int keycode)
 	oldplane_dirX = self->plane_dir.x;
 	if (keycode == KEY_A)
 	{
-		self->ray_dir.x =  self->ray_dir.x * cos(-ROTATE_FACTOR) - self->ray_dir.y * sin(-ROTATE_FACTOR);
+		self->ray_dir.x = self->ray_dir.x * cos(-ROTATE_FACTOR) - self->ray_dir.y * sin(-ROTATE_FACTOR);
 		self->ray_dir.y = oldray_dirX * sin(-ROTATE_FACTOR) + self->ray_dir.y * cos(-ROTATE_FACTOR);
-		self->plane_dir.x = self->plane_dir.x * cos(-ROTATE_FACTOR) - self->plane_dir.y * sin(-ROTATE_FACTOR);
-		self->plane_dir.y = oldplane_dirX * sin(-ROTATE_FACTOR) + self->plane_dir.y * cos(-ROTATE_FACTOR);
+		self->plane_dir = get_plane_dir(self->ray_dir);
+		//self->plane_dir.x = self->plane_dir.x * cos(-ROTATE_FACTOR) - self->plane_dir.y * sin(-ROTATE_FACTOR);
+		//self->plane_dir.y = oldplane_dirX * sin(-ROTATE_FACTOR) + self->plane_dir.y * cos(-ROTATE_FACTOR);
 	}
 	else if (keycode == KEY_D)
 	{
-		self->ray_dir.x =  self->ray_dir.x * cos(ROTATE_FACTOR) - self->ray_dir.y * sin(ROTATE_FACTOR);
+		self->ray_dir.x = self->ray_dir.x * cos(ROTATE_FACTOR) - self->ray_dir.y * sin(ROTATE_FACTOR);
 		self->ray_dir.y = oldray_dirX * sin(ROTATE_FACTOR) + self->ray_dir.y * cos(ROTATE_FACTOR);
-		self->plane_dir.x = self->plane_dir.x * cos(ROTATE_FACTOR) - self->plane_dir.y * sin(ROTATE_FACTOR);
-		self->plane_dir.y = oldplane_dirX * sin(ROTATE_FACTOR) + self->plane_dir.y * cos(ROTATE_FACTOR);
+		self->plane_dir = get_plane_dir(self->ray_dir);
+		//self->plane_dir.x = self->plane_dir.x * cos(ROTATE_FACTOR) - self->plane_dir.y * sin(ROTATE_FACTOR);
+		//self->plane_dir.y = oldplane_dirX * sin(ROTATE_FACTOR) + self->plane_dir.y * cos(ROTATE_FACTOR);
+	}
+	else if (keycode == KEY_U_ARROW)
+	{
+		self->ray_dir = get_player_direction_angle('N');
+		self->plane_dir = get_plane_dir(self->ray_dir);
+	}
+	else if (keycode == KEY_R_ARROW)
+	{
+		self->ray_dir = get_player_direction_angle('E');
+		self->plane_dir = get_plane_dir(self->ray_dir);
+	}
+	else if (keycode == KEY_D_ARROW)
+	{
+		self->ray_dir = get_player_direction_angle('S');
+		self->plane_dir = get_plane_dir(self->ray_dir);
+	}
+	else if (keycode == KEY_L_ARROW)
+	{
+		self->ray_dir = get_player_direction_angle('W');
+		self->plane_dir = get_plane_dir(self->ray_dir);
 	}
 }
 
@@ -140,8 +171,9 @@ t_player	player_init(t_coord player_pos, int player_direction)
 	player.pos.x = ((player_pos.x + 1) * TILE_SIZE) - (TILE_SIZE / 2);
 	player.pos.y = ((player_pos.y + 1) * TILE_SIZE) - (TILE_SIZE / 2);
 	player.ray_dir = get_player_direction_angle(player_direction);
-	player.plane_dir.x = (0.66 * player.ray_dir.y);
-	player.plane_dir.y = -(0.66 * player.ray_dir.x);
+	player.plane_dir = get_plane_dir(player.ray_dir);
+	//player.plane_dir.x = (0.66 * player.ray_dir.y);
+	//player.plane_dir.y = -(0.66 * player.ray_dir.x);
 	player.size = TILE_SIZE / 2;
 	player.print_player(&player);
 	return (player);

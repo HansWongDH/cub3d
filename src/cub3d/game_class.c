@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 17:40:40 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/23 16:10:58 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/24 08:51:27 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,11 @@ void	open_door(t_data *data)
 			direction = 1;
 		else
 			direction = -1;
-		printf("x is %d\n y is %d\n character is %c\n", x, y, data->map.array[y][x + direction]);
+		printf("x is %d\ny is %d\ncharacter is %c\n", x, y, data->map.array[y][x + direction]);
 		if (data->map.array[y][x + direction] == 'D')
-			data->map.array[y][x + direction] = '0';
+			data->map.array[y][x + direction] = 'd';
+		else if (data->map.array[y][x + direction] == 'd')
+			data->map.array[y][x + direction] = 'D';
 	}
 	else
 	{
@@ -87,11 +89,12 @@ void	open_door(t_data *data)
 			direction = 1;
 		else
 			direction = -1;
-		printf("x is %d\n y is %d\n character is %c\n", x, y, data->map.array[y + direction][x]);
+		printf("x is %d\ny is %d\ncharacter is %c\n", x, y, data->map.array[y + direction][x]);
 		if (data->map.array[y + direction][x] == 'D')
-			data->map.array[y + direction][x] = '0';
+			data->map.array[y + direction][x] = 'd';
+		else if (data->map.array[y + direction][x] == 'd')
+			data->map.array[y + direction][x] = 'D';
 	}
-
 }
 
 t_direction	get_direction_of_ray(double player_direction, double angle_offset)
@@ -156,7 +159,7 @@ double		get_x_offset_for_tile_position(t_direction direction, t_vec vec)
 
 t_xpm	get_texture(t_data *data, t_math *math, int side)
 {
-	if (math->door)
+	if (math->door == 1)
 		return (data->door);
 	if (!side)
 	{
@@ -173,6 +176,7 @@ t_xpm	get_texture(t_data *data, t_math *math, int side)
 			return (data->south_wall);
 	}
 }
+
 void	render_walls2(t_data *data, int index, double wall_distance, double wall, int side, t_math *math)
 {
 	int		j;
@@ -250,10 +254,14 @@ double	execute_dda(t_math *math, t_map *map, int *side)
 			*side = 1;
 		}
 		if (map->array[math->map_pos.y / TILE_SIZE][math->map_pos.x / TILE_SIZE] != '0')
-		{ //check collision
-			hit = 1;
+		{//check collision
 			if (map->array[math->map_pos.y / TILE_SIZE][math->map_pos.x / TILE_SIZE] == 'D')
+			{
+				hit = 1;
 				math->door = 1;
+			}
+			if (map->array[math->map_pos.y / TILE_SIZE][math->map_pos.x / TILE_SIZE] == '1')
+				hit = 1;
 		}
 	}
 	if (*side == 0)

@@ -32,6 +32,9 @@ ${NAME}:	${LIBFT} ${OBJ_FILES} ${OBJ_BANNER}
 test: $(NAME)
 	./$(NAME) map3.cub
 
+retest: fclean $(NAME)
+	./$(NAME) map3.cub
+
 clean:
 	$(RM) $(OBJ_DIR)/*
 	make clean -C $(LIBFT_DIR)
