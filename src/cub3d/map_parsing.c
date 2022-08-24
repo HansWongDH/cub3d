@@ -6,15 +6,12 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 15:09:33 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/08/22 18:36:33 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/24 14:11:45 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "libft.h"
-
-int		get_next_line(int fd, char **line);
-int		ft_strcmp(const char *s1, const char *s2);
 
 int	map_filetype(char *file)
 {
