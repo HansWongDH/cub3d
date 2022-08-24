@@ -16,6 +16,7 @@
 # include "structs.h"
 # include "game_class.h"
 # include "libft.h"
+# include "utils.h"
 
 typedef enum	e_direction
 {
@@ -58,8 +59,11 @@ void			printmap(char **map);
 void			map_create(t_map *map, char *file, t_coord *player_pos);
 int				map_parsing(t_map *map, char *file, t_coord *player_pos, int *player_direction);
 int				map_validation(t_map *map);
-unsigned int	get_argb_val(int colour, int transparency);
+//unsigned int	get_argb_val(int colour, int transparency);
 int				shade_colour(int colour, int percent);
 void			init_xpm(void *mlx, t_xpm *xpm, char *path_to_xpm);
+t_vec			add_vectors(t_vec v1, t_vec v2);
+t_vec			subtract_vectors(t_vec v1, t_vec v2);
+t_vec			equate_vectores(t_vec v1);
 
 #endif

@@ -10,11 +10,12 @@
 # include "map_class.h"
 # include "structs.h"
 # include "macros.h"
+# include "utils.h"
 
 typedef struct	c_player	t_player;
 typedef struct	c_map		t_map;
 
-typedef void	(*t_move_player)(t_player *self, int *map_data, int keycode, t_map *map);
+typedef void	(*t_move_player)(t_player *self, int keycode, t_map *map);
 typedef void	(*t_turn_player)(t_player *self, int keycode);
 typedef void	(*t_print_player)(t_player *self);
 
@@ -30,9 +31,13 @@ struct			c_player
 	int				size;
 };
 
-t_player	player_init(t_coord player_pos, int player_direction);
-void		move_player(t_player *self, int *map_data, int keycode, t_map *map);
-void		turn_player(t_player *self, int keycode);
-void		print_player(t_player *self);
+t_player		player_init(t_coord player_pos, int player_direction);
+void			move_player(t_player *self, int keycode, t_map *map);
+void			turn_player(t_player *self, int keycode);
+void			print_player(t_player *self);
+
+t_vec			get_player_direction_angle(int player_direction);
+t_vec			get_plane_dir(t_vec ray_dir);
+int				validate_move(t_player *player, t_map *map, int keycode);
 
 #endif

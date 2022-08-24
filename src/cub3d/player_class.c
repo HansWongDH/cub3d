@@ -6,104 +6,39 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:24:28 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/24 09:41:08 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/24 16:03:30 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "cub3d.h"
 
-t_vec	get_player_direction_angle(int player_direction)
+void	turn_player(t_player *self, int keycode)
 {
-	t_vec	vec;
+	double	oldray_dir_x;
+	//double	oldplane_dirX;
 
-	if (player_direction == 'N')
-	{
-		vec.x = 0;
-		vec.y = -1;
-	}
-	else if (player_direction == 'E')
-	{
-		vec.x = 1;
-		vec.y = 0;
-	}
-	else if (player_direction == 'S')
-	{
-		vec.x = 0;
-		vec.y = 1;
-	}
-	else
-	{
-		vec.x = -1;
-		vec.y = 0;
-	}
-	return (vec);
-}
-
-t_vec	get_plane_dir(t_vec ray_dir)
-{
-	t_vec	plane_dir;
-
-	plane_dir.x = (0.66 * ray_dir.y);
-	plane_dir.y = -(0.66 * ray_dir.x);
-	return (plane_dir);
-}
-
-int				validate_move(t_player *player, t_map *map, int keycode)
-{
-	t_vec	ray;
-	t_vec	delta;
-	double	max;
-	int		i;
-
-	i = 0;
-	ray.x = player->pos.x;
-	ray.y = player->pos.y;
-	delta.x = cos(0) * player->ray_dir.x - sin(0) * player->ray_dir.y;
-	delta.y = sin(0) * player->ray_dir.x + cos(0) * player->ray_dir.y;
-	max = fmax(fabs(delta.x), fabs(delta.y));
-	delta.x /= max;
-	delta.y /= max;
-	while (i < 12)
-	{
-		if (map->img.data[map->width * (int)floor(ray.y)
-				+ (int)floor(ray.x)] == (int)get_argb_val(WALLCOL, MAP_TRANSPARENCY))
-			return (0);
-		if (keycode == KEY_S)
-		{
-			ray.x -= delta.x;
-			ray.y -= delta.y;
-		}
-		else
-		{
-			ray.x += delta.x;
-			ray.y += delta.y;
-		}
-		i++;
-	}
-	return (1);
-}
-
-void		turn_player(t_player *self, int keycode)
-{
-	double	oldray_dirX;
-	double	oldplane_dirX;
-
-	oldray_dirX = self->ray_dir.x;
-	oldplane_dirX = self->plane_dir.x;
+	oldray_dir_x = self->ray_dir.x;
+	//oldplane_dirX = self->plane_dir.x;
 	if (keycode == KEY_A)
 	{
-		self->ray_dir.x = self->ray_dir.x * cos(-ROTATE_FACTOR) - self->ray_dir.y * sin(-ROTATE_FACTOR);
-		self->ray_dir.y = oldray_dirX * sin(-ROTATE_FACTOR) + self->ray_dir.y * cos(-ROTATE_FACTOR);
+		self->ray_dir = equate_vectors_double(
+				self->ray_dir.x * cos(-ROTATE_FACTOR) - self->ray_dir.y * sin(-ROTATE_FACTOR),
+				oldray_dir_x * sin(-ROTATE_FACTOR) + self->ray_dir.y * cos(-ROTATE_FACTOR));
 		self->plane_dir = get_plane_dir(self->ray_dir);
+		//self->ray_dir.x = self->ray_dir.x * cos(-ROTATE_FACTOR) - self->ray_dir.y * sin(-ROTATE_FACTOR);
+		//self->ray_dir.y = oldray_dir_x * sin(-ROTATE_FACTOR) + self->ray_dir.y * cos(-ROTATE_FACTOR);
 		//self->plane_dir.x = self->plane_dir.x * cos(-ROTATE_FACTOR) - self->plane_dir.y * sin(-ROTATE_FACTOR);
 		//self->plane_dir.y = oldplane_dirX * sin(-ROTATE_FACTOR) + self->plane_dir.y * cos(-ROTATE_FACTOR);
 	}
 	else if (keycode == KEY_D)
 	{
-		self->ray_dir.x = self->ray_dir.x * cos(ROTATE_FACTOR) - self->ray_dir.y * sin(ROTATE_FACTOR);
-		self->ray_dir.y = oldray_dirX * sin(ROTATE_FACTOR) + self->ray_dir.y * cos(ROTATE_FACTOR);
+		self->ray_dir = equate_vectors_double(
+				self->ray_dir.x * cos(ROTATE_FACTOR) - self->ray_dir.y * sin(ROTATE_FACTOR),
+				oldray_dir_x * sin(ROTATE_FACTOR) + self->ray_dir.y * cos(ROTATE_FACTOR));
 		self->plane_dir = get_plane_dir(self->ray_dir);
+		//self->ray_dir.x = self->ray_dir.x * cos(ROTATE_FACTOR) - self->ray_dir.y * sin(ROTATE_FACTOR);
+		//self->ray_dir.y = oldray_dir_x * sin(ROTATE_FACTOR) + self->ray_dir.y * cos(ROTATE_FACTOR);
 		//self->plane_dir.x = self->plane_dir.x * cos(ROTATE_FACTOR) - self->plane_dir.y * sin(ROTATE_FACTOR);
 		//self->plane_dir.y = oldplane_dirX * sin(ROTATE_FACTOR) + self->plane_dir.y * cos(ROTATE_FACTOR);
 	}
@@ -129,26 +64,25 @@ void		turn_player(t_player *self, int keycode)
 	}
 }
 
-void		move_player(t_player *self, int *map_data, int keycode, t_map *map)
+void	move_player(t_player *self, int keycode, t_map *map)
 {
-	(void)map_data;
 	if (keycode == KEY_W)
 	{
 		if (validate_move(self, map, KEY_W) == 0)
 			return ;
-		self->pos.x += self->ray_dir.x * MOVE_GAP;
-		self->pos.y += self->ray_dir.y * MOVE_GAP;
+		self->pos = add_vectors_double(self->pos,
+				self->ray_dir.x * MOVE_GAP, self->ray_dir.y * MOVE_GAP);
 	}
 	else if (keycode == KEY_S)
 	{
 		if (validate_move(self, map, KEY_S) == 0)
 			return ;
-		self->pos.x -= self->ray_dir.x * MOVE_GAP;
-		self->pos.y -= self->ray_dir.y * MOVE_GAP;
+		self->pos = subtract_vectors_double(self->pos,
+				self->ray_dir.x * MOVE_GAP, self->ray_dir.y * MOVE_GAP);
 	}
 }
 
-void		print_player(t_player *self)
+void	print_player(t_player *self)
 {
 	printf("===================================\n");
 	printf("player pos x           : %f\n", self->pos.x);
@@ -172,23 +106,7 @@ t_player	player_init(t_coord player_pos, int player_direction)
 	player.pos.y = ((player_pos.y + 1) * TILE_SIZE) - (TILE_SIZE / 2);
 	player.ray_dir = get_player_direction_angle(player_direction);
 	player.plane_dir = get_plane_dir(player.ray_dir);
-	//player.plane_dir.x = (0.66 * player.ray_dir.y);
-	//player.plane_dir.y = -(0.66 * player.ray_dir.x);
 	player.size = TILE_SIZE / 2;
 	player.print_player(&player);
 	return (player);
 }
-
-//int	main()
-//{
-//	t_player	player;
-//
-//	player = player_init();
-//	player.print_player(&player);
-//	player.turn_player(&player, KEY_A);
-//	player.print_player(&player);
-//	player.turn_player(&player, KEY_D);
-//	player.print_player(&player);
-//	player.turn_player(&player, KEY_D);
-//	player.print_player(&player);
-//}
