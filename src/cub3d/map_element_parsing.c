@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:14:39 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/08/24 16:10:22 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/24 16:19:25 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,12 @@ int	parse_element(int fd, t_data *data)
 	char		*line;
 	int			ret;
 	char		**args;
+	int			i;
 
 	ret = get_next_line(fd, &line);
 	if (ret < 0)
 		return(0);
+	i = 0;
 	while (ret >= 0)
 	{
 		if (ret != 0)
@@ -117,9 +119,12 @@ int	parse_element(int fd, t_data *data)
 			args = ft_split(line, ' ');
 			if (!fetch_element(args, data))
 				return (0);
+			i++;
 			free_2d(args);
 		}
 		free(line);
+		if (i == 6)
+			break ;
 		ret = get_next_line(fd, &line);
 	}
 	return (1);
