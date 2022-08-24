@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 13:45:10 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/24 09:34:20 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/24 14:28:39 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ int	is_movement_keys(int keycode)
 int	handle_key(int keycode, t_data *data) //can change to looping over funtion pointers
 {
 	if (keycode == KEY_W)
-		data->player.move_player(&data->player, data->map.img.data, KEY_W, &data->map);
+		data->player.move_player(&data->player, KEY_W, &data->map);
 	if (keycode == KEY_A)
 		data->player.turn_player(&data->player, KEY_A);
 	if (keycode == KEY_S)
-		data->player.move_player(&data->player, data->map.img.data, KEY_S, &data->map);
+		data->player.move_player(&data->player, KEY_S, &data->map);
 	if (keycode == KEY_D)
 		data->player.turn_player(&data->player, KEY_D);
 	if (keycode == KEY_U_ARROW)
