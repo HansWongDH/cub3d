@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:10:30 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/08/29 19:49:16 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/29 20:01:53 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int	free_2d(char **s)
 
 int	print_error(char *s, int fd)
 {
-	if (!s)
-		return ;
 	while (*s)
 	{
 		ft_putchar_fd(*s, fd);
