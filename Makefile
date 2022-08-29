@@ -3,6 +3,7 @@ NAME		= cub3d
 SRC_DIR		= src/cub3d
 OBJ_DIR		= obj
 LIBFT_DIR	= src/libft
+MLX_DIR		= src/mlx
 INC_DIR		= inc
 
 SRC_FILES	= main.c main2.c player_class.c map_class.c handle_key.c init_data.c\
@@ -20,7 +21,8 @@ RM			= rm -f
 OBJ_FILES	= $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
 LIBFT		= $(LIBFT_DIR)/libft.a
-LIBRARIES	= -L$(LIBFT_DIR) -lft
+MLX			= $(MLX_DIR)/libmlx.dylib 
+LIBRARIES	= -L$(LIBFT_DIR) -L$(MLX_DIR) -lft
 
 all:		$(NAME)
 
@@ -30,8 +32,11 @@ $(OBJ_DIR)/%.o:		$(SRC_DIR)/%.c
 $(LIBFT):
 	make -C $(LIBFT_DIR)
 
-${NAME}:	${LIBFT} ${OBJ_FILES} ${OBJ_BANNER}
-	${GCC} -o ${NAME} ${OBJ_FILES} $(LIBRARIES) $(SANITIZE) $(MINIFLAGS)
+$(MLX):
+	make -C $(MLX_DIR)
+
+${NAME}:	${LIBFT} $(MLX) ${OBJ_FILES} ${OBJ_BANNER}
+	${GCC} -o ${NAME} ${OBJ_FILES} $(LIBRARIES) $(SANITIZE) $(MINIFLAGS) $(MLX)
 
 test: $(NAME)
 	./$(NAME) map3.cub

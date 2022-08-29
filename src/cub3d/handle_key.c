@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 13:45:10 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/29 18:35:31 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/29 18:59:33 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,7 @@ int	handle_mouse(int x, int y, t_data *data)
 			data->mouse_pos.x = x;
 		}
 	}
+	else
+		mlx_mouse_move(data->win, WINDOW_WIDTH /2, WINDOW_HEIGHT /2);
 	return (0);
 }
