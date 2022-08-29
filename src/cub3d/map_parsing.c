@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 15:09:33 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/08/29 18:12:32 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/29 19:51:02 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,61 +29,55 @@ int	map_filetype(char *file)
 	return (1);
 }
 
-int	map_character_checking(t_map *map, char *line, t_coord *player_pos, int *player_direction)
+int	map_character_checking(t_map *map, char *line, t_coord *player_pos, int *pd)
 {
 	int	i;
 
 	i = 0;
-	while(line[i])
+	while (line[i])
 	{
 		if (!ft_strchr("01 D\n", line[i]))
 		{
 			if (ft_strchr("NWSE", line[i]))
 			{
-				if (!(*player_direction))
+				if (!(*pd))
 				{
-					*player_direction = line[i];
+					*pd = line[i];
 					player_pos->x = i;
 					player_pos->y = map->row;
 				}
 				else
-				{
-					ft_putstr_fd("More than 1 Player\n", 2);
-					return (0);
-				}
+					return (print_error("More than 1 Player\n", 2));
 			}
 			else
-			{
-				ft_putstr_fd("Invalid Character Found In Map\n", 2);
-				return (0);
-			}
+				return (print_error("Invalid Character Found In Map\n", 2));
 		}
 		i++;
 	}
 	return (1);
 }
 
-int	map_getinfo(t_map *map, int fd, t_coord *player_pos, int *player_direction)
+int	map_getinfo(t_map *map, int fd, t_coord *player_pos, int *pd)
 {
 	char	*line;
 
-	while(get_next_line(fd, &line))
+	while (get_next_line(fd, &line))
 	{
 		if (ft_strlen(line) > (size_t)map->col)
 			map->col = ft_strlen(line);
-		if (!map_character_checking(map, line, player_pos, player_direction))
+		if (!map_character_checking(map, line, player_pos, pd))
 			return (0);
 		free(line);
 		map->row++;
 	}
 	printf("map row is %d\n", map->row);
 	free(line);
-	if (!player_direction)
+	if (!pd)
 		return (0);
 	return (1);
 }
 
-int	map_parsing(t_map *map, t_data *data, char *file, t_coord *player_pos, int *player_direction)
+int	map_parsing(t_map *map, t_data *data, char *file, t_coord *player_pos, int *pd)
 {
 	int	fd;
 
@@ -97,12 +91,11 @@ int	map_parsing(t_map *map, t_data *data, char *file, t_coord *player_pos, int *
 		close(fd);
 		return (0);
 	}
-	if (!map_getinfo(map, fd, player_pos, player_direction))
+	if (!map_getinfo(map, fd, player_pos, pd))
 	{
 		close(fd);
 		return (0);
 	}
-	// printf("map row is 				| %d\n", map->row);
 	close(fd);
 	return (1);
 }
