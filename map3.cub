@@ -3,12 +3,12 @@ WE ./textures/STEEL_2A.xpm
 SO ./textures/STEEL_2A.xpm
 EA ./textures/STEEL_2A.xpm
 
-F 255,255,255
-C 255,255,255
+C  255,        255          ,255
+F   255,   255    ,    255
 
 11111111
 10000001
-1001D1001
+10011001
 10000001
 1001N101
 10000101

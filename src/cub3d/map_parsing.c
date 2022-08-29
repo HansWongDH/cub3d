@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 15:09:33 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/08/24 20:25:39 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/29 15:57:20 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void	map_create(t_map *map, char *file, t_coord *player_pos, int index)
 	while (get_next_line(fd, &line))
 	{
 		if (ft_strlen(line) < (size_t)map->col)
-			map->array[i] = ft_strdup(map_padding(line, map->col - ft_strlen(line)));
+			map->array[i] = map_padding(line, map->col - ft_strlen(line));
 		else
 		{
 			map->array[i] = ft_strdup(line);

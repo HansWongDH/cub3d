@@ -41,8 +41,8 @@ typedef struct	s_data
 	t_xpm		south_wall;
 	t_xpm		west_wall;
 	t_xpm		door;
-	unsigned int	floor;
-	unsigned int	ceiling;
+	int			floor;
+	int			ceiling;
 	int			index;
 	t_game		game;
 	t_map		map;
@@ -67,5 +67,5 @@ t_vec			add_vectors(t_vec v1, t_vec v2);
 t_vec			subtract_vectors(t_vec v1, t_vec v2);
 t_vec			equate_vectores(t_vec v1);
 int				parse_element(int fd, t_data *data);
-
+int				free_2d(char **s);
 #endif
