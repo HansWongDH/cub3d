@@ -41,13 +41,16 @@ typedef struct	s_xpm
 
 typedef struct	s_math
 {
-	double		camera_x;
 	t_vec		ray_dir;
 	t_vec		delta_dist;
 	t_vec		side_dist;
 	t_coord		map_pos;
 	t_coord		step;
+	double		camera_x;
+	double		wall_distance;
+	double		wall;
 	int			door;
+	int			side;
 }				t_math;
 
 t_vec			add_vectors(t_vec v1, t_vec v2);
@@ -58,4 +61,6 @@ t_vec			subtract_vectors_double(t_vec v1, double x, double y);
 t_vec			equate_vectors_double(double x, double y);
 t_vec			divide_vectors_double(t_vec v1, double x, double y);
 
+t_coord			add_coords(t_coord c1, t_coord c2);
+t_coord			equate_coords_int(int x, int y);
 #endif

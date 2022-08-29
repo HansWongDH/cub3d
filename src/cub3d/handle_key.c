@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 13:45:10 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/24 14:28:39 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/29 18:22:56 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	handle_key(int keycode, t_data *data) //can change to looping over funtion p
 		data->player.print_player(&data->player);
 	if (keycode == KEY_E)
 	{
-		open_door(data);
+		data->game.open_door(data);
 		data->mouse_pos.x = GAME_WIDTH / 2;
 	}
 	return (0);

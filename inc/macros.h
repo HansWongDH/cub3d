@@ -42,8 +42,8 @@
 # define GAME_WIDTH 		WIDTH * 3 //needs to by dynamic
 # define GAME_HEIGHT		HEIGHT * 3 //needs to by dynamic
 # define X_SCALE			4
+# define Y_SCALE			375
 # define Y_INV_SCALE		32000
-# define Y_SCALE(distance)	(28000/distance)
 
 # define GUN_WIDTH			128
 # define GUN_HEIGHT			128
