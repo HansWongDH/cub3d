@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 15:09:33 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/08/29 15:57:20 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/29 18:12:32 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,4 +150,5 @@ void	map_create(t_map *map, char *file, t_coord *player_pos, int index)
 	map->array[i] = NULL;
 	map->array[player_pos->y][player_pos->x] = '0';
 	close(fd);
+	free(line);
 }
