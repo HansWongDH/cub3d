@@ -13,6 +13,7 @@
 
 typedef struct	c_map		t_map;
 typedef struct	c_player	t_player;
+typedef struct	s_data		t_data;
 
 typedef	void	(*t_print_map)(t_map *self);
 typedef void	(*t_draw_map)(t_map *self, t_player *player);
@@ -35,7 +36,7 @@ struct			c_map
 	int						flag;
 };
 
-t_map   map_init(void *mlx, char *file, t_coord *player_pos, int *player_direction);
+t_map   map_init(void *mlx, t_data *data, char *file, t_coord *player_pos, int *player_direction);
 void	print_map(t_map *self);
 void	draw_map(t_map *self, t_player *player);
 

@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 13:45:10 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/29 18:22:56 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/29 18:35:31 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,11 @@ int	handle_key(int keycode, t_data *data) //can change to looping over funtion p
 	if (keycode == KEY_SPACE)
 		data->game.shoot_gun(data);
 	if (keycode == KEY_ESC)
+	{
+		freestr(data->map.array);
+		system("leaks cub3d");
 		exit(0);
+	}
 	if (is_movement_keys(keycode) >= 1)
 		data->player.print_player(&data->player);
 	if (keycode == KEY_E)

@@ -32,6 +32,7 @@ typedef struct	s_xpm
 {
 	void		*img_p;
 	int			*data;
+	char		*path;
 	int			bpp;
 	int			line_size;
 	int			endian;

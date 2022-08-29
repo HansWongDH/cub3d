@@ -1,8 +1,19 @@
+NO ./textures/STEEL_2A.xpm
+WE ./textures/STEEL_2A.xpm
+SO ./textures/STEEL_2A.xpm
+EA ./textures/STEEL_2A.xpm
+
+C  255,        255          ,255
+F   255,   255    ,    255
+
 11111111
 10000001
 1001D101
 10000001
 100DN001
+10011001
+1000D001
+1001N101
 10000101
 10000001
 10000001
