@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_game_render.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
+/*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:30:40 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/29 18:19:39 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/29 18:44:34 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,19 @@ static void	render_walls(t_data *data, t_math *math, int index)
 	{
 		game_pos_to_draw = get_pos_to_draw(data, -1, j, index);
 		if (game_pos_to_draw <= data->game.width * data->game.height)
-			data->game.img.data[game_pos_to_draw]
-				= img.data[get_xpm_pos(j, factor, math->wall, 0)];
+		{
+			if (get_xpm_pos(j, factor, math->wall, 0) < XPM_SIZE * XPM_SIZE)
+				data->game.img.data[game_pos_to_draw]
+					= img.data[get_xpm_pos(j, factor, math->wall, 0)];
+		}
 		game_pos_to_draw = get_pos_to_draw(data, factor, j, index);
 		if (data->game.width * data->game.height - game_pos_to_draw >= 0)
-			data->game.img.data[data->game.width
-				* data->game.height - game_pos_to_draw]
-				= img.data[get_xpm_pos(j, factor, math->wall, 1)];
+		{
+			if (get_xpm_pos(j, factor, math->wall, 1) < XPM_SIZE * XPM_SIZE)
+				data->game.img.data[data->game.width
+					* data->game.height - game_pos_to_draw]
+					= img.data[get_xpm_pos(j, factor, math->wall, 1)];
+		}
 		j++;
 	}
 }

@@ -6,13 +6,26 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:24:28 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/24 16:03:30 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/30 14:42:11 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "cub3d.h"
 
+void	turn_player_mouse(t_player *self, double m_pos)
+{
+	double	oldray_dir_x;
+
+	oldray_dir_x = self->ray_dir.x;
+	self->ray_dir = equate_vectors_double(
+			self->ray_dir.x * cos(m_pos * (M_PI / 2) * SENSITIVITY)
+			- self->ray_dir.y * sin(m_pos * (M_PI / 2) * SENSITIVITY),
+			oldray_dir_x * sin(m_pos * (M_PI / 2) * SENSITIVITY)
+			+ self->ray_dir.y * cos(m_pos * (M_PI / 2) * SENSITIVITY));
+	self->plane_dir = get_plane_dir(self->ray_dir);
+}
+	
 void	turn_player(t_player *self, int keycode)
 {
 	double	oldray_dir_x;
@@ -102,6 +115,7 @@ t_player	player_init(t_coord player_pos, int player_direction)
 	player.move_player = move_player;
 	player.print_player = print_player;
 	player.turn_player = turn_player;
+	player.turn_player_mouse = turn_player_mouse;
 	player.pos.x = ((player_pos.x + 1) * TILE_SIZE) - (TILE_SIZE / 2);
 	player.pos.y = ((player_pos.y + 1) * TILE_SIZE) - (TILE_SIZE / 2);
 	player.ray_dir = get_player_direction_angle(player_direction);
