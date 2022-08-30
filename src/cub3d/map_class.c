@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:11:49 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/30 15:20:53 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/30 15:58:38 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,21 +66,21 @@ static void	init_map_img(t_data *data, t_map *map)
 			&map->display.bpp, &map->display.line_size, &map->display.endian);
 }
 
-t_map	map_init(t_data *data, char *file,
-		t_coord *player_pos, int *player_direction)
+t_map	map_init(t_data *data, char *file)
 {
-	t_map	map;
+	t_map		map;
 
 	map.flag = 1;
+	map.player_direction = 0;
 	map.print_map = print_map;
 	map.draw_map = draw_map;
 	init_wall_path(data);
-	if (!map_parsing(&map, data, file, player_pos, player_direction))
+	if (!map_parsing(&map, data, file))
 	{
 		map.flag = 0;
 		return (map);
 	}
-	map_create(&map, file, player_pos, data->index);
+	map_create(&map, file, data->index);
 	if (!map_validation(&map))
 	{
 		ft_putstr_fd("Map Is Not Enclosed\n", 2);

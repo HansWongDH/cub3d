@@ -6,14 +6,14 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 15:09:33 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/08/30 15:21:57 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/30 15:58:46 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "libft.h"
 
-int	map_character_checking(t_map *map, char *line, t_coord *player_pos, int *pd)
+int	map_character_checking(t_map *map, char *line)
 {
 	int	i;
 
@@ -24,11 +24,11 @@ int	map_character_checking(t_map *map, char *line, t_coord *player_pos, int *pd)
 		{
 			if (ft_strchr("NWSE", line[i]))
 			{
-				if (!(*pd))
+				if (!(map->player_direction))
 				{
-					*pd = line[i];
-					player_pos->x = i;
-					player_pos->y = map->row;
+					map->player_direction = line[i];
+					map->player_pos.x = i;
+					map->player_pos.y = map->row;
 				}
 				else
 					return (print_error("More than 1 Player\n", 2));
@@ -41,7 +41,7 @@ int	map_character_checking(t_map *map, char *line, t_coord *player_pos, int *pd)
 	return (1);
 }
 
-int	map_getinfo(t_map *map, int fd, t_coord *player_pos, int *pd)
+int	map_getinfo(t_map *map, int fd)
 {
 	char	*line;
 
@@ -49,19 +49,19 @@ int	map_getinfo(t_map *map, int fd, t_coord *player_pos, int *pd)
 	{
 		if (ft_strlen(line) > (size_t)map->col)
 			map->col = ft_strlen(line);
-		if (!map_character_checking(map, line, player_pos, pd))
+		if (!map_character_checking(map, line))
 			return (0);
 		free(line);
 		map->row++;
 	}
 	printf("map row is %d\n", map->row);
 	free(line);
-	if (!pd)
+	if (!map->player_direction)
 		return (0);
 	return (1);
 }
 
-int	map_parsing(t_map *map, t_data *data, char *file, t_coord *player_pos, int *pd)
+int	map_parsing(t_map *map, t_data *data, char *file)
 {
 	int	fd;
 
@@ -75,7 +75,7 @@ int	map_parsing(t_map *map, t_data *data, char *file, t_coord *player_pos, int *
 		close(fd);
 		return (0);
 	}
-	if (!map_getinfo(map, fd, player_pos, pd))
+	if (!map_getinfo(map, fd))
 	{
 		close(fd);
 		return (0);
@@ -98,7 +98,7 @@ char	*map_padding(char *line, int size)
 	return (ret);
 }
 
-void	map_create(t_map *map, char *file, t_coord *player_pos, int index)
+void	map_create(t_map *map, char *file, int index)
 {
 	int		fd;
 	char	*line;
@@ -120,7 +120,7 @@ void	map_create(t_map *map, char *file, t_coord *player_pos, int index)
 		i++;
 	}
 	map->array[i] = NULL;
-	map->array[player_pos->y][player_pos->x] = '0';
+	map->array[map->player_pos.y][map->player_pos.x] = '0';
 	close(fd);
 	free(line);
 }

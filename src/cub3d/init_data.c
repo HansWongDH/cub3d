@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 14:00:08 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/30 11:54:57 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/30 15:48:25 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,18 @@ void	init_images(t_data *data) //change name later (initialize all images here i
 
 void	init_data(t_data *data, char *file)
 {
-	t_coord	player_pos;
-	int		player_direction;
-
-	player_direction = 0;
 	data->index = 0;
 	data->floor = -1;
 	data->ceiling = -1;
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3d");
-	data->map = map_init(data, file, &player_pos, &player_direction);
+	data->map = map_init(data, file);
 	if (data->map.flag == 0)
 	{
-		//free all data
+	// 	//free all data
 		exit(1);
 	}
-	data->player = player_init(player_pos, player_direction);
+	data->player = player_init(data->map.player_pos, data->map.player_direction);
 	data->game = game_init(data->mlx);
 	init_images(data);
 	init_textures(data);
