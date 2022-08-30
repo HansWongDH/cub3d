@@ -21,7 +21,7 @@ RM			= rm -f
 OBJ_FILES	= $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
 LIBFT		= $(LIBFT_DIR)/libft.a
-MLX			= $(MLX_DIR)/libmlx.dylib 
+MLX			= $(MLX_DIR)/libmlx.a
 LIBRARIES	= -L$(LIBFT_DIR) -L$(MLX_DIR) -lft
 
 all:		$(NAME)

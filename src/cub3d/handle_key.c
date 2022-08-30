@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 13:45:10 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/29 18:59:33 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/30 14:40:51 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,13 @@ int	handle_key(int keycode, t_data *data) //can change to looping over funtion p
 	if (keycode == KEY_ESC)
 	{
 		freestr(data->map.array);
-		system("leaks cub3d");
+		// system("leaks cub3d");
 		exit(0);
 	}
 	if (is_movement_keys(keycode) >= 1)
 		data->player.print_player(&data->player);
 	if (keycode == KEY_E)
-	{
 		data->game.open_door(data);
-		data->mouse_pos.x = GAME_WIDTH / 2;
-	}
 	return (0);
 }
 
@@ -67,33 +64,18 @@ int	handle_exit(int keycode, t_data *data)
 
 int	handle_mouse(int x, int y, t_data *data)
 {
-	//idk what how the fuck im supposed to achive mouse
-	//movement based on mouse displacemnt NOT relative to pixel pos
-	//can ntry to reset mouse to middle everytime but all mouse prototyeps dont fucking work
 	(void)y;
-	if (data->mouse_pos.x == -1)
+	static int reset = 0;
+	
+	if (x < 0 || x > WINDOW_WIDTH)
 	{
-		data->mouse_pos.x = x;
-		return (0);
-	}
-	printf("================\n");
-	printf("old = %d\n", data->mouse_pos.x);
-	printf("new = %d\n", x);
-	if (x >= 0 && x <= WINDOW_WIDTH)
-	{
-		if (abs(x - data->mouse_pos.x) > 10)
-		{
-			if (x > data->mouse_pos.x)
-				data->player.turn_player(&data->player, KEY_D);
-			else if (x < data->mouse_pos.x)
-				data->player.turn_player(&data->player, KEY_A);
-			else
-				return (0);
-			printf("================\n");
-			data->mouse_pos.x = x;
-		}
-	}
-	else
 		mlx_mouse_move(data->win, WINDOW_WIDTH /2, WINDOW_HEIGHT /2);
+		reset = 1;
+	}
+	else if (reset == 0)
+		data->player.turn_player_mouse(&data->player, (double)(data->mouse_pos.x - x) / WINDOW_WIDTH * -1);
+	else if (reset == 1)
+		reset = 0;
+	data->mouse_pos.x = x;
 	return (0);
 }

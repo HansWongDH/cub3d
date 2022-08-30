@@ -27,6 +27,7 @@
 # define MOVE_GAP			3
 # define PLAYER_SIZE		10
 # define ROTATE_FACTOR		PI / 27
+# define SENSITIVITY		1.0
 # define MAP_TRANSPARENCY	75
 
 # define ROW				11 //remove to be dynamic
