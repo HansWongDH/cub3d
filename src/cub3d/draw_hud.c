@@ -6,7 +6,7 @@
 /*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:21:04 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/29 17:21:52 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/08/30 11:14:28 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@ void	draw_hud(t_data *data)
 		{
 			if (loop.y % HUD_Y_SCALE == 0)
 				data->game.background.data[data->game.width * loop.y + loop.x]
-					= background_tex.data[XPM_SIZE * (loop.y / HUD_Y_SCALE) + (loop.x / x_scale)];
+					= background_tex.data[XPM_SIZE
+					* (loop.y / HUD_Y_SCALE) + (loop.x / x_scale)];
 			else
 				data->game.background.data[data->game.width * loop.y + loop.x]
-					= background_tex.data[XPM_SIZE * ((loop.y - loop.y % HUD_Y_SCALE) / HUD_Y_SCALE)
+					= background_tex.data[XPM_SIZE
+					* ((loop.y - loop.y % HUD_Y_SCALE) / HUD_Y_SCALE)
 					+ ((loop.x - loop.x % x_scale) / x_scale)];
 			loop.y++;
 		}

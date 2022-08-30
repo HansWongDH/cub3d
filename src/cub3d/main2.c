@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 13:07:32 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/29 18:12:50 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/30 11:50:50 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	put_images(t_data *data)
 int			draw_loop(t_data *data)
 {
 	data->map.draw_map(&data->map, &data->player);
-	//data->map.draw_player_direction(&data->map, &data->player);
 	data->game.draw_sky(&data->game);
 	data->game.draw_game(data);
 	put_images(data);
