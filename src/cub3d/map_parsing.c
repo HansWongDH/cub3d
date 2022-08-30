@@ -6,28 +6,12 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 15:09:33 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/08/29 19:51:02 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/30 15:21:57 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "libft.h"
-
-int	map_filetype(char *file)
-{
-	char	*file_type;
-
-	if (ft_strlen(file) < 5)
-		return (0);
-	file_type = ft_substr(file, ft_strlen(file) - 4, 4);
-	if (ft_strcmp(file_type, ".cub"))
-	{
-		free(file_type);
-		return (0);
-	}
-	free(file_type);
-	return (1);
-}
 
 int	map_character_checking(t_map *map, char *line, t_coord *player_pos, int *pd)
 {
@@ -123,12 +107,7 @@ void	map_create(t_map *map, char *file, t_coord *player_pos, int index)
 	i = 0;
 	map->array = ft_calloc(sizeof(char *), map->row);
 	fd = open(file, O_RDONLY);
-	while (index > 0)
-	{
-		get_next_line(fd, &line);
-		free(line);
-		index--;
-	}
+	map_skip_element(fd, index);
 	while (get_next_line(fd, &line))
 	{
 		if (ft_strlen(line) < (size_t)map->col)

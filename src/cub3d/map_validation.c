@@ -6,14 +6,14 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 18:08:17 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/08/24 20:22:11 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/30 15:01:07 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "libft.h"
 
-int		map_edgechecking(t_map *map)
+int	map_edgechecking(t_map *map)
 {
 	int		i;
 	char	*top;
@@ -38,7 +38,7 @@ int		map_edgechecking(t_map *map)
 	return (1);
 }
 
-int		map_spacechecking(t_map *map, int x, int y)
+int	map_spacechecking(t_map *map, int x, int y)
 {
 	if (y > 0)
 	{
@@ -63,8 +63,7 @@ int		map_spacechecking(t_map *map, int x, int y)
 	return (1);
 }
 
-
-int		map_validation(t_map *map)
+int	map_validation(t_map *map)
 {
 	int	x;
 	int	y;

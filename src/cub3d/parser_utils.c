@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:10:30 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/08/29 20:01:53 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/30 15:05:01 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,32 @@ int	print_error(char *s, int fd)
 		s++;
 	}
 	return (1);
+}
+
+int	map_filetype(char *file)
+{
+	char	*file_type;
+
+	if (ft_strlen(file) < 5)
+		return (0);
+	file_type = ft_substr(file, ft_strlen(file) - 4, 4);
+	if (ft_strcmp(file_type, ".cub"))
+	{
+		free(file_type);
+		return (0);
+	}
+	free(file_type);
+	return (1);
+}
+
+void	map_skip_element(int fd, int index)
+{
+	char	*line;
+
+	while (index > 0)
+	{
+		get_next_line(fd, &line);
+		free(line);
+		index--;
+	}
 }

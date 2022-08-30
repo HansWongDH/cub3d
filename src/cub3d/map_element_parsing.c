@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:14:39 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/08/29 17:28:59 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/30 15:18:40 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ int	parse_element(int fd, t_data *data)
 	char		*line;
 	char		**args;
 	int			i;
-
 
 	if (get_next_line(fd, &line) < 0)
 		return (0);

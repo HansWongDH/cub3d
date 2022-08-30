@@ -37,7 +37,7 @@ struct			c_map
 t_map   map_init(t_data *data, char *file, t_coord *player_pos, int *player_direction);
 void	print_map(t_map *self);
 void	draw_map(t_map *self, t_player *player);
-
+int		map_filetype(char *file);
 void	draw_display_map(t_map *map, t_player *player);
 void	draw_square(int *img_data, t_coord tile_coord, int width, int colour);
 void	draw_tiles(t_map *map);
@@ -45,4 +45,11 @@ void	draw_player(t_map *map, t_player *player);
 void	draw_display_border(t_map *map);
 void	draw_display_player(t_map *map, t_player *player);
 void	draw_display_player_direction(t_map *map, t_player *player);
+void	map_skip_element(int fd, int index);
+void	map_create(t_map *map, char *file, t_coord *player_pos, int index);
+int		map_parsing(t_map *map, t_data *data, char *file, t_coord *player_pos, int *pd);
+int		map_validation(t_map *map);
+int		parse_element(int fd, t_data *data);
+int		free_2d(char **s);
+int		print_error(char *s, int fd);
 #endif

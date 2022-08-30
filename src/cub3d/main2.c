@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 13:07:32 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/30 14:58:54 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/08/30 15:06:37 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,9 @@ void	start_game(t_data *data)
 {
 	mlx_hook(data->win, X_KEY_PRESS, 0, handle_key, data);
 	mlx_hook(data->win, X_KEY_EXIT, 0, handle_exit, data);
-<<<<<<< HEAD
-=======
 	mlx_mouse_hide();
 	mlx_mouse_move(data->win, WINDOW_WIDTH /2, WINDOW_HEIGHT / 2);
 	data->mouse_pos.x = WINDOW_WIDTH / 2;
->>>>>>> 6f85cef3ef92d8076648395c654b9d46550d24bc
 	mlx_hook(data->win, X_MOUSE_MOVE, 0, handle_mouse, data);
 	mlx_loop_hook(data->mlx, draw_loop, data);
 	mlx_loop(data->mlx);
