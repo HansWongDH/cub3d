@@ -1,6 +1,6 @@
 NO ./textures/Labwall_North.xpm
-WE ./textures/Labwall_West.xpm
 SO ./textures/SUPPORT_5B.xpm
+WE ./textures/Labwall_West.xpm
 EA ./textures/Labwall_East.xpm
 
 C  24,        60           ,48

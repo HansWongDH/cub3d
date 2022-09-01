@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
+/*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:52:23 by nfernand          #+#    #+#             */
-/*   Updated: 2022/09/01 09:36:04 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/01 14:18:41 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,18 @@ int	shade_colour(int colour, int percent)
 	while (i++ < percent)
 		colour = ((colour & 0x7E7E7E) >> 1) | (colour & 0x808080);
 	return (colour);
+}
+
+int	free_2d(char **s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		free(s[i]);
+		i++;
+	}
+	free(s);
+	return (0);
 }

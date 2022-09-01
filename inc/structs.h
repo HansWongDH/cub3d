@@ -67,6 +67,7 @@ typedef enum e_error_id
 	MAP_NOT_ENCLOSED,
 	MAP_MISSING_ELEM,
 	MAP_INVALID_RBG,
+	MAP_WRONG_ELEM_ORDER,
 	NUM_OF_ENUMS,
 }	t_error_id;
 
