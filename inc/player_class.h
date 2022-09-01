@@ -42,5 +42,6 @@ void			turn_player_mouse(t_player *self, double m_pos);
 t_vec			get_player_direction_angle(int player_direction);
 t_vec			get_plane_dir(t_vec ray_dir);
 int				validate_move(t_player *player, t_map *map, int keycode);
+void			turn_player_arrow_keys(t_player *player, int keycode);
 
 #endif

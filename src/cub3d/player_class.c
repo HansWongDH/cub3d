@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:24:28 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/30 14:42:11 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/01 09:26:09 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,56 +25,32 @@ void	turn_player_mouse(t_player *self, double m_pos)
 			+ self->ray_dir.y * cos(m_pos * (M_PI / 2) * SENSITIVITY));
 	self->plane_dir = get_plane_dir(self->ray_dir);
 }
-	
+
 void	turn_player(t_player *self, int keycode)
 {
 	double	oldray_dir_x;
-	//double	oldplane_dirX;
 
 	oldray_dir_x = self->ray_dir.x;
-	//oldplane_dirX = self->plane_dir.x;
 	if (keycode == KEY_A)
 	{
 		self->ray_dir = equate_vectors_double(
-				self->ray_dir.x * cos(-ROTATE_FACTOR) - self->ray_dir.y * sin(-ROTATE_FACTOR),
-				oldray_dir_x * sin(-ROTATE_FACTOR) + self->ray_dir.y * cos(-ROTATE_FACTOR));
+				self->ray_dir.x * cos(-ROTATE_FACTOR)
+				- self->ray_dir.y * sin(-ROTATE_FACTOR),
+				oldray_dir_x * sin(-ROTATE_FACTOR)
+				+ self->ray_dir.y * cos(-ROTATE_FACTOR));
 		self->plane_dir = get_plane_dir(self->ray_dir);
-		//self->ray_dir.x = self->ray_dir.x * cos(-ROTATE_FACTOR) - self->ray_dir.y * sin(-ROTATE_FACTOR);
-		//self->ray_dir.y = oldray_dir_x * sin(-ROTATE_FACTOR) + self->ray_dir.y * cos(-ROTATE_FACTOR);
-		//self->plane_dir.x = self->plane_dir.x * cos(-ROTATE_FACTOR) - self->plane_dir.y * sin(-ROTATE_FACTOR);
-		//self->plane_dir.y = oldplane_dirX * sin(-ROTATE_FACTOR) + self->plane_dir.y * cos(-ROTATE_FACTOR);
 	}
 	else if (keycode == KEY_D)
 	{
 		self->ray_dir = equate_vectors_double(
-				self->ray_dir.x * cos(ROTATE_FACTOR) - self->ray_dir.y * sin(ROTATE_FACTOR),
-				oldray_dir_x * sin(ROTATE_FACTOR) + self->ray_dir.y * cos(ROTATE_FACTOR));
-		self->plane_dir = get_plane_dir(self->ray_dir);
-		//self->ray_dir.x = self->ray_dir.x * cos(ROTATE_FACTOR) - self->ray_dir.y * sin(ROTATE_FACTOR);
-		//self->ray_dir.y = oldray_dir_x * sin(ROTATE_FACTOR) + self->ray_dir.y * cos(ROTATE_FACTOR);
-		//self->plane_dir.x = self->plane_dir.x * cos(ROTATE_FACTOR) - self->plane_dir.y * sin(ROTATE_FACTOR);
-		//self->plane_dir.y = oldplane_dirX * sin(ROTATE_FACTOR) + self->plane_dir.y * cos(ROTATE_FACTOR);
-	}
-	else if (keycode == KEY_U_ARROW)
-	{
-		self->ray_dir = get_player_direction_angle('N');
+				self->ray_dir.x * cos(ROTATE_FACTOR)
+				- self->ray_dir.y * sin(ROTATE_FACTOR),
+				oldray_dir_x * sin(ROTATE_FACTOR)
+				+ self->ray_dir.y * cos(ROTATE_FACTOR));
 		self->plane_dir = get_plane_dir(self->ray_dir);
 	}
-	else if (keycode == KEY_R_ARROW)
-	{
-		self->ray_dir = get_player_direction_angle('E');
-		self->plane_dir = get_plane_dir(self->ray_dir);
-	}
-	else if (keycode == KEY_D_ARROW)
-	{
-		self->ray_dir = get_player_direction_angle('S');
-		self->plane_dir = get_plane_dir(self->ray_dir);
-	}
-	else if (keycode == KEY_L_ARROW)
-	{
-		self->ray_dir = get_player_direction_angle('W');
-		self->plane_dir = get_plane_dir(self->ray_dir);
-	}
+	else if (is_movement_keys(keycode) == 2)
+		turn_player_arrow_keys(self, keycode);
 }
 
 void	move_player(t_player *self, int keycode, t_map *map)

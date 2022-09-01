@@ -6,11 +6,38 @@
 /*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:31:49 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/24 15:30:26 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/01 09:27:57 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "player_class.h"
+
+void	turn_player_arrow_keys(t_player *player, int keycode)
+{
+	double	oldray_dir_x;
+
+	oldray_dir_x = player->ray_dir.x;
+	if (keycode == KEY_U_ARROW)
+	{
+		player->ray_dir = get_player_direction_angle('N');
+		player->plane_dir = get_plane_dir(player->ray_dir);
+	}
+	else if (keycode == KEY_R_ARROW)
+	{
+		player->ray_dir = get_player_direction_angle('E');
+		player->plane_dir = get_plane_dir(player->ray_dir);
+	}
+	else if (keycode == KEY_D_ARROW)
+	{
+		player->ray_dir = get_player_direction_angle('S');
+		player->plane_dir = get_plane_dir(player->ray_dir);
+	}
+	else if (keycode == KEY_L_ARROW)
+	{
+		player->ray_dir = get_player_direction_angle('W');
+		player->plane_dir = get_plane_dir(player->ray_dir);
+	}
+}
 
 t_vec	get_player_direction_angle(int player_direction)
 {

@@ -6,21 +6,12 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 13:45:10 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/30 14:40:51 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/01 09:20:54 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "cub3d.h"
-
-int	is_movement_keys(int keycode)
-{
-	if (keycode == KEY_W || keycode == KEY_A || keycode == KEY_S || keycode == KEY_D)
-		return (1);
-	if (keycode == KEY_U_ARROW || keycode == KEY_R_ARROW || keycode == KEY_D_ARROW || keycode == KEY_L_ARROW)
-		return (2);
-	return (0);
-}
 
 int	handle_key(int keycode, t_data *data) //can change to looping over funtion pointers
 {
@@ -64,9 +55,9 @@ int	handle_exit(int keycode, t_data *data)
 
 int	handle_mouse(int x, int y, t_data *data)
 {
+	static int	reset = 0;
+
 	(void)y;
-	static int reset = 0;
-	
 	if (x < 0 || x > WINDOW_WIDTH)
 	{
 		mlx_mouse_move(data->win, WINDOW_WIDTH /2, WINDOW_HEIGHT /2);
