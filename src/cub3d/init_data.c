@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 14:00:08 by nfernand          #+#    #+#             */
-/*   Updated: 2022/09/01 11:09:50 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/01 13:33:58 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	init_data(t_data *data, char *file)
 	if (data->map.flag != MAP_OK)
 	{
 		print_map_error(data->map.flag);
-		printf("EXITED HERE\n");
 		exit(1);
 	}
 	data->win = mlx_new_window(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3d");

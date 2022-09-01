@@ -6,13 +6,13 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:14:39 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/09/01 11:33:56 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/01 13:29:00 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	create_rgb(char **args)
+static int	create_rgb(char **args)
 {
 	int	i;
 	int	colour[3];
@@ -39,7 +39,9 @@ int	create_rgb(char **args)
 	return (0 << 24 | colour[0] << 16 | colour[1] << 8 | colour[2]);
 }
 
-unsigned int	check_colour(char*s, char *line, t_data *data)
+//might have to check for invalid amount of commas in while loop idk
+
+static unsigned int	check_colour(t_data *data, t_map *map, char *s, char *line)
 {
 	char	**args;
 	int		i;
@@ -55,7 +57,7 @@ unsigned int	check_colour(char*s, char *line, t_data *data)
 	args = ft_split(line, ' ');
 	colour = create_rgb(args);
 	if (colour < 0)
-		return (0);
+		return (set_map_flag(map, MAP_INVALID_RBG));
 	if (!ft_strcmp(s, "F") && data->floor < 0)
 		data->floor = colour;
 	else if (data->ceiling < 0)
@@ -65,7 +67,7 @@ unsigned int	check_colour(char*s, char *line, t_data *data)
 	return (1);
 }
 
-int	check_path(char *s)
+static int	check_path(char *s)
 {
 	int	fd;
 
@@ -78,7 +80,7 @@ int	check_path(char *s)
 	return (1);
 }
 
-int	fetch_element(char **args, t_data *data, char *line)
+static int	fetch_element(t_data *data, t_map *map, char **args, char *line)
 {
 	if (!ft_strcmp(args[0], "NO") && check_path(args[1]))
 	{
@@ -101,13 +103,13 @@ int	fetch_element(char **args, t_data *data, char *line)
 			data->west_wall.path = ft_strdup(args[1]);
 	}
 	else if (!ft_strcmp(args[0], "F") || !ft_strcmp(args[0], "C"))
-		return (check_colour(args[0], line, data));
+		return (check_colour(data, map, args[0], line));
 	else
-		return (0);
+		return (set_map_flag(map, MAP_MISSING_ELEM));
 	return (1);
 }
 
-int	parse_element(int fd, t_data *data)
+int	parse_element(t_data *data, t_map *map, int fd)
 {
 	char		*line;
 	char		**args;
@@ -121,11 +123,8 @@ int	parse_element(int fd, t_data *data)
 		args = ft_split(line, ' ');
 		if (args[0])
 		{
-			if (!fetch_element(args, data, line))
-			{
-				set_map_flag(&data->map, MAP_INVALID_FILE);
+			if (!fetch_element(data, map, args, line))
 				return (free_2d(args));
-			}
 			i++;
 		}
 		free_2d(args);

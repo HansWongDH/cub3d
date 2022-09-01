@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:10:30 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/09/01 11:25:24 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/01 13:15:24 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	print_map_error(t_error_id err)
 	const char	*err_arr[] = {"MAP HAS TOO MANY PLAYERS\n",
 		"MAP HAS AN INVALID CHAR\n", "MAP HAS NO PLAYER\n",
 		"MAP HAS WRONG FILE EXTENSION\n", "MAP WAS AN INVALID FILE\n",
-		"MAP WAS NOT ENCLOSED\n"};
+		"MAP WAS NOT ENCLOSED\n", "MAP MISSING ELEMENT\n",
+		"MAP INVALID RGB\n"};
 
 	ft_putstr_fd(PR_RED, 2);
 	ft_putstr_fd((char *)err_arr[err - 2], 2);

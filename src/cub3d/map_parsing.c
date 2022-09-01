@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 15:09:33 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/09/01 10:48:56 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/01 13:07:45 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	map_parsing(t_map *map, t_data *data, char *file)
 	if (!map_filetype(map, file))
 		return (0);
 	fd = open(file, O_RDONLY);
-	if (!parse_element(fd, data))
+	if (!parse_element(data, map, fd))
 	{
 		close(fd);
 		return (0);

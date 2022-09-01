@@ -52,7 +52,7 @@ int		map_parsing(t_map *map, t_data *data, char *file);
 int		map_validation(t_map *map);
 void	map_skip_element(int fd, int index);
 
-int		parse_element(int fd, t_data *data);
+int		parse_element(t_data *data, t_map *map, int fd);
 int		free_2d(char **s);
 void	print_map_error(t_error_id err);
 int		set_map_flag(t_map *map, t_error_id err);
