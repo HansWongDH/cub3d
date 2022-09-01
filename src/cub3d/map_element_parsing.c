@@ -6,20 +6,20 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:14:39 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/09/01 14:36:21 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/01 15:26:27 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 //might have to check for invalid amount of commas in while loop idk
-static	int	strict_order(char *s, int i)
+static	int	strict_order(t_map *map, char *s, int i)
 {
 	const char	*arr[6] = {"NO", "SO", "WE", "EA", "F", "C"};
 
 	if (!ft_strcmp(s, arr[i]))
 		return (1);
-	return (0);
+	return (set_map_flag(map, MAP_WRONG_ELEM_ORDER));
 }
 
 static unsigned int	check_colour(t_data *data, t_map *map, char *s, char *line)
@@ -102,8 +102,10 @@ int	parse_element(t_data *data, t_map *map, int fd)
 	while (get_next_line(fd, &line) > 0)
 	{
 		args = ft_split(line, ' ');
-		if (args[0] && strict_order(args[0], i))
+		if (args[0])
 		{
+			if (!strict_order(map, args[0], i))
+				return (free_2d(args));
 			if (!fetch_element(data, map, args, line))
 				return (free_2d(args));
 			i++;
