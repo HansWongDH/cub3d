@@ -11,5 +11,6 @@
 
 unsigned int	get_argb_val(int colour, int transparency);
 int				is_movement_keys(int keycode);
+int				shade_colour(int colour, int percent);
 
 #endif

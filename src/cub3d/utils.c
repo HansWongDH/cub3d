@@ -6,7 +6,7 @@
 /*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:52:23 by nfernand          #+#    #+#             */
-/*   Updated: 2022/09/01 09:22:04 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/01 09:36:04 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,14 @@ int	is_movement_keys(int keycode)
 		|| keycode == KEY_D_ARROW || keycode == KEY_L_ARROW)
 		return (2);
 	return (0);
+}
+
+int	shade_colour(int colour, int percent)
+{
+	int	i;
+
+	i = 0;
+	while (i++ < percent)
+		colour = ((colour & 0x7E7E7E) >> 1) | (colour & 0x808080);
+	return (colour);
 }

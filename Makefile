@@ -6,12 +6,12 @@ LIBFT_DIR	= src/libft
 MLX_DIR		= src/mlx
 INC_DIR		= inc
 
-SRC_FILES	= main.c main2.c player_class.c map_class.c handle_key.c init_data.c\
+SRC_FILES	= main2.c player_class.c map_class.c handle_key.c init_data.c\
 			  float_utils.c game_class.c map_validation.c map_parsing.c xpm_utils.c\
 			  player_class_utils.c vector_utils.c coord_utils.c draw_gun.c draw_hud.c\
 			  draw_game_render.c draw_game_render_utils.c draw_gun_and_door_uitls.c\
 			  parser_utils.c map_element_parsing.c draw_display_map.c draw_map_utils.c\
-			  draw_display_map_2.c utils.c
+			  draw_display_map_2.c utils.c vector_utils_2.c
 
 GCC 		= gcc
 CFLAGS		= -Wall -Wextra -Werror
