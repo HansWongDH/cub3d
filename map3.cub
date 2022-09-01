@@ -1,7 +1,6 @@
-NO ./textures/STEEL_2A.xpm
-WE ./textures/STEEL_2A.xpm
-SO ./textures/STEEL_2A.xpm
-EA ./textures/STEEL_2A.xpm
+NO ./textures/Labwall_North.xpm
+WE ./textures/Labwall_West.xpm
+SO ./textures/SUPPORT_5B.xpm
 
 C  255,        255          ,255
 F   255,   255    ,    255

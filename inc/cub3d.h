@@ -54,7 +54,6 @@ float			get_positive_value_of_angle(double angle);
 int				handle_key(int keycode, t_data *data);
 int				handle_exit(int keycode, t_data *data);
 int				handle_mouse(int x, int y, t_data *data);
-void			init_images(t_data *data);
 void			init_data(t_data *data, char *file);
 void			printmap(char **map);
 void			init_xpm(void *mlx, t_xpm *xpm, char *path_to_xpm);

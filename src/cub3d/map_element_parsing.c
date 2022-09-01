@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:14:39 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/08/30 15:18:40 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/01 11:33:56 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,25 +78,25 @@ int	check_path(char *s)
 	return (1);
 }
 
-int	fetch_element(char	**args, t_data *data, char *line)
+int	fetch_element(char **args, t_data *data, char *line)
 {
 	if (!ft_strcmp(args[0], "NO") && check_path(args[1]))
-	{	
+	{
 		if (!data->north_wall.path)
 			data->north_wall.path = ft_strdup(args[1]);
 	}
 	else if (!ft_strcmp(args[0], "SO") && check_path(args[1]))
-	{	
+	{
 		if (!data->south_wall.path)
 			data->south_wall.path = ft_strdup(args[1]);
 	}
 	else if (!ft_strcmp(args[0], "EA") && check_path(args[1]))
-	{	
+	{
 		if (!data->east_wall.path)
 			data->east_wall.path = ft_strdup(args[1]);
 	}
 	else if (!ft_strcmp(args[0], "WE") && check_path(args[1]))
-	{	
+	{
 		if (!data->west_wall.path)
 			data->west_wall.path = ft_strdup(args[1]);
 	}
@@ -122,7 +122,10 @@ int	parse_element(int fd, t_data *data)
 		if (args[0])
 		{
 			if (!fetch_element(args, data, line))
+			{
+				set_map_flag(&data->map, MAP_INVALID_FILE);
 				return (free_2d(args));
+			}
 			i++;
 		}
 		free_2d(args);

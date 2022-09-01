@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 15:09:33 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/08/30 15:58:46 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/01 10:48:56 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ int	map_character_checking(t_map *map, char *line)
 					map->player_pos.y = map->row;
 				}
 				else
-					return (print_error("More than 1 Player\n", 2));
+					return (set_map_flag(map, MAP_TOO_MANY_PLAYERS));
 			}
 			else
-				return (print_error("Invalid Character Found In Map\n", 2));
+				return (set_map_flag(map, MAP_INV_CHAR));
 		}
 		i++;
 	}
@@ -54,33 +54,9 @@ int	map_getinfo(t_map *map, int fd)
 		free(line);
 		map->row++;
 	}
-	printf("map row is %d\n", map->row);
 	free(line);
 	if (!map->player_direction)
-		return (0);
-	return (1);
-}
-
-int	map_parsing(t_map *map, t_data *data, char *file)
-{
-	int	fd;
-
-	map->col = 0;
-	map->row = 0;
-	if (map_filetype(file) < 0)
-		return (0);
-	fd = open(file, O_RDONLY);
-	if (!parse_element(fd, data))
-	{
-		close(fd);
-		return (0);
-	}
-	if (!map_getinfo(map, fd))
-	{
-		close(fd);
-		return (0);
-	}
-	close(fd);
+		return (set_map_flag(map, MAP_NO_PLAYER));
 	return (1);
 }
 
@@ -123,4 +99,27 @@ void	map_create(t_map *map, char *file, int index)
 	map->array[map->player_pos.y][map->player_pos.x] = '0';
 	close(fd);
 	free(line);
+}
+
+int	map_parsing(t_map *map, t_data *data, char *file)
+{
+	int	fd;
+
+	map->col = 0;
+	map->row = 0;
+	if (!map_filetype(map, file))
+		return (0);
+	fd = open(file, O_RDONLY);
+	if (!parse_element(fd, data))
+	{
+		close(fd);
+		return (0);
+	}
+	if (!map_getinfo(map, fd))
+	{
+		close(fd);
+		return (0);
+	}
+	close(fd);
+	return (1);
 }

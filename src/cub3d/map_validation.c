@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 18:08:17 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/08/30 15:01:07 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/01 10:55:40 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	map_validation(t_map *map)
 	y = 0;
 	(void)x;
 	if (!map_edgechecking(map))
-		return (0);
+		return (set_map_flag(map, MAP_NOT_ENCLOSED));
 	while (map->array[y])
 	{
 		x = 0;
@@ -80,7 +80,7 @@ int	map_validation(t_map *map)
 			if (map->array[y][x] == ' ')
 			{
 				if (!map_spacechecking(map, x, y))
-					return (0);
+					return (set_map_flag(map, MAP_NOT_ENCLOSED));
 			}
 			x++;
 		}

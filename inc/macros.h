@@ -65,11 +65,32 @@
 # define YELLOW			0xFFFF00
 # define LBLUE			0x00B4D8
 # define BROWN			0xAB3428
+
 # define FLOORCOL		0x1E1E18 //0x1E1E18
 # define CIELCOL		0x183C30 //0x183C30
 # define DOOR_CL_COL	0xffba08
 # define DOOR_OP_COL	0x4daa57
-
 # define WALLCOL		GRAY
+
+/* FOREGROUND */
+#define PR_RESET  "\x1B[0m"
+#define PR_RED  "\x1B[31m"
+#define PR_GREEN  "\x1B[32m"
+#define PR_YELLOW  "\x1B[33m"
+#define PR_BLUE  "\x1B[34m"
+#define PR_MAGENTA  "\x1B[35m"
+#define PR_CYAN  "\x1B[36m"
+#define PR_WHITE  "\x1B[37m"
+
+#define FRED(x) RED x RESET
+#define FGRN(x) GREEN x RESET
+#define FYEL(x) YELLOW x RESET
+#define FBLU(x) BLUE x RESET
+#define FMAG(x) MAGENTA x RESET
+#define FCYN(x) CYAN x RESET
+#define FWHT(x) WHITE x RESET
+
+#define BOLD(x)	"\x1B[1m" x RESET
+#define UNDL(x)	"\x1B[4m" x RESET
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 11:18:07 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/30 11:43:00 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/01 10:24:11 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,27 +33,6 @@ void	draw_display_border(t_map *map)
 			coord.y++;
 		}
 		coord.x++;
-	}
-}
-
-void	draw_player(t_map *map, t_player *player)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < player->size)
-	{
-		j = 0;
-		while (j < player->size)
-		{
-			map->img.data[map->width
-				* ((int)player->pos.y + j - (player->size / 2))
-				+ ((int)player->pos.x + i - (player->size / 2))]
-				= get_argb_val(RED, MAP_TRANSPARENCY - 20);
-			j++;
-		}
-		i++;
 	}
 }
 

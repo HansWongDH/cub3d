@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:11:49 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/30 15:58:38 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/01 10:56:02 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	print_map(t_map *self)
 void	draw_map(t_map *self, t_player *player)
 {
 	draw_tiles(self);
-	draw_player(self, player);
 	draw_display_border(self);
 	draw_display_map(self, player);
 	draw_display_player(self, player);
@@ -70,23 +69,16 @@ t_map	map_init(t_data *data, char *file)
 {
 	t_map		map;
 
-	map.flag = 1;
+	map.flag = MAP_OK;
 	map.player_direction = 0;
 	map.print_map = print_map;
 	map.draw_map = draw_map;
 	init_wall_path(data);
 	if (!map_parsing(&map, data, file))
-	{
-		map.flag = 0;
 		return (map);
-	}
 	map_create(&map, file, data->index);
 	if (!map_validation(&map))
-	{
-		ft_putstr_fd("Map Is Not Enclosed\n", 2);
-		map.flag = 0;
 		return (map);
-	}
 	map.width = map.col * TILE_SIZE;
 	map.height = map.row * TILE_SIZE;
 	init_map_img(data, &map);

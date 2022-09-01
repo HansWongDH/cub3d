@@ -54,6 +54,21 @@ typedef struct	s_math
 	int			side;
 }				t_math;
 
+
+typedef enum e_error_id
+{
+	NONE,
+	MAP_OK,
+	MAP_TOO_MANY_PLAYERS,
+	MAP_INV_CHAR,
+	MAP_NO_PLAYER,
+	MAP_WRONG_FILE_EXT,
+	MAP_INVALID_FILE,
+	MAP_NOT_ENCLOSED,
+	MAP_MISSING_TEX,
+	NUM_OF_ENUMS,
+}	t_error_id;
+
 t_vec			add_vectors(t_vec v1, t_vec v2);
 t_vec			subtract_vectors(t_vec v1, t_vec v2);
 t_vec			equate_vectores(t_vec v1);
