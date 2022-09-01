@@ -6,24 +6,37 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:10:30 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/09/01 13:15:24 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/01 14:19:39 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	free_2d(char **s)
+int	create_rgb(char **args)
 {
 	int	i;
+	int	colour[3];
 
 	i = 0;
-	while (s[i])
+	while (args[i])
+		i++;
+	if (i != 4)
 	{
-		free(s[i]);
+		free_2d(args);
+		return (-1);
+	}
+	i = -1;
+	while (++i < 3)
+		colour[i] = ft_atoi(args[i + 1]);
+	free_2d(args);
+	i = 0;
+	while (i < 3)
+	{
+		if (colour[i] > 255 || colour[i] < 0)
+			return (-1);
 		i++;
 	}
-	free(s);
-	return (0);
+	return (0 << 24 | colour[0] << 16 | colour[1] << 8 | colour[2]);
 }
 
 void	print_map_error(t_error_id err)

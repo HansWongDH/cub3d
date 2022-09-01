@@ -6,64 +6,46 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:14:39 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/09/01 13:29:00 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/01 14:20:08 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	create_rgb(char **args)
-{
-	int	i;
-	int	colour[3];
-
-	i = 0;
-	while (args[i])
-		i++;
-	if (i != 4)
-	{
-		free_2d(args);
-		return (-1);
-	}
-	i = -1;
-	while (++i < 3)
-		colour[i] = ft_atoi(args[i + 1]);
-	free_2d(args);
-	i = 0;
-	while (i < 3)
-	{
-		if (colour[i] > 255 || colour[i] < 0)
-			return (-1);
-		i++;
-	}
-	return (0 << 24 | colour[0] << 16 | colour[1] << 8 | colour[2]);
-}
-
 //might have to check for invalid amount of commas in while loop idk
+static	int	strict_order(char *s, int i)
+{
+	const char	*arr[6] = {"NO", "SO", "WE", "EA", "F", "C"};
+
+	if (!ft_strcmp(s, arr[i]))
+		return (1);
+	return (0);
+}
 
 static unsigned int	check_colour(t_data *data, t_map *map, char *s, char *line)
 {
 	char	**args;
-	int		i;
 	int		colour;
+	int		count;
 
-	i = 0;
-	while (line[i])
+	count = 0;
+	while (*line)
 	{
-		if (line[i] == ',')
-			line[i] = ' ';
-		i++;
+		if (*line == ',')
+		{
+			count++;
+			*line = ' ';
+		}
+		line++;
 	}
 	args = ft_split(line, ' ');
 	colour = create_rgb(args);
-	if (colour < 0)
+	if (colour < 0 || count != 2)
 		return (set_map_flag(map, MAP_INVALID_RBG));
-	if (!ft_strcmp(s, "F") && data->floor < 0)
+	if (!ft_strcmp(s, "F"))
 		data->floor = colour;
-	else if (data->ceiling < 0)
-		data->ceiling = colour;
 	else
-		return (0);
+		data->ceiling = colour;
 	return (1);
 }
 
@@ -115,13 +97,11 @@ int	parse_element(t_data *data, t_map *map, int fd)
 	char		**args;
 	int			i;
 
-	if (get_next_line(fd, &line) < 0)
-		return (0);
 	i = 0;
-	while (1)
+	while (get_next_line(fd, &line) > 0)
 	{
 		args = ft_split(line, ' ');
-		if (args[0])
+		if (args[0] && strict_order(args[0], i))
 		{
 			if (!fetch_element(data, map, args, line))
 				return (free_2d(args));
@@ -132,7 +112,8 @@ int	parse_element(t_data *data, t_map *map, int fd)
 		data->index++;
 		if (i == 6)
 			break ;
-		get_next_line(fd, &line);
 	}
+	if (i != 0)
+		return (set_map_flag(map, MAP_MISSING_ELEM));
 	return (1);
 }

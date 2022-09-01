@@ -57,4 +57,5 @@ int		free_2d(char **s);
 void	print_map_error(t_error_id err);
 int		set_map_flag(t_map *map, t_error_id err);
 int		map_filetype(t_map *map, char *file);
+int		create_rgb(char **args);
 #endif
