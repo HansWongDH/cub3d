@@ -66,8 +66,8 @@
 # define LBLUE			0x00B4D8
 # define BROWN			0xAB3428
 
-# define FLOORCOL		0x1E1E18 //0x1E1E18
-# define CIELCOL		0x183C30 //0x183C30
+# define FLOORCOL		0x1E1E18 //0x1E1E18 30,30,24
+# define CIELCOL		0x183C30 //0x183C30 24,60,48
 # define DOOR_CL_COL	0xffba08
 # define DOOR_OP_COL	0x4daa57
 # define WALLCOL		GRAY
