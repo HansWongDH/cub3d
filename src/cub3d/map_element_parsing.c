@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:14:39 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/09/01 14:20:08 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/01 14:26:26 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int	parse_element(t_data *data, t_map *map, int fd)
 		if (i == 6)
 			break ;
 	}
-	if (i != 0)
+	if (i != 6)
 		return (set_map_flag(map, MAP_MISSING_ELEM));
 	return (1);
 }
