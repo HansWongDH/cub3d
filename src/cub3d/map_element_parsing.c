@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:14:39 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/09/01 14:26:26 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/01 14:36:21 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,17 @@ static unsigned int	check_colour(t_data *data, t_map *map, char *s, char *line)
 	char	**args;
 	int		colour;
 	int		count;
+	int		i;
 
 	count = 0;
-	while (*line)
+	i = -1;
+	while (line[++i])
 	{
-		if (*line == ',')
+		if (line[i] == ',')
 		{
 			count++;
-			*line = ' ';
+			line[i] = ' ';
 		}
-		line++;
 	}
 	args = ft_split(line, ' ');
 	colour = create_rgb(args);
