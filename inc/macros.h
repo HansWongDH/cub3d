@@ -6,14 +6,12 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 10:49:35 by nfernand          #+#    #+#             */
-/*   Updated: 2022/09/02 14:37:41 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/02 16:44:11 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MACROS_H
 # define MACROS_H
-
-# define PI				3.14159265359 //deelte
 
 # define X_KEY_PRESS	2
 # define X_KEY_RELEASE	3
@@ -38,25 +36,16 @@
 
 # define MOVE_GAP			3
 # define PLAYER_SIZE		10
-# define ROTATE_FACTOR		PI / 27 //have to change
+# define ROTATE_FACTOR		27
 # define SENSITIVITY		1.0
 # define MAP_TRANSPARENCY	75
 
-# define ROW				11 //remove to be dynamic
-# define COL				15 //remove to be dynamic
 # define TILE_SIZE			16
-# define WIDTH				COL * TILE_SIZE //480 //remove to be dynamic
-# define HEIGHT				ROW * TILE_SIZE //352 //remove to be dynamic
 # define DISPLAY_ROW		15
 # define DISPLAY_COL		15
 
 # define GAME_SCALE			16
-# define GAME_TILE			GAME_SCALE * TILE_SIZE //256
-# define GAME_WIDTH 		WIDTH * 3 //needs to by dynamic
-# define GAME_HEIGHT		HEIGHT * 3 //needs to by dynamic
-# define X_SCALE			4
 # define Y_SCALE			375
-# define Y_INV_SCALE		32000 //can delete
 
 # define GUN_WIDTH			128
 # define GUN_HEIGHT			128
@@ -84,7 +73,6 @@
 # define DOOR_OP_COL	0x4daa57
 # define WALLCOL		GRAY
 
-/* FOREGROUND */
 # define PR_RESET	"\x1B[0m"
 # define PR_RED		"\x1B[31m"
 # define PR_GREEN	"\x1B[32m"

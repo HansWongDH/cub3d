@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:24:28 by nfernand          #+#    #+#             */
-/*   Updated: 2022/09/02 14:34:33 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/02 16:42:02 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,19 @@ void	turn_player(t_player *self, int keycode)
 	if (keycode == KEY_A)
 	{
 		self->ray_dir = equate_vectors_double(
-				self->ray_dir.x * cos(-ROTATE_FACTOR)
-				- self->ray_dir.y * sin(-ROTATE_FACTOR),
-				oldray_dir_x * sin(-ROTATE_FACTOR)
-				+ self->ray_dir.y * cos(-ROTATE_FACTOR));
+				self->ray_dir.x * cos(-M_PI / ROTATE_FACTOR)
+				- self->ray_dir.y * sin(-M_PI / ROTATE_FACTOR),
+				oldray_dir_x * sin(-M_PI / ROTATE_FACTOR)
+				+ self->ray_dir.y * cos(-M_PI / ROTATE_FACTOR));
 		self->plane_dir = get_plane_dir(self->ray_dir);
 	}
 	else if (keycode == KEY_D)
 	{
 		self->ray_dir = equate_vectors_double(
-				self->ray_dir.x * cos(ROTATE_FACTOR)
-				- self->ray_dir.y * sin(ROTATE_FACTOR),
-				oldray_dir_x * sin(ROTATE_FACTOR)
-				+ self->ray_dir.y * cos(ROTATE_FACTOR));
+				self->ray_dir.x * cos(M_PI / ROTATE_FACTOR)
+				- self->ray_dir.y * sin(M_PI / ROTATE_FACTOR),
+				oldray_dir_x * sin(M_PI / ROTATE_FACTOR)
+				+ self->ray_dir.y * cos(M_PI / ROTATE_FACTOR));
 		self->plane_dir = get_plane_dir(self->ray_dir);
 	}
 	else if (is_movement_keys(keycode) == 2)
