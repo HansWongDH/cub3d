@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:30:40 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/29 18:44:34 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/02 12:49:06 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,20 @@ static void	render_walls(t_data *data, t_math *math, int index)
 	j = 0;
 	factor = (TILE_SIZE * Y_SCALE) / (math->wall_distance);
 	img = get_texture(data, math, math->side);
-	while (j < factor)
+	while (j <= factor)
 	{
 		game_pos_to_draw = get_pos_to_draw(data, -1, j, index);
 		if (game_pos_to_draw <= data->game.width * data->game.height)
 		{
-			if (get_xpm_pos(j, factor, math->wall, 0) < XPM_SIZE * XPM_SIZE)
-				data->game.img.data[game_pos_to_draw]
-					= img.data[get_xpm_pos(j, factor, math->wall, 0)];
+			data->game.img.data[game_pos_to_draw]
+				= img.data[get_xpm_pos(j, factor, math->wall, 0)];
 		}
 		game_pos_to_draw = get_pos_to_draw(data, factor, j, index);
 		if (data->game.width * data->game.height - game_pos_to_draw >= 0)
 		{
-			if (get_xpm_pos(j, factor, math->wall, 1) < XPM_SIZE * XPM_SIZE)
-				data->game.img.data[data->game.width
-					* data->game.height - game_pos_to_draw]
-					= img.data[get_xpm_pos(j, factor, math->wall, 1)];
+			data->game.img.data[data->game.width
+				* data->game.height - game_pos_to_draw]
+				= img.data[get_xpm_pos(j, factor, math->wall, 1)];
 		}
 		j++;
 	}
