@@ -6,27 +6,27 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:35:20 by nfernand          #+#    #+#             */
-/*   Updated: 2022/09/02 12:49:34 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/02 13:36:08 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "cub3d.h"
 
-int	get_xpm_pos(int j, int factor, double wall, int option)
+int	get_xpm_pos(t_xpm *img, double scale, double wall, int option)
 {
 	t_vec	coord;
 
 	if (option == 0)
 	{
-		coord.y = round(((float)j / factor)
-				* ((XPM_SIZE - 1) / 2) + ((XPM_SIZE - 1) / 2));
-		coord.x = round((float)XPM_SIZE * wall);
-		return (XPM_SIZE * (coord.y - 1) + coord.x);
+		coord.y = round(scale
+				* ((img->height - 1) / 2) + ((img->height - 1) / 2));
+		coord.x = round((double)(img->width - 1) * wall);
+		return (img->width * coord.y + coord.x);
 	}
-	coord.y = round(((float)j / factor) / 2 * (XPM_SIZE - 1));
-	coord.x = round((float)XPM_SIZE * wall);
-	return (XPM_SIZE * coord.y + coord.x);
+	coord.y = round(scale / 2 * (img->height - 1));
+	coord.x = round((double)(img->width - 1) * wall);
+	return (img->width * coord.y + coord.x);
 }
 
 int	get_pos_to_draw(t_data *data, int factor, int j, int index)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_class.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
+/*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 10:34:57 by nfernand          #+#    #+#             */
-/*   Updated: 2022/09/02 10:41:46 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/02 13:46:36 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@
 typedef struct s_game	t_game;
 typedef struct s_data	t_data;
 
-typedef void	(*t_draw_sky)(t_game *self,
+typedef void			(*t_draw_sky)(t_game *self,
 		unsigned int floor_col, unsigned int ciel_col);
-typedef void	(*t_draw_game)(t_data *data);
-typedef void	(*t_shoot_gun)(t_data *data);
-typedef void	(*t_open_door)(t_data *data);
+typedef void			(*t_draw_game)(t_data *data);
+typedef void			(*t_shoot_gun)(t_data *data);
+typedef void			(*t_open_door)(t_data *data);
 
 struct		s_game
 {
@@ -59,7 +59,7 @@ void	draw_game_render(t_data *data);
 t_xpm	get_texture(t_data *data, t_math *math, int side);
 void	flag_collision(t_math *math, char **array, int *hit);
 int		check_side(t_math *math);
-int		get_xpm_pos(int j, int factor, double wall, int option);
+int		get_xpm_pos(t_xpm *img, double scale, double wall, int option);
 int		get_pos_to_draw(t_data *data, int factor, int j, int index);
 void	toggle_door(char **array, int x, int y);
 void	put_gun_and_hud_image(t_data *data);

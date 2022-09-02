@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_hud.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
+/*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:21:04 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/30 11:14:28 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/02 13:28:25 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	draw_hud(t_data *data)
 	int		x_scale;
 
 	init_xpm(data->mlx, &background_tex, "./textures/Steel_2A.xpm");
-	x_scale = round((float)data->game.width / XPM_SIZE);
+	x_scale = round((double)data->game.width / XPM_SIZE);
 	loop.x = 0;
 	while (loop.x < XPM_SIZE * x_scale)
 	{

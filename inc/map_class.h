@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_class.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
+/*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 10:42:15 by nfernand          #+#    #+#             */
-/*   Updated: 2022/09/02 10:44:27 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/02 13:11:26 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ typedef struct s_map		t_map;
 typedef struct s_player		t_player;
 typedef struct s_data		t_data;
 
-typedef void	(*t_print_map)(t_map *self);
-typedef void	(*t_draw_map)(t_map *self, t_player *player);
+typedef void				(*t_print_map)(t_map *self);
+typedef void				(*t_draw_map)(t_map	*self, t_player *player);
 
 struct			s_map
 {

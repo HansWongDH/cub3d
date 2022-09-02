@@ -1,7 +1,7 @@
-NO ./textures/Labwall_North.xpm
-SO ./textures/SUPPORT_5B.xpm
-WE ./textures/Labwall_West.xpm
-EA ./textures/Labwall_East.xpm
+NO ./textures/TECH_3B.xpm
+SO ./textures/TECH_3F.xpm
+WE ./textures/TECH_3I.xpm
+EA ./textures/TECH_4F.xpm
 
 F   30,   30    ,    24
 C  24,        60           ,48

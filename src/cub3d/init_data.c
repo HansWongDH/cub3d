@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 14:00:08 by nfernand          #+#    #+#             */
-/*   Updated: 2022/09/01 13:41:24 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/02 13:41:24 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	init_textures_2(t_data *data)
 			&data->east_wall.bpp, &data->east_wall.line_size,
 			&data->east_wall.endian);
 	data->door.img_p = mlx_xpm_file_to_image(data->mlx,
-			"./textures/DOOR_3B.xpm", &data->door.width,
+			"./textures/DOOR_1E.xpm", &data->door.width,
 			&data->door.height);
 	data->door.data = (int *)mlx_get_data_addr(data->door.img_p,
 			&data->door.bpp, &data->door.line_size, &data->door.endian);

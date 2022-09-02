@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_class.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
+/*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 10:44:41 by nfernand          #+#    #+#             */
-/*   Updated: 2022/09/02 10:45:13 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/02 13:46:21 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@
 typedef struct s_player	t_player;
 typedef struct s_map	t_map;
 
-typedef void	(*t_move_player)(t_player *self, int keycode, t_map *map);
-typedef void	(*t_turn_player)(t_player *self, int keycode);
-typedef void	(*t_print_player)(t_player *self);
-typedef void	(*t_turn_player_mouse)(t_player *self, double m_pos);
+typedef void			(*t_move_player)(t_player *self,
+							int keycode, t_map *map);
+typedef void			(*t_turn_player)(t_player *self, int keycode);
+typedef void			(*t_print_player)(t_player *self);
+typedef void			(*t_turn_player_mouse)(t_player *self, double m_pos);
 
 struct			s_player
 {
