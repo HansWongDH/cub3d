@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 13:24:28 by nfernand          #+#    #+#             */
-/*   Updated: 2022/09/01 09:26:09 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/02 14:34:33 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,23 @@ void	turn_player(t_player *self, int keycode)
 
 void	move_player(t_player *self, int keycode, t_map *map)
 {
-	if (keycode == KEY_W)
-	{
-		if (validate_move(self, map, KEY_W) == 0)
-			return ;
+	t_vec	temp;
+
+	if (validate_move(self, map, keycode) == 0)
+		return ;
+	if (keycode == KEY_A || keycode == KEY_D)
+		temp = equate_vectors_double(
+				self->ray_dir.x * (cos(M_PI_2)) - self->ray_dir.y * sin(M_PI_2),
+				self->ray_dir.y * (cos(M_PI_2)) + self->ray_dir.x * sin(M_PI_2)
+				);
+	else
+		temp = equate_vectores(self->ray_dir);
+	if (keycode == KEY_W || keycode == KEY_D)
 		self->pos = add_vectors_double(self->pos,
-				self->ray_dir.x * MOVE_GAP, self->ray_dir.y * MOVE_GAP);
-	}
-	else if (keycode == KEY_S)
-	{
-		if (validate_move(self, map, KEY_S) == 0)
-			return ;
+				temp.x * MOVE_GAP, temp.y * MOVE_GAP);
+	else
 		self->pos = subtract_vectors_double(self->pos,
-				self->ray_dir.x * MOVE_GAP, self->ray_dir.y * MOVE_GAP);
-	}
+				temp.x * MOVE_GAP, temp.y * MOVE_GAP);
 }
 
 void	print_player(t_player *self)

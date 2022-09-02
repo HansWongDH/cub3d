@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 13:45:10 by nfernand          #+#    #+#             */
-/*   Updated: 2022/09/01 09:49:00 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/02 14:14:14 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 
 int	handle_key(int keycode, t_data *data)
 {
-	if (keycode == KEY_W || keycode == KEY_S)
+	if (is_movement_keys(keycode) == 1)
 		data->player.move_player(&data->player, keycode, &data->map);
-	if (keycode == KEY_A || keycode == KEY_D)
-		data->player.turn_player(&data->player, keycode);
 	if (is_movement_keys(keycode) == 2)
 		data->player.turn_player(&data->player, keycode);
 	if (keycode == KEY_SPACE)

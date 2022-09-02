@@ -2,9 +2,9 @@ NO ./textures/TECH_3B.xpm
 SO ./textures/TECH_3F.xpm
 WE ./textures/TECH_3I.xpm
 EA ./textures/TECH_4F.xpm
-
-F   30,   30    ,    24
-C  24,        60           ,48
+DO ./textures/DOOR_1E.xpm
+F   28,   28    ,    27
+C  2,75,110
 
 11111111
 10000001
@@ -13,8 +13,8 @@ C  24,        60           ,48
 100DD001
 10011001
 1000D001
-1001N101
-10000101
+1100N011
+10000001
 10000001
 10000001
 11111111

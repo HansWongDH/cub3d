@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_class_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
+/*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:31:49 by nfernand          #+#    #+#             */
-/*   Updated: 2022/09/01 09:27:57 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/02 14:29:12 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,31 +62,38 @@ t_vec	get_plane_dir(t_vec ray_dir)
 	return (plane_dir);
 }
 
+static double	get_angle(int keycode)
+{
+	if (keycode == KEY_A || keycode == KEY_D)
+		return (M_PI_2);
+	return (0);
+}
+
 int	validate_move(t_player *player, t_map *map, int keycode)
 {
 	t_vec	ray;
 	t_vec	delta;
+	double	a;
 	double	max;
 	int		i;
 
-	i = 0;
+	i = -1;
+	a = get_angle(keycode);
 	ray = equate_vectores(player->pos);
-	delta = equate_vectors_double(
-			cos(0) * player->ray_dir.x - sin(0) * player->ray_dir.y,
-			sin(0) * player->ray_dir.x + cos(0) * player->ray_dir.y);
+	delta.x = cos(a) * player->ray_dir.x - sin(a) * player->ray_dir.y;
+	delta.y = sin(a) * player->ray_dir.x + cos(a) * player->ray_dir.y;
 	max = fmax(fabs(delta.x), fabs(delta.y));
 	delta = divide_vectors_double(delta, max, max);
-	while (i < 12)
+	while (++i < 12)
 	{
 		if (map->img.data[map->width * (int)floor(ray.y)
 				+ (int)floor(ray.x)]
 			== (int)get_argb_val(WALLCOL, MAP_TRANSPARENCY))
 			return (0);
-		if (keycode == KEY_S)
+		if (keycode == KEY_S || keycode == KEY_A)
 			ray = subtract_vectors(ray, delta);
 		else
 			ray = add_vectors(ray, delta);
-		i++;
 	}
 	return (1);
 }

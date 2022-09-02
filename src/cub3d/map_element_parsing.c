@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:14:39 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/09/01 15:26:27 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/02 13:53:54 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //might have to check for invalid amount of commas in while loop idk
 static	int	strict_order(t_map *map, char *s, int i)
 {
-	const char	*arr[6] = {"NO", "SO", "WE", "EA", "F", "C"};
+	const char	*arr[7] = {"NO", "SO", "WE", "EA", "DO", "F", "C"};
 
 	if (!ft_strcmp(s, arr[i]))
 		return (1);
@@ -66,25 +66,15 @@ static int	check_path(char *s)
 static int	fetch_element(t_data *data, t_map *map, char **args, char *line)
 {
 	if (!ft_strcmp(args[0], "NO") && check_path(args[1]))
-	{
-		if (!data->north_wall.path)
-			data->north_wall.path = ft_strdup(args[1]);
-	}
+		data->north_wall.path = ft_strdup(args[1]);
 	else if (!ft_strcmp(args[0], "SO") && check_path(args[1]))
-	{
-		if (!data->south_wall.path)
-			data->south_wall.path = ft_strdup(args[1]);
-	}
+		data->south_wall.path = ft_strdup(args[1]);
 	else if (!ft_strcmp(args[0], "EA") && check_path(args[1]))
-	{
-		if (!data->east_wall.path)
-			data->east_wall.path = ft_strdup(args[1]);
-	}
+		data->east_wall.path = ft_strdup(args[1]);
 	else if (!ft_strcmp(args[0], "WE") && check_path(args[1]))
-	{
-		if (!data->west_wall.path)
-			data->west_wall.path = ft_strdup(args[1]);
-	}
+		data->west_wall.path = ft_strdup(args[1]);
+	else if (!ft_strcmp(args[0], "DO") && check_path(args[1]))
+		data->door.path = ft_strdup(args[1]);
 	else if (!ft_strcmp(args[0], "F") || !ft_strcmp(args[0], "C"))
 		return (check_colour(data, map, args[0], line));
 	else
@@ -113,10 +103,10 @@ int	parse_element(t_data *data, t_map *map, int fd)
 		free_2d(args);
 		free(line);
 		data->index++;
-		if (i == 6)
+		if (i == 7)
 			break ;
 	}
-	if (i != 6)
+	if (i != 7)
 		return (set_map_flag(map, MAP_MISSING_ELEM));
 	return (1);
 }

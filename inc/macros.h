@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 10:49:35 by nfernand          #+#    #+#             */
-/*   Updated: 2022/09/02 13:43:40 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/02 14:37:41 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@
 # define LBLUE			0x00B4D8
 # define BROWN			0xAB3428
 
-# define FLOORCOL		0x1E1E18 //0x1E1E18 30,30,24
-# define CIELCOL		0x183C30 //0x183C30 24,60,48
+# define FLOORCOL		0x1E1E18 //0x1E1E18 30,30,24 || 28,28,27
+# define CIELCOL		0x183C30 //0x183C30 24,60,48 || 2,75,110
 # define DOOR_CL_COL	0xffba08
 # define DOOR_OP_COL	0x4daa57
 # define WALLCOL		GRAY
