@@ -1,4 +1,16 @@
-#ifndef	PLAYER_CLASS_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player_class.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/02 10:44:41 by nfernand          #+#    #+#             */
+/*   Updated: 2022/09/02 10:45:13 by nfernand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef PLAYER_CLASS_H
 # define PLAYER_CLASS_H
 
 # include <mlx.h>
@@ -12,15 +24,15 @@
 # include "macros.h"
 # include "utils.h"
 
-typedef struct	c_player	t_player;
-typedef struct	c_map		t_map;
+typedef struct s_player	t_player;
+typedef struct s_map	t_map;
 
 typedef void	(*t_move_player)(t_player *self, int keycode, t_map *map);
 typedef void	(*t_turn_player)(t_player *self, int keycode);
 typedef void	(*t_print_player)(t_player *self);
 typedef void	(*t_turn_player_mouse)(t_player *self, double m_pos);
 
-struct			c_player
+struct			s_player
 {
 	t_move_player		move_player;
 	t_turn_player		turn_player;

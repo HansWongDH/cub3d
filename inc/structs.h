@@ -1,4 +1,16 @@
-#ifndef	STRUCTS_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   structs.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/02 10:45:35 by nfernand          #+#    #+#             */
+/*   Updated: 2022/09/02 10:47:56 by nfernand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef STRUCTS_H
 # define STRUCTS_H
 
 # include <mlx.h>
@@ -7,40 +19,40 @@
 # include <math.h>
 # include <float.h>
 
-typedef struct	s_vec
+typedef struct s_vec
 {
-	double		x;
-	double		y;
-}				t_vec;
+	double	x;
+	double	y;
+}	t_vec;
 
-typedef struct	s_coord
+typedef struct s_coord
 {
-	int			x;
-	int			y;
-}				t_coord;
+	int	x;
+	int	y;
+}	t_coord;
 
-typedef struct	s_img
+typedef struct s_img
 {
-	void		*img_p;
-	int			*data;
-	int			bpp;
-	int			line_size;
-	int			endian;
-}				t_img;
+	void	*img_p;
+	int		*data;
+	int		bpp;
+	int		line_size;
+	int		endian;
+}	t_img;
 
-typedef struct	s_xpm
+typedef struct s_xpm
 {
-	void		*img_p;
-	int			*data;
-	char		*path;
-	int			bpp;
-	int			line_size;
-	int			endian;
-	int			width;
-	int			height;
-}				t_xpm;
+	void	*img_p;
+	int		*data;
+	char	*path;
+	int		bpp;
+	int		line_size;
+	int		endian;
+	int		width;
+	int		height;
+}	t_xpm;
 
-typedef struct	s_math
+typedef struct s_math
 {
 	t_vec		ray_dir;
 	t_vec		delta_dist;
@@ -52,8 +64,7 @@ typedef struct	s_math
 	double		wall;
 	int			door;
 	int			side;
-}				t_math;
-
+}	t_math;
 
 typedef enum e_error_id
 {

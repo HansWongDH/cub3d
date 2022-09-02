@@ -3,8 +3,8 @@ SO ./textures/SUPPORT_5B.xpm
 WE ./textures/Labwall_West.xpm
 EA ./textures/Labwall_East.xpm
 
-F   255,   255    , 255
-C  255,        255 ,255
+F   30,   30    ,    24
+C  24,        60           ,48
 
 11111111
 10000001

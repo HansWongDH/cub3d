@@ -1,4 +1,16 @@
-#ifndef	GAME_CLASS_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   game_class.h                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/02 10:34:57 by nfernand          #+#    #+#             */
+/*   Updated: 2022/09/02 10:41:46 by nfernand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef GAME_CLASS_H
 # define GAME_CLASS_H
 
 # include <mlx.h>
@@ -12,15 +24,16 @@
 # include "structs.h"
 # include "cub3d.h"
 
-typedef struct	c_game		t_game;
-typedef struct	s_data		t_data;
+typedef struct s_game	t_game;
+typedef struct s_data	t_data;
 
-typedef void	(*t_draw_sky)(t_game *self);
-typedef	void	(*t_draw_game)(t_data *data);
-typedef	void	(*t_shoot_gun)(t_data *data);
-typedef	void	(*t_open_door)(t_data *data);
+typedef void	(*t_draw_sky)(t_game *self,
+		unsigned int floor_col, unsigned int ciel_col);
+typedef void	(*t_draw_game)(t_data *data);
+typedef void	(*t_shoot_gun)(t_data *data);
+typedef void	(*t_open_door)(t_data *data);
 
-struct		c_game
+struct		s_game
 {
 	t_draw_sky	draw_sky;
 	t_draw_game	draw_game;
@@ -35,13 +48,14 @@ struct		c_game
 
 t_game	game_init(void *mlx);
 void	draw_game(t_data *data);
-void	draw_sky(t_game *self);
+void	draw_sky(t_game *self, unsigned int floor_col, unsigned int ciel_col);
 void	shoot_gun(t_data *data);
 void	open_door(t_data *data);
 
 void	draw_gun(t_data *data, char *path_to_xpm);
 void	draw_hud(t_data *data);
 void	draw_game_render(t_data *data);
+
 t_xpm	get_texture(t_data *data, t_math *math, int side);
 void	flag_collision(t_math *math, char **array, int *hit);
 int		check_side(t_math *math);

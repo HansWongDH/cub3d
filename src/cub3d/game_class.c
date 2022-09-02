@@ -6,14 +6,14 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 17:40:40 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/29 18:31:12 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/01 13:45:31 by nfernand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "cub3d.h"
 
-void	draw_sky(t_game *self)
+void	draw_sky(t_game *self, unsigned int floor_col, unsigned int ciel_col)
 {
 	int	i;
 	int	j;
@@ -25,9 +25,9 @@ void	draw_sky(t_game *self)
 		while (j < self->height)
 		{
 			if (j > self->height / 2)
-				self->img.data[self->width * j + i] = FLOORCOL;
+				self->img.data[self->width * j + i] = floor_col;
 			else
-				self->img.data[self->width * j + i] = CIELCOL;
+				self->img.data[self->width * j + i] = ciel_col;
 			j++;
 		}
 		i++;
