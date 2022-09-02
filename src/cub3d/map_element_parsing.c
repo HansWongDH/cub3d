@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:14:39 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/09/02 13:53:54 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/02 16:36:27 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,21 @@ static	int	strict_order(t_map *map, char *s, int i)
 
 static unsigned int	check_colour(t_data *data, t_map *map, char *s, char *line)
 {
-	char	**args;
 	int		colour;
-	int		count;
+	char	**args;
 	int		i;
 
-	count = 0;
-	i = -1;
+	i = 0;
+	if (!check_argument(line, 1, 0))
+		return (set_map_flag(map, MAP_INVALID_RBG));
 	while (line[++i])
 	{
 		if (line[i] == ',')
-		{
-			count++;
 			line[i] = ' ';
-		}
 	}
 	args = ft_split(line, ' ');
 	colour = create_rgb(args);
-	if (colour < 0 || count != 2)
+	if (colour < 0)
 		return (set_map_flag(map, MAP_INVALID_RBG));
 	if (!ft_strcmp(s, "F"))
 		data->floor = colour;

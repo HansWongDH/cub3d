@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 10:42:15 by nfernand          #+#    #+#             */
-/*   Updated: 2022/09/02 13:11:26 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/02 16:37:11 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,10 @@ void	map_skip_element(int fd, int index);
 
 int		parse_element(t_data *data, t_map *map, int fd);
 int		free_2d(char **s);
-void	print_map_error(t_error_id err);
-int		set_map_flag(t_map *map, t_error_id err);
 int		map_filetype(t_map *map, char *file);
 int		create_rgb(char **args);
+int		check_argument(char *line, int i, int count);
+
+void	print_map_error(t_error_id err);
+int		set_map_flag(t_map *map, t_error_id err);
 #endif

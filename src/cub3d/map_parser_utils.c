@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:10:30 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/09/01 15:21:22 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/02 16:38:33 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,6 @@ int	create_rgb(char **args)
 	return (0 << 24 | colour[0] << 16 | colour[1] << 8 | colour[2]);
 }
 
-void	print_map_error(t_error_id err)
-{
-	const char	*err_arr[] = {"MAP HAS TOO MANY PLAYERS\n",
-		"MAP HAS AN INVALID CHAR\n", "MAP HAS NO PLAYER\n",
-		"MAP HAS WRONG FILE EXTENSION\n", "MAP WAS AN INVALID FILE\n",
-		"MAP WAS NOT ENCLOSED\n", "MAP MISSING ELEMENT\n",
-		"MAP INVALID RGB\n", "MAP WRONG ELEMENT ORDER\n"};
-
-	ft_putstr_fd(PR_RED, 2);
-	ft_putstr_fd((char *)err_arr[err - 2], 2);
-	ft_putstr_fd(PR_RESET, 2);
-}
-
 int	map_filetype(t_map *map, char *file)
 {
 	char	*file_type;
@@ -80,9 +67,21 @@ void	map_skip_element(int fd, int index)
 	}
 }
 
-int	set_map_flag(t_map *map, t_error_id err)
+int	check_argument(char *line, int i, int count)
 {
-	map->flag = err;
-	printf("map->err_id = %d\n", err);
+	while (line[i] == ' ')
+		i++;
+	while (ft_isdigit(line[i]))
+		i++;
+	while (line[i] == ' ')
+		i++;
+	if ((line[i] == ',' && line[i + 1]) || !line[i])
+	{
+		count++;
+		if (line[i] && line[i + 1])
+			return (check_argument(line, i + 1, count));
+	}
+	if (count == 3)
+		return (1);
 	return (0);
 }
