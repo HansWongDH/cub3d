@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
+/*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 10:31:50 by nfernand          #+#    #+#             */
-/*   Updated: 2022/09/02 10:49:24 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/02 17:14:03 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,13 @@ typedef struct s_data
 	t_coord		mouse_pos;
 }	t_data;
 
-float			get_positive_value_of_angle(double angle);
-int				handle_key(int keycode, t_data *data);
-int				handle_exit(int keycode, t_data *data);
-int				handle_mouse(int x, int y, t_data *data);
-void			init_data(t_data *data, char *file);
-void			printmap(char **map);
-void			init_xpm(void *mlx, t_xpm *xpm, char *path_to_xpm);
+float	get_positive_value_of_angle(double angle);
+int		handle_key(int keycode, t_data *data);
+int		handle_exit(int keycode, t_data *data);
+int		handle_mouse(int x, int y, t_data *data);
+void	init_data(t_data *data, char *file);
+void	printmap(char **map);
+void	init_xpm(void *mlx, t_xpm *xpm, char *path_to_xpm);
+void	free_data(t_data *data);
 
 #endif

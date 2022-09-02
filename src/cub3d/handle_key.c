@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 13:45:10 by nfernand          #+#    #+#             */
-/*   Updated: 2022/09/02 14:14:14 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/02 17:58:17 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	handle_key(int keycode, t_data *data)
 		data->game.shoot_gun(data);
 	if (keycode == KEY_ESC)
 	{
-		freestr(data->map.array);
+		free_data(data);
+		system("leaks cub3d");
 		exit(0);
 	}
 	if (is_movement_keys(keycode) >= 1)
@@ -37,8 +38,9 @@ int	handle_key(int keycode, t_data *data)
 
 int	handle_exit(int keycode, t_data *data)
 {
-	(void)data;
 	(void)keycode;
+	free_data(data);
+	system("leaks cub3d");
 	exit(0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 15:09:33 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/09/02 16:47:45 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/02 17:57:10 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	map_create(t_map *map, char *file, int index)
 	int		i;
 
 	i = 0;
-	map->array = ft_calloc(sizeof(char *), map->row);
+	map->array = ft_calloc(sizeof(char *), map->row + 1);
 	fd = open(file, O_RDONLY);
 	map_skip_element(fd, index);
 	while (get_next_line(fd, &line))
@@ -98,7 +98,6 @@ void	map_create(t_map *map, char *file, int index)
 		}
 		i++;
 	}
-	map->array[i] = NULL;
 	map->array[map->player_pos.y][map->player_pos.x] = '0';
 	close(fd);
 	free(line);
