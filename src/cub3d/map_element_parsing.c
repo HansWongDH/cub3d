@@ -6,19 +6,20 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:14:39 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/09/02 16:36:27 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/02 17:10:18 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 //might have to check for invalid amount of commas in while loop idk
-static	int	strict_order(t_map *map, char *s, int i)
+static	int	strict_order(t_map *map, char *s, int i, char *line)
 {
 	const char	*arr[7] = {"NO", "SO", "WE", "EA", "DO", "F", "C"};
 
 	if (!ft_strcmp(s, arr[i]))
 		return (1);
+	free(line);
 	return (set_map_flag(map, MAP_WRONG_ELEM_ORDER));
 }
 
@@ -39,7 +40,10 @@ static unsigned int	check_colour(t_data *data, t_map *map, char *s, char *line)
 	args = ft_split(line, ' ');
 	colour = create_rgb(args);
 	if (colour < 0)
+	{
+		free(line);
 		return (set_map_flag(map, MAP_INVALID_RBG));
+	}
 	if (!ft_strcmp(s, "F"))
 		data->floor = colour;
 	else
@@ -75,7 +79,10 @@ static int	fetch_element(t_data *data, t_map *map, char **args, char *line)
 	else if (!ft_strcmp(args[0], "F") || !ft_strcmp(args[0], "C"))
 		return (check_colour(data, map, args[0], line));
 	else
+	{
+		free(line);
 		return (set_map_flag(map, MAP_MISSING_ELEM));
+	}
 	return (1);
 }
 
@@ -91,7 +98,7 @@ int	parse_element(t_data *data, t_map *map, int fd)
 		args = ft_split(line, ' ');
 		if (args[0])
 		{
-			if (!strict_order(map, args[0], i))
+			if (!strict_order(map, args[0], i, line))
 				return (free_2d(args));
 			if (!fetch_element(data, map, args, line))
 				return (free_2d(args));

@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 15:09:33 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/09/01 13:07:45 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/02 16:47:45 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ int	map_getinfo(t_map *map, int fd)
 		if (ft_strlen(line) > (size_t)map->col)
 			map->col = ft_strlen(line);
 		if (!map_character_checking(map, line))
+		{
+			free(line);
 			return (0);
+		}
 		free(line);
 		map->row++;
 	}

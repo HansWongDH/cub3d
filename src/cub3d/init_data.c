@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 14:00:08 by nfernand          #+#    #+#             */
-/*   Updated: 2022/09/02 16:32:17 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/02 16:45:35 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	init_data(t_data *data, char *file)
 	if (data->map.flag != MAP_OK)
 	{
 		print_map_error(data->map.flag);
+		system("leaks cub3d");
 		exit(1);
 	}
 	data->win = mlx_new_window(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3d");
