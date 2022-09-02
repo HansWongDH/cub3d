@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   macros.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/02 10:49:35 by nfernand          #+#    #+#             */
+/*   Updated: 2022/09/02 10:52:07 by nfernand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MACROS_H
 # define MACROS_H
 
-# define PI				3.14159265359
+# define PI				3.14159265359 //deelte
 
 # define X_KEY_PRESS	2
 # define X_KEY_RELEASE	3
@@ -26,7 +38,7 @@
 
 # define MOVE_GAP			3
 # define PLAYER_SIZE		10
-# define ROTATE_FACTOR		PI / 27
+# define ROTATE_FACTOR		PI / 27 //have to change
 # define SENSITIVITY		1.0
 # define MAP_TRANSPARENCY	75
 
@@ -44,7 +56,7 @@
 # define GAME_HEIGHT		HEIGHT * 3 //needs to by dynamic
 # define X_SCALE			4
 # define Y_SCALE			375
-# define Y_INV_SCALE		32000
+# define Y_INV_SCALE		32000 //can delete
 
 # define GUN_WIDTH			128
 # define GUN_HEIGHT			128
@@ -73,24 +85,13 @@
 # define WALLCOL		GRAY
 
 /* FOREGROUND */
-#define PR_RESET  "\x1B[0m"
-#define PR_RED  "\x1B[31m"
-#define PR_GREEN  "\x1B[32m"
-#define PR_YELLOW  "\x1B[33m"
-#define PR_BLUE  "\x1B[34m"
-#define PR_MAGENTA  "\x1B[35m"
-#define PR_CYAN  "\x1B[36m"
-#define PR_WHITE  "\x1B[37m"
-
-#define FRED(x) RED x RESET
-#define FGRN(x) GREEN x RESET
-#define FYEL(x) YELLOW x RESET
-#define FBLU(x) BLUE x RESET
-#define FMAG(x) MAGENTA x RESET
-#define FCYN(x) CYAN x RESET
-#define FWHT(x) WHITE x RESET
-
-#define BOLD(x)	"\x1B[1m" x RESET
-#define UNDL(x)	"\x1B[4m" x RESET
+# define PR_RESET	"\x1B[0m"
+# define PR_RED		"\x1B[31m"
+# define PR_GREEN	"\x1B[32m"
+# define PR_YELLOW	"\x1B[33m"
+# define PR_BLUE	"\x1B[34m"
+# define PR_MAGENTA	"\x1B[35m"
+# define PR_CYAN	"\x1B[36m"
+# define PR_WHITE	"\x1B[37m"
 
 #endif

@@ -1,4 +1,16 @@
-#ifndef	MAP_CLASS_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_class.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/02 10:42:15 by nfernand          #+#    #+#             */
+/*   Updated: 2022/09/02 10:44:27 by nfernand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef MAP_CLASS_H
 # define MAP_CLASS_H
 
 # include <mlx.h>
@@ -11,14 +23,14 @@
 # include "structs.h"
 # include "macros.h"
 
-typedef struct	c_map		t_map;
-typedef struct	c_player	t_player;
-typedef struct	s_data		t_data;
+typedef struct s_map		t_map;
+typedef struct s_player		t_player;
+typedef struct s_data		t_data;
 
-typedef	void	(*t_print_map)(t_map *self);
+typedef void	(*t_print_map)(t_map *self);
 typedef void	(*t_draw_map)(t_map *self, t_player *player);
 
-struct			c_map
+struct			s_map
 {
 	t_draw_map				draw_map;
 	t_print_map				print_map;
@@ -36,7 +48,7 @@ struct			c_map
 	int						flag;
 };
 
-t_map   map_init(t_data *data, char *file);
+t_map	map_init(t_data *data, char *file);
 void	print_map(t_map *self);
 void	draw_map(t_map *self, t_player *player);
 

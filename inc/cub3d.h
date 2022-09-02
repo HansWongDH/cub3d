@@ -1,4 +1,16 @@
-#ifndef	CUB3D_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/02 10:31:50 by nfernand          #+#    #+#             */
+/*   Updated: 2022/09/02 10:49:24 by nfernand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef CUB3D_H
 # define CUB3D_H
 
 # include "../src/mlx/mlx.h"
@@ -18,24 +30,18 @@
 # include "libft.h"
 # include "utils.h"
 
-typedef enum	e_direction
+typedef enum e_direction
 {
 	NORTH,
 	EAST,
 	SOUTH,
 	WEST
-}				t_direction;
+}	t_direction;
 
-typedef struct	s_data
+typedef struct s_data
 {
 	void		*mlx;
 	void		*win;
-	//int			map[ROW][COL];
-	//t_vec		player_pos;
-	//t_vec		fov;
-	//float		player_direction;
-	//t_img		img;
-	//t_img		game;
 	t_xpm		north_wall;
 	t_xpm		east_wall;
 	t_xpm		south_wall;
@@ -48,7 +54,7 @@ typedef struct	s_data
 	t_map		map;
 	t_player	player;
 	t_coord		mouse_pos;
-}				t_data;
+}	t_data;
 
 float			get_positive_value_of_angle(double angle);
 int				handle_key(int keycode, t_data *data);
