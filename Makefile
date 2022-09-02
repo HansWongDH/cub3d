@@ -48,6 +48,7 @@ retest: fclean $(NAME)
 clean:
 	$(RM) $(OBJ_DIR)/*
 	make clean -C $(LIBFT_DIR)
+	make clean -C $(MLX_DIR)
 
 fclean:
 	$(RM) $(NAME)
