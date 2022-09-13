@@ -1,0 +1,14 @@
+NO ./textures/TECH_3B.xpm
+SO ./textures/TECH_3F.xpm
+WE ./textures/TECH_3I.xpm
+EA ./textures/TECH_4F.xpm
+DO ./textures/DOOR_1E.xpm
+
+F      28      ,       255  ,    27           
+C  2,75,110 
+
+111111111
+101000D011111                 
+1010N000000001      1      1
+1100001111111
+111111111
