@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_gun.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfernand <nfernand@student.42kl.edu.m      +#+  +:+       +#+        */
+/*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/29 17:18:57 by nfernand          #+#    #+#             */
-/*   Updated: 2022/08/29 17:20:24 by nfernand         ###   ########.fr       */
+/*   Updated: 2022/09/13 18:31:03 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,5 @@ void	draw_gun(t_data *data, char *path_to_xpm)
 		}
 		loop.x++;
 	}
+	mlx_destroy_image(data->mlx, texture.img_p);
 }

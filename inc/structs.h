@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 10:45:35 by nfernand          #+#    #+#             */
-/*   Updated: 2022/09/02 17:11:01 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/13 14:55:23 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef enum e_error_id
 	MAP_MISSING_ELEM,
 	MAP_INVALID_RBG,
 	MAP_WRONG_ELEM_ORDER,
+	MAP_INVALID_PATH,
 	NUM_OF_ENUMS,
 }	t_error_id;
 

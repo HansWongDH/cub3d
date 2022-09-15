@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 14:14:39 by wding-ha          #+#    #+#             */
-/*   Updated: 2022/09/02 17:10:18 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/13 14:55:55 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,37 +51,41 @@ static unsigned int	check_colour(t_data *data, t_map *map, char *s, char *line)
 	return (1);
 }
 
-static int	check_path(char *s)
+static int	check_path(t_map *map, char **s)
 {
 	int	fd;
+	int	i;
 
-	if (!s)
-		return (0);
-	fd = open(s, O_RDONLY);
+	i = 0;
+	while (s[i])
+		i++;
+	if (i != 2)
+		return (set_map_flag(map, MAP_INVALID_PATH));
+	fd = open(s[1], O_RDONLY);
 	if (fd < 0)
-		return (0);
+		return (set_map_flag(map, MAP_INVALID_PATH));
 	close(fd);
 	return (1);
 }
 
 static int	fetch_element(t_data *data, t_map *map, char **args, char *line)
 {
-	if (!ft_strcmp(args[0], "NO") && check_path(args[1]))
+	if (!ft_strcmp(args[0], "NO") && check_path(map, args))
 		data->north_wall.path = ft_strdup(args[1]);
-	else if (!ft_strcmp(args[0], "SO") && check_path(args[1]))
+	else if (!ft_strcmp(args[0], "SO") && check_path(map, args))
 		data->south_wall.path = ft_strdup(args[1]);
-	else if (!ft_strcmp(args[0], "EA") && check_path(args[1]))
+	else if (!ft_strcmp(args[0], "EA") && check_path(map, args))
 		data->east_wall.path = ft_strdup(args[1]);
-	else if (!ft_strcmp(args[0], "WE") && check_path(args[1]))
+	else if (!ft_strcmp(args[0], "WE") && check_path(map, args))
 		data->west_wall.path = ft_strdup(args[1]);
-	else if (!ft_strcmp(args[0], "DO") && check_path(args[1]))
+	else if (!ft_strcmp(args[0], "DO") && check_path(map, args))
 		data->door.path = ft_strdup(args[1]);
 	else if (!ft_strcmp(args[0], "F") || !ft_strcmp(args[0], "C"))
 		return (check_colour(data, map, args[0], line));
 	else
 	{
 		free(line);
-		return (set_map_flag(map, MAP_MISSING_ELEM));
+		return (0);
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:11:49 by nfernand          #+#    #+#             */
-/*   Updated: 2022/09/02 18:37:44 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/13 18:34:11 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ void	print_map(t_map *self)
 		j = 0;
 		while (j < self->col)
 		{
-			if (self->array[i][j] != ' ')
-				printf("%c", self->array[i][j]);
+			printf("%c", self->array[i][j]);
 			j++;
 		}
 		printf("\n");

@@ -6,7 +6,7 @@
 /*   By: wding-ha <wding-ha@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 13:45:10 by nfernand          #+#    #+#             */
-/*   Updated: 2022/09/02 17:59:24 by wding-ha         ###   ########.fr       */
+/*   Updated: 2022/09/13 18:33:19 by wding-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	handle_key(int keycode, t_data *data)
 int	handle_exit(int keycode, t_data *data)
 {
 	(void)keycode;
-	free_data(data);
+	(void)data;
 	system("leaks cub3d");
 	exit(0);
 }
